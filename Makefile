@@ -14,28 +14,12 @@ OBJ = $(addprefix $(SRC_DIR), $(SRC:.c=.o))
 all: $(LIBFT) $(MLX) $(CUB_LIB) $(NAME)
 
 $(LIBFT):
-	@if [ -d $(LIBFT_DIR) ]; then \
-		echo "C_libft is already cloned."; \
-	else \
-		git clone git@github.com:gtretiak/C_libft.git $(LIBFT_DIR); \
-	fi
-	@if [ -f $(LIBFT_DIR)$(LIBFT) ]; then \
-		echo "libft.a is already compiled."; \
-	else \
-		$(MAKE) -C $(LIBFT_DIR); \
-	fi
+	@if [ -d $(LIBFT_DIR) ]; then echo "C_libft is already cloned."; else git clone --depth=1 https://github.com/gtretiak/C_libft.git $(LIBFT_DIR); fi
+	@if [ -f $(LIBFT_DIR)$(LIBFT) ]; then echo "libft.a is already compiled."; else $(MAKE) -C $(LIBFT_DIR); fi
 
 $(MLX):
-	@if [ -d $(MLX_DIR) ]; then \
-		echo "minilibx_linux is already cloned."; \
-	else \
-		git clone git@github.com:42paris/minilibx-linux.git $(MLX_DIR); \
-	fi
-	@if [ -f $(MLX_DIR)$(MLX) ]; then \
-		echo "libmlx_Linux.a is already compiled."; \
-	else \
-		$(MAKE) -C $(MLX_DIR); \
-	fi
+	@if [ -d $(MLX_DIR) ]; then echo "minilibx_linux is already cloned."; else git clone --depth=1 https://github.com/42Paris/minilibx-linux.git $(MLX_DIR); fi
+	@if [ -f $(MLX_DIR)$(MLX) ]; then echo "libmlx_Linux.a is already compiled."; else $(MAKE) -C $(MLX_DIR); fi
 
 $(CUB_LIB): $(OBJ)
 	ar -rcs $(CUB_LIB) $(OBJ)
