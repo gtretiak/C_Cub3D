@@ -1,8 +1,10 @@
-#include "cub3d.h"
+#include "../cub3d.h"
 
-int	main(void)
+int	main(int argv, char **argc)
 {
 	t_mlx	game;
+
+	
 
 	init(&game);
 	rendering(&game);
