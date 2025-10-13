@@ -1,14 +1,14 @@
 NAME = cub3D
 HEADER = cub3d.h
 CUB_LIB = cub3D.a
-CFLAGS = cc -Wall -Wextra -Werror
+CFLAGS = cc -Wall -Wextra -Werror -g
 MLX_FLAGS = -lX11 -lXext -lXrender -lXrandr -lm -lpthread
 LIBFT = libft.a
 LIBFT_DIR = C_libft/
 MLX = libmlx_Linux.a
 MLX_DIR = minilibx_linux/
 SRC_DIR = Sources/
-SRC = main.c init.c events.c render.c utils.c 
+SRC = main.c init.c events.c render.c utils.c args_checker.c
 OBJ = $(addprefix $(SRC_DIR), $(SRC:.c=.o))
 
 all: $(LIBFT) $(MLX) $(CUB_LIB) $(NAME)

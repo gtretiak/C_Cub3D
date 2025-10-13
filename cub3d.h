@@ -7,9 +7,11 @@
 # include <stdlib.h>
 # include <string.h>
 # include <math.h>
+#include  <stdbool.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include "minilibx_linux/mlx.h"
+# include "C_libft/libft.h"
 
 # ifndef HEIGHT
 #  define HEIGHT 800
@@ -34,6 +36,8 @@ typedef struct	s_mlx
 	void	*win;
 	t_img	img;
 }	t_mlx;
+
+bool args_checker(char *map_path);
 
 void	init(t_mlx *game);
 void	event_listening(t_mlx *game);
