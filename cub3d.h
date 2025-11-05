@@ -74,9 +74,11 @@ typedef struct	s_mlx
 }	t_mlx;
 
 bool args_checker(char *map_path);
+void	file_reading(char *file, t_map *map);
+int	parse_map(char *line, t_map *map);
 
-void	file_reading(char *file);
 void	init(t_mlx *game);
+
 void	event_listening(t_mlx *game);
 int	handle_key(int keysym, t_mlx *game);
 int	key_movement(int keysym, t_mlx *game);
