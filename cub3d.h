@@ -22,6 +22,7 @@
 # endif
 
 # define MAP_WALLS "Error.\nThe map must be closed/surrounded by walls.\n"
+# define MAP_PLAYER "Error.\nThere can't be more than one player.\n"
 # define MAP_UNEXPECTED "Error.\nUnexpected char found in the map.\n"
 # define MAP_GAPS "Error.\nThere can't be gaps (empty lines) in the map.\n"
 # define MAP_LAST "Error.\nThe map must be the last element of *.cub.\n"
@@ -78,6 +79,10 @@ void	file_reading(char *file);
 void	init(t_mlx *game);
 void	event_listening(t_mlx *game);
 int	handle_key(int keysym, t_mlx *game);
+int	key_movement(int keysym, t_mlx *game);
+int	key_control(int keysym, t_mlx *game);
+int	handle_mini(t_mlx *game);
+int	handle_action(t_mlx *game);
 int	handle_mouse(int button, int x, int y, t_mlx *game);
 int	handle_closing(t_mlx *game);
 
