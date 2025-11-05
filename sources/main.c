@@ -8,7 +8,7 @@ int	main(int argc, char **argv)
 		ft_printf("Invalid argument\n");
 		return 1;
 	}
-
+	file_reading(argv[1]);
 	init(&game);
 	rendering(&game);
 	mlx_loop(game.mlx);

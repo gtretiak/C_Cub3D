@@ -7,7 +7,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <math.h>
-#include  <stdbool.h>
+# include <stdbool.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include "minilibx_linux/mlx.h"
@@ -21,6 +21,16 @@
 #  define WIDTH 640
 # endif
 
+# define MAP_WALLS "Error.\nThe map must be closed/surrounded by walls.\n"
+# define MAP_UNEXPECTED "Error.\nUnexpected char found in the map.\n"
+# define MAP_GAPS "Error.\nThere can't be gaps (empty lines) in the map.\n"
+# define MAP_LAST "Error.\nThe map must be the last element of *.cub.\n"
+# define MAP_SPACES "Error.\nSpaces aren't allowed in the map.\n"
+# define MAP_NO "Error.\nThere is no map in your cub file.\n"
+# define ELEMENT_TYPE "Error.\nElement type is missing (invalid).\n"
+# define ELEMENT_UNEXPECTED "Error.\nUnexpected char found in an element.\n"
+# define ELEMENT_PATH "Error.\nTexture path/file is invalid/inaccessible.\n"
+
 typedef struct s_img
 {
 	void	*img;
@@ -29,6 +39,31 @@ typedef struct s_img
 	int	line_len;
 	int	endian;
 }	t_img;
+
+// structure for a player TODO
+
+typedef struct	s_flat
+{
+	char	type;
+	char	*rgb;
+}	t_flat;
+
+typedef struct	s_wall
+{
+	char	*type;
+	char	*path;
+}	t_wall;
+
+typedef struct	s_map
+{
+	t_flat	floor;
+	t_flat	ceilling;
+	t_wall	north;
+	t_wall	south;
+	t_wall	west;
+	t_wall	east;
+	char	**map;
+}	t_map;
 
 typedef struct	s_mlx
 {
@@ -39,6 +74,7 @@ typedef struct	s_mlx
 
 bool args_checker(char *map_path);
 
+void	file_reading(char *file);
 void	init(t_mlx *game);
 void	event_listening(t_mlx *game);
 int	handle_key(int keysym, t_mlx *game);
