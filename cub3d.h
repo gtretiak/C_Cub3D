@@ -26,7 +26,6 @@
 # define MAP_UNEXPECTED "Error.\nUnexpected char found in the map.\n"
 # define MAP_GAPS "Error.\nThere can't be gaps (empty lines) in the map.\n"
 # define MAP_LAST "Error.\nThe map must be the last element of *.cub.\n"
-# define MAP_SPACES "Error.\nSpaces aren't allowed in the map.\n"
 # define MAP_NO "Error.\nThere is no map in your cub file.\n"
 # define ELEMENT_TYPE "Error.\nElement type is missing (invalid).\n"
 # define ELEMENT_UNEXPECTED "Error.\nUnexpected char found in an element.\n"
@@ -64,6 +63,7 @@ typedef struct	s_map
 	t_wall	west;
 	t_wall	east;
 	char	**map;
+	bool	flag;
 }	t_map;
 
 typedef struct	s_mlx
