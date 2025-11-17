@@ -6,19 +6,19 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:52:17 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/17 15:18:28 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/17 16:25:12 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./render.h"
 
-
-
-
-// int render(char **map)
-int render(void)
+// int ft_render(char **map, char **textures)
+int ft_render(void)
 {
 	t_game *game;
+	char **textures = {
+	"Path/To/N","Path/To/E","Path/To/S","Path/To/W"
+	};
 	char **map = {
 		"1111111111111111111111111",
 		"1000000000110000000000001",
@@ -36,7 +36,7 @@ int render(void)
 		"11111111 1111111 11111111",
 		NULL
 	};
-	game = ft_init_game(map);
+	game = ft_init_game(&game, map, textures);
 
 	return 0;
 }

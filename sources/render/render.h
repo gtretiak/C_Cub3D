@@ -5,22 +5,27 @@
 
 typedef struct s_player
 {
-	int posX;
-	int posY;
-	int dirX;
-	int dirY;
+	double posX;
+	double posY;
+	double dirX;
+	double dirY;
+	double camX;
+	double camY;
 }	t_player;
 
 typedef struct s_game
 {
-	char	**map;
-	int		res_height;
-	int		res_width;
-	int		map_width;
-	int		map_height;
-	t_player *player;
+	int			res_width;
+	int			res_height;
+	int			map_width;
+	int			map_height;
+	void		*xpms[4];
+	char		**map;
+	double		time;
+	double		prev_time;
+	t_player	*player;
 }	t_game;
 
-t_game	*ft_init_game(char **map);
+void ft_init_game(t_game *game,char **map, char **textures);
 
 #endif
