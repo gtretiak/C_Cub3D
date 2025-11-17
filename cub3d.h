@@ -10,8 +10,8 @@
 # include <stdbool.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
-# include "minilibx_linux/mlx.h"
-# include "C_libft/libft.h"
+# include "lib/minilibx-linux/mlx.h"
+# include "lib/libft/libft.h"
 
 # ifndef HEIGHT
 #  define HEIGHT 800

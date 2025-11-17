@@ -1,0 +1,82 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/17 14:43:06 by rimagalh          #+#    #+#             */
+/*   Updated: 2025/11/17 15:18:03 by rimagalh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "./render.h"
+
+//* typedef struct s_player
+//* {
+//* 	int posX;
+//* 	int posY;
+//* 	int dirX;
+//* 	int dirY;
+//* }	t_player;
+
+
+int is_player(char c)
+{
+	if (c == 'N')
+		return (0);
+	if (c == 'E')
+		return (90);
+	if (c == 'S')
+		return (180);
+	if (c == 'W')
+		return (270);
+
+	return (-1);
+}
+
+t_player *init_player(char **map)
+{
+	t_player *player;
+	int y;
+	int x;
+
+	y = 0;
+
+	while(map[y] != NULL)
+	{
+		x = 0;
+		while(map[y][x] != '\0')
+		{
+			if(is_player(map[y][x]) != -1)
+				break;
+			x++;
+		}
+		y++;
+	}
+
+	player->posX = x;
+	player->posY = y;
+	player->dirX = 0;
+	player->dirY = 0;
+	return player;
+}
+
+//* typedef struct s_game
+//* {
+//* 	char	**map;
+//* 	int		res_height;
+//* 	int		res_width;
+//* 	int		map_width;
+//* 	int		map_height;
+//* 	t_player player;
+//* }	t_game;
+
+void *ft_init_game(char **map)
+{
+	t_game *game;
+	game->map = map;
+	game->player = init_player(map);
+	game->res_width = 480;
+	game->res_height = 640;
+}
