@@ -7,7 +7,7 @@ void	event_listening(t_mlx *game)
 	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, handle_closing, game);
 }
 
-void	init(t_mlx *game)
+void	init_game(t_mlx *game)
 {
 	game->mlx = mlx_init();
 	if (!game->mlx)

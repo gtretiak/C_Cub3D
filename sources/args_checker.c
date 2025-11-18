@@ -1,26 +1,33 @@
 #include "../cub3d.h"
-#include <fcntl.h>
 
-static bool is_an_cub_extension(char *map_path)
+static void	exiter(char *str)
 {
-    char *extension;
-
-    extension = ft_strrchr(map_path, '.');
-    if(!extension)
-        return false;
-    if (ft_strncmp(extension, ".cub", 4) != 0)
-        return false;
-    return true;
+	if (str)
+		ft_printf("%s", str);
+	else
+		perror("Error:");
+	exit(1);
 }
 
-bool args_checker(char *map_path){
-    int fd;
+static void	cub_extension(char *map_path)
+{
+	char	*extension;
+	
+	extension = ft_strrchr(map_path, '.');
+	if (!extension || ft_strncmp(extension, ".cub", 4))
+		exiter(ARG_INV);
+	return ;
+}
 
-    if(!is_an_cub_extension(map_path))
-        return false;
-    fd = open(map_path, O_RDONLY);
-    if(fd < 0)
-        return false;
+void	args_checker(int argc, char **argv)
+{
+	int	fd;
 
-    return true;
+	if (argc != 2)
+		exiter(ARG_NUM);
+	cub_extension(argv[1]);
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+		exiter(NULL);
+	return ;
 }

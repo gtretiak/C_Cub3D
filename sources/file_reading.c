@@ -1,20 +1,23 @@
 #include "../cub3d.h"
 
+static int	returner(char *str)
+{
+	printf("%s", str);
+	return (1);
+}
+
 int	parse_map(char *line, t_map *map)
 {
 	short	i;
 
 	i = -1;
-	while (line[++i] != '\0' && line[i] != '\n')
+	while (line[++i] != '\0')
 	{
-		if (line[0] == '\n')
+		if (line[i] == '\n')
 		{
-			if (map->flag == true)
-			{
-				printf(MAP_GAPS);
-				return (1);
-			}
-			continue ;
+			if (i == 0 && map->flag == true)
+				return (returner(MAP_GAPS));
+			return (0);
 		}	
 		if (ft_isspace(line[i]))
 			continue ;
@@ -50,6 +53,7 @@ void	file_reading(char *file, t_map *map)
 		perror("Error opening file");
 		exit(1);
 	}
+	init_map(map);
 	while (1)
 	{
 		str = get_next_line(fd, 0); //recall workflow TODO
@@ -58,6 +62,7 @@ void	file_reading(char *file, t_map *map)
 		if (parse_map(str, map)) // might include just \n (empty)
 		{
 			free(str);
+			free_map(map);
 			exit(1);
 		}
 		free(str);
