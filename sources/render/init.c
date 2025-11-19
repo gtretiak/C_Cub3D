@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:43:06 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/19 16:14:27 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/19 17:37:09 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,17 @@ void init_map_size(int height, int width, char **map)
 
 void get_xpms(t_game *game, char **textures)
 {
+	int width;
+	int height;
+
 	game->xpms[0] = mlx_xpm_file_to_image(game->mlx_ptr,
-			textures[0], 0, 0);
+		textures[0], &width, &height);
 	game->xpms[1] = mlx_xpm_file_to_image(game->mlx_ptr,
-			textures[1], 0, 0);
+		textures[1], &width, &height);
 	game->xpms[2] = mlx_xpm_file_to_image(game->mlx_ptr,
-			textures[2], 0, 0);
+		textures[2], &width, &height);
 	game->xpms[3] = mlx_xpm_file_to_image(game->mlx_ptr,
-			textures[3], 0, 0);
+		textures[3], &width, &height);
 }
 
 void ft_init_game(t_game *game,char **map, char **textures)
@@ -114,10 +117,10 @@ void ft_init_game(t_game *game,char **map, char **textures)
 	// if(!game->player)
 	// 	return ;
 	game->player->dirX = -1;
-	game->player->camY = 0.66;
+	game->player->plnY = 0.66;
 	get_xpms(game, textures);
 	init_map_size(game->map_height, game->map_width, map);
-	game->win_ptr = mlx_new_window(game->mlx_ptr, game->res_height, game->res_width, "キュボーソリディ");
+	game->win_ptr = mlx_new_window(game->mlx_ptr, game->res_height, game->res_width, "キュボースリディ");
 	// if (!game->win_ptr)
 	// 	return (free_game(game), print_error("mlx_new_window"), exit(1));
 }
