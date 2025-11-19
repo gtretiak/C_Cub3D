@@ -15,6 +15,8 @@ typedef struct s_player
 
 typedef struct s_game
 {
+	void		*mlx_ptr;
+	void		*win_ptr;
 	int			res_width;
 	int			res_height;
 	int			map_width;
@@ -26,6 +28,8 @@ typedef struct s_game
 	t_player	*player;
 }	t_game;
 
-void ft_init_game(t_game *game,char **map, char **textures);
+void	ft_init_game(t_game *game,char **map, char **textures);
+int		ft_keypress(int key);
+int		ft_quit_game(void);
 
 #endif

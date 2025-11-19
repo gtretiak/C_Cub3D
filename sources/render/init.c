@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:43:06 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/17 16:49:38 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/19 16:14:27 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,12 @@ int is_player(char c)
 	return (-1);
 }
 
-t_player *init_player_pos(char **map)
+void init_player(t_player *player, char **map)
 {
-	t_player *player;
 	int y;
 	int x;
 
 	y = 0;
-
 	while(map[y] != NULL)
 	{
 		x = 0;
@@ -58,13 +56,14 @@ t_player *init_player_pos(char **map)
 
 	player->posX = x;
 	player->posY = y;
-	return player;
 }
+
 void init_map_size(int height, int width, char **map)
 {
 	int i;
-	int max;
+	size_t max;
 
+	i = 0;
 	max = 0;
 	while(map[i] != NULL)
 	{
@@ -88,20 +87,37 @@ void init_map_size(int height, int width, char **map)
 //* 	t_player *player;
 //* }	t_game;
 
+void get_xpms(t_game *game, char **textures)
+{
+	game->xpms[0] = mlx_xpm_file_to_image(game->mlx_ptr,
+			textures[0], 0, 0);
+	game->xpms[1] = mlx_xpm_file_to_image(game->mlx_ptr,
+			textures[1], 0, 0);
+	game->xpms[2] = mlx_xpm_file_to_image(game->mlx_ptr,
+			textures[2], 0, 0);
+	game->xpms[3] = mlx_xpm_file_to_image(game->mlx_ptr,
+			textures[3], 0, 0);
+}
+
 void ft_init_game(t_game *game,char **map, char **textures)
 {
-	//TODO game->xpms = init_xpms(textures);
-
+	game->mlx_ptr = mlx_init();
+	// if (!game->mlx_ptr)
+	// 	return (free_game(game), print_error("mlx_init"), exit(1));
 	game->map = map;
-	game->player = init_player_pos(map);
 	game->res_width = 480;
 	game->res_height = 640;
+	game->player = ft_calloc(1, sizeof(t_player));
+	if(!game->player)
+		return ;
+	init_player(game->player, map);
+	// if(!game->player)
+	// 	return ;
 	game->player->dirX = -1;
-	game->player->dirY = 0;
-	game->player->camX = 0;
 	game->player->camY = 0.66;
-	game->time = 0;
-	game->prev_time = 0;
-	game->prev_time = 0;
-	init_map_size(&game->map_height,&game->map_width, map);
+	get_xpms(game, textures);
+	init_map_size(game->map_height, game->map_width, map);
+	game->win_ptr = mlx_new_window(game->mlx_ptr, game->res_height, game->res_width, "キュボーソリディ");
+	// if (!game->win_ptr)
+	// 	return (free_game(game), print_error("mlx_new_window"), exit(1));
 }
