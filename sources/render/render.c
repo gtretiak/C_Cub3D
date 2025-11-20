@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:52:17 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/20 10:27:19 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/20 15:34:19 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ void raycasting(t_game *game)
 			if(rayDirX == 0)
 				deltaDistX = 1e30;
 			else
-				deltaDistX = abs(1/rayDirX);
+				deltaDistX = fabs(1/rayDirX);
 
 			if(rayDirY == 0)
 				deltaDistY = 1e30;
 			else
-				deltaDistY = abs(1/rayDirY);
+				deltaDistY = fabs(1/rayDirY);
 
 			if(rayDirX < 0)
 			{
@@ -78,7 +78,7 @@ void raycasting(t_game *game)
 			}
 
 
-			while(hit = 0)
+			while(hit == 0)
 			{
 				if(sideDistX < sideDistY)
 				{
@@ -110,6 +110,7 @@ void raycasting(t_game *game)
 			if(drawEnd >= game->res_height)
 				drawEnd = game->res_height - 1;
 
+			// ft_custom_pixel_put();
 			x++;
 		}
 	}
@@ -119,7 +120,9 @@ void raycasting(t_game *game)
 int main(void)
 {
 	t_game game;
-	unsigned int *colors[] = {{125,75,125},{255,255,255}};
+	unsigned int color_top[] = {125, 75, 125};
+    unsigned int color_bot[] = {255, 255, 255};
+    unsigned int *colors[] = {color_top, color_bot};
 	char *textures[] = {"./a.xpm","./a.xpm","./a.xpm","./a.xpm"};
 	char *map[] = {
 		"1111111111111111111111111",

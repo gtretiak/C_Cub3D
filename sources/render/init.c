@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:43:06 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/20 10:25:58 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/20 15:19:13 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@
 //* 	double camX;
 //* 	double camY;
 //* }	t_player;
+
+void init_colors(unsigned int **input, unsigned int *clr_arr)
+{
+	clr_arr[0] = ((input[0][0] & 0xFF) << 16 | (input[0][1] & 0xFF) << 8 | (input[0][2] & 0xFF));
+	clr_arr[1] = ((input[1][0] & 0xFF) << 16 | (input[1][1] & 0xFF) << 8 | (input[1][2] & 0xFF));
+}
 
 int is_player(char c)
 {
@@ -116,7 +122,9 @@ void ft_init_game(t_game *game,char **map, char **textures, unsigned int **color
 	init_player(game->player, map);
 	// if(!game->player)
 	// 	return ;
-	game->colors = colors;
+	game->img->img_ptr = mlx_new_image(game->mlx_ptr, game->res_width, game->res_height);
+	game->img->img_pixels_ptr = mlx_get_data_addr(game->img->img_ptr, &game->img->bits_per_pixel, &game->img->line_len, &game->img->endian);
+	init_colors(colors, game->colors);
 	game->player->dirX = -1;
 	game->player->plnY = 0.66;
 	get_xpms(game, textures);

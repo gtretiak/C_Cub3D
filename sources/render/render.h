@@ -15,6 +15,15 @@ typedef struct s_player
 	double plnY;
 }	t_player;
 
+typedef struct s_image
+{
+	void *img_ptr;
+	char *img_pixels_ptr;
+	int bits_per_pixel;
+	int line_len;
+	int endian;
+}	t_image;
+
 typedef struct s_game
 {
 	char			**map;
@@ -24,14 +33,17 @@ typedef struct s_game
 	int				map_height;
 	int				res_width;
 	int				res_height;
+	t_image 		*img;
 	t_player		*player;
-	unsigned int	**colors;
+	unsigned int	*colors;
 	void			*mlx_ptr;
 	void			*win_ptr;
 	void			*xpms[4];
+
 }	t_game;
 
 void	ft_init_game(t_game *game,char **map, char **textures, unsigned int **colors);
+void ft_custom_pixel_put(t_image *img, int x, int y, int color);
 int		ft_keypress(int key);
 int		ft_quit_game(void);
 
