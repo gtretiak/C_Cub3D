@@ -17,20 +17,21 @@ typedef struct s_player
 
 typedef struct s_game
 {
-	char		**map;
-	double		time;
-	double		prev_time;
-	int			map_width;
-	int			map_height;
-	int			res_width;
-	int			res_height;
-	t_player	*player;
-	void		*mlx_ptr;
-	void		*win_ptr;
-	void		*xpms[4];
+	char			**map;
+	double			time;
+	double			prev_time;
+	int				map_width;
+	int				map_height;
+	int				res_width;
+	int				res_height;
+	t_player		*player;
+	unsigned int	**colors;
+	void			*mlx_ptr;
+	void			*win_ptr;
+	void			*xpms[4];
 }	t_game;
 
-void	ft_init_game(t_game *game,char **map, char **textures);
+void	ft_init_game(t_game *game,char **map, char **textures, unsigned int **colors);
 int		ft_keypress(int key);
 int		ft_quit_game(void);
 

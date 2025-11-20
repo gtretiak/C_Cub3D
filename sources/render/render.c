@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:52:17 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/19 18:18:37 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/20 10:27:19 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,11 @@ void raycasting(t_game *game)
 	}
 }
 
-// int ft_render(char **map, char **textures)
+// int ft_render(char **map, char **textures, unsigned int **colors)
 int main(void)
 {
 	t_game game;
+	unsigned int *colors[] = {{125,75,125},{255,255,255}};
 	char *textures[] = {"./a.xpm","./a.xpm","./a.xpm","./a.xpm"};
 	char *map[] = {
 		"1111111111111111111111111",
@@ -138,7 +139,7 @@ int main(void)
 		NULL
 	};
 	ft_bzero(&game, sizeof(t_game));
-	ft_init_game(&game, map, textures);
+	ft_init_game(&game, map, textures, colors);
 	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, &ft_keypress, &game);
 	mlx_hook(game.win_ptr, DestroyNotify,
 		StructureNotifyMask, &ft_quit_game, &game);

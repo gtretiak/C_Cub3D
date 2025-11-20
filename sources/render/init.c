@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:43:06 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/19 17:37:09 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/20 10:25:58 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void get_xpms(t_game *game, char **textures)
 		textures[3], &width, &height);
 }
 
-void ft_init_game(t_game *game,char **map, char **textures)
+void ft_init_game(t_game *game,char **map, char **textures, unsigned int **colors)
 {
 	game->mlx_ptr = mlx_init();
 	// if (!game->mlx_ptr)
@@ -116,6 +116,7 @@ void ft_init_game(t_game *game,char **map, char **textures)
 	init_player(game->player, map);
 	// if(!game->player)
 	// 	return ;
+	game->colors = colors;
 	game->player->dirX = -1;
 	game->player->plnY = 0.66;
 	get_xpms(game, textures);
