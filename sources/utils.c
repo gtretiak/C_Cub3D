@@ -8,7 +8,7 @@ void	malloc_error()
 
 void	init_map(t_map *map)
 {
-	map->flag = false;
+	map->flag = -6;
 	map->map = malloc(sizeof(char**));
 	if (!map->map)
 		malloc_error();

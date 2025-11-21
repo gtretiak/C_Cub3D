@@ -3,24 +3,24 @@
 
 ## 1) Argument Validation (CLI)
 
-* [ ] Accepts exactly **1 argument**: path to a `*.cub` file
-* [ ] Rejects:
+* [x] Accepts exactly **1 argument**: path to a `*.cub` file
+* [x] Rejects:
 
-  * [ ] No arguments
-  * [ ] More than one argument
-  * [ ] Extension other than `.cub`
-  * [ ] Nonexistent/inaccessible path
-  * [ ] Path that is a directory
+  * [x] No arguments
+  * [x] More than one argument
+  * [x] Extension other than `.cub`
+  * [x] Nonexistent/inaccessible path
+  * [x] Path that is a directory
 
 **Acceptance**
 
-* [ ] On any error, print exactly:
+* [x] On any error, print exactly:
 
   ```
   Error
   <message>
   ```
-* [ ] Clear messages:
+* [x] Clear messages:
   `usage: ./cub3D <map.cub>`,
   `map must end with .cub`,
   `cannot open file`,
@@ -33,12 +33,12 @@
 * [ ] Read the file line by line (preserve content)
 * [ ] Identify and collect **elements**: `NO`, `SO`, `WE`, `EA`, `F`, `C`
 * [ ] Delimit the **map block** (the last block in the file)
-* [ ] Allow **empty lines** between elements (never inside the map)
+* [x] Allow **empty lines** between elements (never inside the map)
 * [ ] Store map lines *exactly as they appear* (including spaces)
 
 **Acceptance**
 
-* [ ] If lines exist after the map → error `map must be last`
+* [x] If lines exist after the map → error `map must be last`
 * [ ] If map block is empty → error `empty map block`
 
 ---
@@ -46,7 +46,7 @@
 ## 3) Element Validation (Textures and Colors)
 
 * [ ] Each identifier appears **exactly once**
-* [ ] `NO/SO/WE/EA` → *path* exists and is readable (XPM recommended)
+* [x] `NO/SO/WE/EA` → *path* exists and is readable (XPM recommended)
 * [ ] `F r,g,b` and `C r,g,b`:
 
   * [ ] Exactly 3 integers

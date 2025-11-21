@@ -65,7 +65,7 @@ typedef struct	s_map
 	t_wall	west;
 	t_wall	east;
 	char	**map;
-	bool	flag;
+	int	flag;
 }	t_map;
 
 typedef struct	s_mlx
