@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:43:06 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/24 11:50:42 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/24 14:13:50 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void init_player(t_player *player, char **map)
 		{
 			if(is_player(map[y][x]) != -1)
 			{
-				player->posX = x;
-				player->posY = y;
+				player->posX = x + 0.5;
+				player->posY = y + 0.5;
 				return ;
 			}
 			x++;

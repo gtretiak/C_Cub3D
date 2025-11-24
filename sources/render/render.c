@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:52:17 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/24 11:56:11 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/24 14:14:49 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int raycasting(t_game *game)
 {
 	unsigned int wall;
 	int x;
+	double frameTime;
 	double cameraX;
 	double rayDirX;
 	double rayDirY;
@@ -113,10 +114,13 @@ int raycasting(t_game *game)
 			wall = 0xFFFF00;
 		else
 			wall = 0x7F7F00;
-		printf("mapX=%d mapY=%d posX=%f posY=%f\n", mapX, mapY, game->player->posX, game->player->posY);
 		ft_draw_column(x, drawStart, drawEnd, game, wall);
 		x++;
 	}
+	game->prev_time = game->time;
+	game->time = ft_get_current_time();
+	frameTime = (game->time - game->prev_time) / 1000.0;
+
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img->img_ptr, 0, 0);
 	return 0;
 }
@@ -151,8 +155,6 @@ int main(void)
 	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, &ft_keypress, &game);
 	mlx_hook(game.win_ptr, DestroyNotify,
 		StructureNotifyMask, &ft_quit_game, &game);
-	// render_game(&game);
-	// raycasting(&game);
 	mlx_loop_hook(game.mlx_ptr, raycasting, &game);
 	mlx_loop(game.mlx_ptr);
 	return 0;
