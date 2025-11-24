@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:52:17 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/24 14:47:21 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/24 14:55:15 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@ void ft_calc_speed(t_game *game)
 	game->prev_time = game->time;
 	game->time = ft_get_current_time();
 	frameTime = (game->time - game->prev_time) / 1000.0;
+
+	if((game->time - game->prev_time) < 2)
+	{
+		game->player->moveSpeed = 0.05;
+		game->player->rotSpeed = 0.03;
+		return ;
+	}
 
 	game->player->moveSpeed = frameTime * 5.0;
 	game->player->rotSpeed = frameTime * 3.0;
@@ -127,7 +134,7 @@ int raycasting(t_game *game)
 		else
 			wall = 0x7F7F00;
 		ft_draw_column(x, drawStart, drawEnd, game, wall);
-		// ft_calc_speed(game);
+		ft_calc_speed(game);
 		x++;
 	}
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img->img_ptr, 0, 0);
