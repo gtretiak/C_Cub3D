@@ -6,17 +6,29 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:52:17 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/24 14:14:49 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/24 14:47:21 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./render.h"
 
+void ft_calc_speed(t_game *game)
+{
+	double frameTime;
+	game->prev_time = game->time;
+	game->time = ft_get_current_time();
+	frameTime = (game->time - game->prev_time) / 1000.0;
+
+	game->player->moveSpeed = frameTime * 5.0;
+	game->player->rotSpeed = frameTime * 3.0;
+	printf("calc_speed: prev=%.0f, time=%.0f, frameTime=%.4f, moveSpeed=%.4f\n",
+		game->prev_time, game->time, frameTime, game->player->moveSpeed);
+}
+
 int raycasting(t_game *game)
 {
 	unsigned int wall;
 	int x;
-	double frameTime;
 	double cameraX;
 	double rayDirX;
 	double rayDirY;
@@ -115,12 +127,9 @@ int raycasting(t_game *game)
 		else
 			wall = 0x7F7F00;
 		ft_draw_column(x, drawStart, drawEnd, game, wall);
+		// ft_calc_speed(game);
 		x++;
 	}
-	game->prev_time = game->time;
-	game->time = ft_get_current_time();
-	frameTime = (game->time - game->prev_time) / 1000.0;
-
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img->img_ptr, 0, 0);
 	return 0;
 }

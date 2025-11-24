@@ -13,6 +13,9 @@ typedef struct s_player
 	double dirY;
 	double plnX;
 	double plnY;
+	double moveSpeed;
+	double rotSpeed;
+
 }	t_player;
 
 typedef struct s_image
@@ -42,11 +45,11 @@ typedef struct s_game
 
 }	t_game;
 
+double	ft_get_current_time(void);
+int		ft_keypress(int key, t_game *game);
+int		ft_quit_game(void);
 void	ft_init_game(t_game *game,char **map, char **textures, unsigned int **colors);
 void	ft_custom_pixel_put(t_image *img, int x, int y, unsigned int color);
-void ft_draw_column(int x, int drawStart, int drawEnd, t_game *game, unsigned int wall);
-int		ft_keypress(int key);
-double	ft_get_current_time(void);
-int		ft_quit_game(void);
+void	ft_draw_column(int x, int drawStart, int drawEnd, t_game *game, unsigned int wall);
 
 #endif

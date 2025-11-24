@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:43:06 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/24 14:13:50 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/24 14:46:57 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,10 @@ void ft_init_game(t_game *game,char **map, char **textures, unsigned int **color
 	game->player->dirY = 0;
 	game->player->plnY = 0.66;
 	game->player->plnX = 0;
+	game->player->moveSpeed = 0.05;
+	game->player->rotSpeed = 0.03;
+	game->time = ft_get_current_time();
+	game->prev_time = game->time;
 	get_xpms(game, textures);
 	init_map_size(&game->map_height, &game->map_width, map);
 	game->win_ptr = mlx_new_window(game->mlx_ptr, game->res_width, game->res_height, "キュボースリディ");
