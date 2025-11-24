@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:43:06 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/20 15:19:13 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/24 11:50:42 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,18 @@ void init_player(t_player *player, char **map)
 		while(map[y][x] != '\0')
 		{
 			if(is_player(map[y][x]) != -1)
-				break;
+			{
+				player->posX = x;
+				player->posY = y;
+				return ;
+			}
 			x++;
 		}
 		y++;
 	}
-
-	player->posX = x;
-	player->posY = y;
 }
 
-void init_map_size(int height, int width, char **map)
+void init_map_size(int *height, int *width, char **map)
 {
 	int i;
 	size_t max;
@@ -77,8 +78,8 @@ void init_map_size(int height, int width, char **map)
 			max = ft_strlen(map[i]);
 		i++;
 	}
-	height = i;
-	width = max;
+	*height = i;
+	*width = (int)max;
 }
 
 //* typedef struct s_game
@@ -114,22 +115,31 @@ void ft_init_game(t_game *game,char **map, char **textures, unsigned int **color
 	// if (!game->mlx_ptr)
 	// 	return (free_game(game), print_error("mlx_init"), exit(1));
 	game->map = map;
-	game->res_width = 480;
-	game->res_height = 640;
+	game->res_width = 1280 / 2;
+	game->res_height = 720 / 2;
 	game->player = ft_calloc(1, sizeof(t_player));
 	if(!game->player)
 		return ;
+	game->img = ft_calloc(1, sizeof(t_image));
+	if(!game->img)
+		return ;
+
 	init_player(game->player, map);
 	// if(!game->player)
 	// 	return ;
 	game->img->img_ptr = mlx_new_image(game->mlx_ptr, game->res_width, game->res_height);
 	game->img->img_pixels_ptr = mlx_get_data_addr(game->img->img_ptr, &game->img->bits_per_pixel, &game->img->line_len, &game->img->endian);
+	game->colors = ft_calloc(2, sizeof(unsigned int));
+	if(!game->colors)
+		return ;
 	init_colors(colors, game->colors);
 	game->player->dirX = -1;
+	game->player->dirY = 0;
 	game->player->plnY = 0.66;
+	game->player->plnX = 0;
 	get_xpms(game, textures);
-	init_map_size(game->map_height, game->map_width, map);
-	game->win_ptr = mlx_new_window(game->mlx_ptr, game->res_height, game->res_width, "キュボースリディ");
+	init_map_size(&game->map_height, &game->map_width, map);
+	game->win_ptr = mlx_new_window(game->mlx_ptr, game->res_width, game->res_height, "キュボースリディ");
 	// if (!game->win_ptr)
 	// 	return (free_game(game), print_error("mlx_new_window"), exit(1));
 }

@@ -43,7 +43,8 @@ typedef struct s_game
 }	t_game;
 
 void	ft_init_game(t_game *game,char **map, char **textures, unsigned int **colors);
-void ft_custom_pixel_put(t_image *img, int x, int y, int color);
+void	ft_custom_pixel_put(t_image *img, int x, int y, unsigned int color);
+void ft_draw_column(int x, int drawStart, int drawEnd, t_game *game, unsigned int wall);
 int		ft_keypress(int key);
 int		ft_quit_game(void);
 

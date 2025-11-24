@@ -6,7 +6,8 @@ NAME = cub3d
 SRC = init.c \
 	move.c \
 	render.c \
-	utils.c
+	pixel.c \
+	utils.c \
 
 OBJ = $(SRC:.c=.o)
 
