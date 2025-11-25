@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:43:06 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/24 14:52:51 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/25 11:56:03 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,18 @@ void get_xpms(t_game *game, char **textures)
 
 void ft_init_game(t_game *game,char **map, char **textures, unsigned int **colors)
 {
+	int width;
+	int height;
 	game->mlx_ptr = mlx_init();
 	// if (!game->mlx_ptr)
 	// 	return (free_game(game), print_error("mlx_init"), exit(1));
 	game->map = map;
 	game->res_width = 1280 / 2;
 	game->res_height = 720 / 2;
-	game->player = ft_calloc(1, sizeof(t_player));
+	game ->player = malloc(sizeof(t_player));
+	if (!game->player)
+		return;
+	ft_bzero(game->player, sizeof(t_player));
 	if(!game->player)
 		return ;
 	game->img = ft_calloc(1, sizeof(t_image));
@@ -133,14 +138,31 @@ void ft_init_game(t_game *game,char **map, char **textures, unsigned int **color
 	if(!game->colors)
 		return ;
 	init_colors(colors, game->colors);
+	game->player->moveSpeed = 0.05;
+	game->player->rotSpeed = 0.03;
+	printf("Init speeds: move=%.4f, rot=%.4f\n", game->player->moveSpeed, game->player->rotSpeed);
 	game->player->dirX = -1;
 	game->player->dirY = 0;
 	game->player->plnY = 0.66;
 	game->player->plnX = 0;
 	game->time = ft_get_current_time();
 	game->prev_time = game->time;
+
+	// Initialize all 4 textures
+	int i = 0;
+	while (i < 4)
+	{
+		game->textures[i] = ft_calloc(1, sizeof(t_image));
+		game->textures[i]->img_ptr = mlx_xpm_file_to_image(game->mlx_ptr, textures[i], &width, &height);
+		game->textures[i]->img_pixels_ptr = mlx_get_data_addr(game->textures[i]->img_ptr,
+			&game->textures[i]->bits_per_pixel,
+			&game->textures[i]->line_len,
+			&game->textures[i]->endian);
+		i++;
+	}
 	get_xpms(game, textures);
 	init_map_size(&game->map_height, &game->map_width, map);
+	printf("Init speeds: move=%.4f, rot=%.4f\n", game->player->moveSpeed, game->player->rotSpeed);
 	game->win_ptr = mlx_new_window(game->mlx_ptr, game->res_width, game->res_height, "キュボースリディ");
 	// if (!game->win_ptr)
 	// 	return (free_game(game), print_error("mlx_new_window"), exit(1));

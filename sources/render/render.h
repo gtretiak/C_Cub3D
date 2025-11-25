@@ -37,6 +37,7 @@ typedef struct s_game
 	int				res_width;
 	int				res_height;
 	t_image 		*img;
+	t_image 		*textures[4];
 	t_player		*player;
 	unsigned int	*colors;
 	void			*mlx_ptr;

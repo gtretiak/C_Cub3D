@@ -6,35 +6,34 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:52:17 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/24 14:55:15 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/25 11:36:49 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./render.h"
 
-void ft_calc_speed(t_game *game)
-{
-	double frameTime;
-	game->prev_time = game->time;
-	game->time = ft_get_current_time();
-	frameTime = (game->time - game->prev_time) / 1000.0;
+// void ft_calc_speed(t_game *game)
+// {
+// 	double frameTime;
+// 	game->prev_time = game->time;
+// 	game->time = ft_get_current_time();
+// 	frameTime = (game->time - game->prev_time) / 1000.0;
 
-	if((game->time - game->prev_time) < 2)
-	{
-		game->player->moveSpeed = 0.05;
-		game->player->rotSpeed = 0.03;
-		return ;
-	}
+// 	if((game->time - game->prev_time) < 2)
+// 	{
+// 		game->player->moveSpeed = 0.05;
+// 		game->player->rotSpeed = 0.03;
+// 		return ;
+// 	}
 
-	game->player->moveSpeed = frameTime * 5.0;
-	game->player->rotSpeed = frameTime * 3.0;
-	printf("calc_speed: prev=%.0f, time=%.0f, frameTime=%.4f, moveSpeed=%.4f\n",
-		game->prev_time, game->time, frameTime, game->player->moveSpeed);
-}
+// 	game->player->moveSpeed = frameTime * 5.0;
+// 	game->player->rotSpeed = frameTime * 3.0;
+// 	printf("calc_speed: prev=%.0f, time=%.0f, frameTime=%.4f, moveSpeed=%.4f\n",
+// 		game->prev_time, game->time, frameTime, game->player->moveSpeed);
+// }
 
 int raycasting(t_game *game)
 {
-	unsigned int wall;
 	int x;
 	double cameraX;
 	double rayDirX;
@@ -129,12 +128,38 @@ int raycasting(t_game *game)
 		if(drawEnd >= game->res_height)
 			drawEnd = game->res_height - 1;
 
-		if(side == 1)
-			wall = 0xFFFF00;
+		int texnum = game->map[mapY][mapX] - '1';
+		double wallX;
+
+		if(side == 0)
+			wallX = game->player->posY + perpWallDist * rayDirY;
 		else
-			wall = 0x7F7F00;
-		ft_draw_column(x, drawStart, drawEnd, game, wall);
-		ft_calc_speed(game);
+			wallX = game->player->posY + perpWallDist * rayDirX;
+		wallX -= floor((wallX));
+
+		int texX = (int)(wallX * (double)64);
+
+		if(side == 0 && rayDirX > 0)
+			texX = 64 - texX - 1;
+		if(side == 1 && rayDirY < 0)
+			texX = 64 - texX - 1;
+
+		double step = 1.0 * 64 / lineHeight;
+		double texPos = (drawStart - game->res_height / 2 + lineHeight) * step;
+		int y = drawStart;
+
+		while (y <= drawEnd)
+		{
+			int texY = (int) texPos & (64 - 1);
+			texPos += step;
+			int offset = (game->textures[texnum]->line_len * texY) + (texX * (game->textures[texnum]->bits_per_pixel / 8));
+			unsigned int color = *(unsigned int *)(game->textures[texnum]->img_pixels_ptr + offset);
+			if(side == 1)
+				color = (color >> 1) & 8355711;
+			ft_custom_pixel_put(game->img, x, y, color);
+			y++;
+		}
+		// ft_calc_speed(game);
 		x++;
 	}
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img->img_ptr, 0, 0);
@@ -148,7 +173,7 @@ int main(void)
 	unsigned int color_top[] = {75, 75, 75};
     unsigned int color_bot[] = {50, 50, 255};
     unsigned int *colors[] = {color_top, color_bot};
-	char *textures[] = {"./a.xpm","./a.xpm","./a.xpm","./a.xpm"};
+	char *textures[] = {"./a.xpm","./wall.xpm","./a.xpm","./a.xpm"};
 	char *map[] = {
 		"1111111111111111111111111",
 		"1000000000110000000000001",
