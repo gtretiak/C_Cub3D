@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:43:06 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/25 11:56:03 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/25 13:53:33 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,8 @@ void ft_init_game(t_game *game,char **map, char **textures, unsigned int **color
 	if(!game->colors)
 		return ;
 	init_colors(colors, game->colors);
-	game->player->moveSpeed = 0.05;
-	game->player->rotSpeed = 0.03;
+		// game->player->moveSpeed = 0.05;
+		// game->player->rotSpeed = 0.03;
 	printf("Init speeds: move=%.4f, rot=%.4f\n", game->player->moveSpeed, game->player->rotSpeed);
 	game->player->dirX = -1;
 	game->player->dirY = 0;
