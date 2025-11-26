@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 11:51:15 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/25 11:45:11 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/26 11:21:54 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,42 +22,21 @@ void ft_custom_pixel_put(t_image *img, int x, int y, unsigned int color)
 	}
 }
 
-//*textures
 void ft_draw_column(int x, int drawStart, int drawEnd, t_game *game, unsigned int color)
 {
 	int y;
 	int center;
 
-	center = game->res_height / 2;
+	center = RESH / 2;
 	y = 0;
-	while ( y < game->res_height)
+	while ( y < RESH)
 	{
 		if (y < drawStart && y <= center)
-			ft_custom_pixel_put(game->img, x, y, game->colors[0]);
+			ft_custom_pixel_put(game->mlx, x, y, game->colors[0]);
 		else if (y >= drawStart && y <= drawEnd)
-			ft_custom_pixel_put(game->img, x, y, color);
+			ft_custom_pixel_put(game->mlx, x, y, color);
 		else if (y > drawEnd && y > center)
-			ft_custom_pixel_put(game->img, x, y, game->colors[1]);
+			ft_custom_pixel_put(game->mlx, x, y, game->colors[1]);
 		y++;
 	}
 }
-//*colors
-// //! wall var is temp
-// void ft_draw_column(int x, int drawStart, int drawEnd, t_game *game, unsigned int wall)
-// {
-// 	int y;
-// 	int center;
-
-// 	center = game->res_height / 2;
-// 	y = 0;
-// 	while ( y < game->res_height)
-// 	{
-// 		if (y < drawStart && y <= center)
-// 			ft_custom_pixel_put(game->img, x, y, game->colors[0]);
-// 		else if (y >= drawStart && y <= drawEnd)
-// 			ft_custom_pixel_put(game->img, x, y, wall);
-// 		else if (y > drawEnd && y > center)
-// 			ft_custom_pixel_put(game->img, x, y, game->colors[1]);
-// 		y++;
-// 	}
-// }

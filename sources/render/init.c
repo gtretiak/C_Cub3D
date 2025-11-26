@@ -6,21 +6,11 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:43:06 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/25 13:53:33 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/26 11:21:54 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./render.h"
-
-//* typedef struct s_player
-//* {
-//* 	double posX;
-//* 	double posY;
-//* 	double dirX;
-//* 	double dirY;
-//* 	double camX;
-//* 	double camY;
-//* }	t_player;
 
 void init_colors(unsigned int **input, unsigned int *clr_arr)
 {
@@ -30,69 +20,8 @@ void init_colors(unsigned int **input, unsigned int *clr_arr)
 
 int is_player(char c)
 {
-	if (c == 'N')
-		return (0);
-	if (c == 'E')
-		return (90);
-	if (c == 'S')
-		return (180);
-	if (c == 'W')
-		return (270);
-
-	return (-1);
+	return (c == 'N' || c == 'E' || c == 'S' || c == 'W');
 }
-
-void init_player(t_player *player, char **map)
-{
-	int y;
-	int x;
-
-	y = 0;
-	while(map[y] != NULL)
-	{
-		x = 0;
-		while(map[y][x] != '\0')
-		{
-			if(is_player(map[y][x]) != -1)
-			{
-				player->posX = x + 0.5;
-				player->posY = y + 0.5;
-				return ;
-			}
-			x++;
-		}
-		y++;
-	}
-}
-
-void init_map_size(int *height, int *width, char **map)
-{
-	int i;
-	size_t max;
-
-	i = 0;
-	max = 0;
-	while(map[i] != NULL)
-	{
-		if(ft_strlen(map[i]) > max)
-			max = ft_strlen(map[i]);
-		i++;
-	}
-	*height = i;
-	*width = (int)max;
-}
-
-//* typedef struct s_game
-//* {
-//* 	char	**map;
-//* 	int		res_height;
-//* 	int		res_width;
-//* 	int		map_width;
-//* 	int		map_height;
-//* 	double time;
-//* 	double prev_time;
-//* 	t_player *player;
-//* }	t_game;
 
 void get_xpms(t_game *game, char **textures)
 {
@@ -109,42 +38,68 @@ void get_xpms(t_game *game, char **textures)
 		textures[3], &width, &height);
 }
 
-void ft_init_game(t_game *game,char **map, char **textures, unsigned int **colors)
+void get_player_pos(t_player *plyr, char **map)
+{
+	int y;
+	int x;
+
+	y = 0;
+	while(map[y] != NULL)
+	{
+		x = 0;
+		while(map[y][x] != '\0')
+		{
+			if(is_player(map[y][x]))
+			{
+				plyr->posX = x + 0.5;
+				plyr->posY = y + 0.5;
+				return ;
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
+void init_player(t_game *game, char **map)
+{
+	game->plyr = malloc(sizeof(t_player));
+	if (!game->plyr)
+		return;
+	get_player_pos(game->plyr, map);
+	game->plyr->dirX = -1;
+	game->plyr->dirY = 0;
+	game->plyr->plnY = 0.66;
+	game->plyr->plnX = 0;
+	game->plyr->moveSpeed = 0.05;
+	game->plyr->rotSpeed = 0.03;
+}
+
+void init_mlx(t_game *game)
+{
+	game->mlx_ptr = mlx_init();
+	if (!game->mlx_ptr)
+		return (ft_printf("mlx_init"), exit(1));
+}
+
+void ft_init_struct(t_game *game,char **map, char **textures, unsigned int **colors)
 {
 	int width;
 	int height;
-	game->mlx_ptr = mlx_init();
-	// if (!game->mlx_ptr)
-	// 	return (free_game(game), print_error("mlx_init"), exit(1));
 	game->map = map;
-	game->res_width = 1280 / 2;
-	game->res_height = 720 / 2;
-	game ->player = malloc(sizeof(t_player));
-	if (!game->player)
-		return;
-	ft_bzero(game->player, sizeof(t_player));
-	if(!game->player)
+	init_mlx(game);
+	game->mlx = malloc(sizeof(t_image));
+	if(!game->mlx)
 		return ;
-	game->img = ft_calloc(1, sizeof(t_image));
-	if(!game->img)
+	init_player(game, map);
+	if(!game->plyr)
 		return ;
-
-	init_player(game->player, map);
-	// if(!game->player)
-	// 	return ;
-	game->img->img_ptr = mlx_new_image(game->mlx_ptr, game->res_width, game->res_height);
-	game->img->img_pixels_ptr = mlx_get_data_addr(game->img->img_ptr, &game->img->bits_per_pixel, &game->img->line_len, &game->img->endian);
+	game->mlx->img_ptr = mlx_new_image(game->mlx_ptr, RESW, RESH);
+	game->mlx->img_pixels_ptr = mlx_get_data_addr(game->mlx->img_ptr, &game->mlx->bits_per_pixel, &game->mlx->line_len, &game->mlx->endian);
 	game->colors = ft_calloc(2, sizeof(unsigned int));
 	if(!game->colors)
 		return ;
 	init_colors(colors, game->colors);
-		// game->player->moveSpeed = 0.05;
-		// game->player->rotSpeed = 0.03;
-	printf("Init speeds: move=%.4f, rot=%.4f\n", game->player->moveSpeed, game->player->rotSpeed);
-	game->player->dirX = -1;
-	game->player->dirY = 0;
-	game->player->plnY = 0.66;
-	game->player->plnX = 0;
 	game->time = ft_get_current_time();
 	game->prev_time = game->time;
 
@@ -161,9 +116,7 @@ void ft_init_game(t_game *game,char **map, char **textures, unsigned int **color
 		i++;
 	}
 	get_xpms(game, textures);
-	init_map_size(&game->map_height, &game->map_width, map);
-	printf("Init speeds: move=%.4f, rot=%.4f\n", game->player->moveSpeed, game->player->rotSpeed);
-	game->win_ptr = mlx_new_window(game->mlx_ptr, game->res_width, game->res_height, "キュボースリディ");
+	game->win_ptr = mlx_new_window(game->mlx_ptr, RESW, RESH, "キュボースリディ");
 	// if (!game->win_ptr)
 	// 	return (free_game(game), print_error("mlx_new_window"), exit(1));
 }

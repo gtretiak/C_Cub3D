@@ -1,9 +1,13 @@
 #ifndef RENDER_H
 # define RENDER_H
 
-#include "../../cub3d.h"
-#include "sys/time.h"
-#include "math.h"
+
+# include "../../cub3d.h"
+# include "sys/time.h"
+# include "math.h"
+
+# define RESH 360
+# define RESW 640
 
 typedef struct s_player
 {
@@ -32,13 +36,9 @@ typedef struct s_game
 	char			**map;
 	double			time;
 	double			prev_time;
-	int				map_width;
-	int				map_height;
-	int				res_width;
-	int				res_height;
-	t_image 		*img;
+	t_image 		*mlx;
 	t_image 		*textures[4];
-	t_player		*player;
+	t_player		*plyr;
 	unsigned int	*colors;
 	void			*mlx_ptr;
 	void			*win_ptr;
@@ -49,7 +49,8 @@ typedef struct s_game
 double	ft_get_current_time(void);
 int		ft_keypress(int key, t_game *game);
 int		ft_quit_game(void);
-void	ft_init_game(t_game *game,char **map, char **textures, unsigned int **colors);
+void	ft_init_player(t_game *game, char **map);
+void	ft_init_struct(t_game *game,char **map, char **textures, unsigned int **colors);
 void	ft_custom_pixel_put(t_image *img, int x, int y, unsigned int color);
 void	ft_draw_column(int x, int drawStart, int drawEnd, t_game *game, unsigned int wall);
 

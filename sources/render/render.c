@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:52:17 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/25 15:24:52 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/26 11:21:54 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ void ft_calc_speed(t_game *game)
 
 	if((game->time - game->prev_time) < 2)
 	{
-		game->player->moveSpeed = 0.05;
-		game->player->rotSpeed = 0.03;
+		game->plyr->moveSpeed = 0.05;
+		game->plyr->rotSpeed = 0.03;
 		return ;
 	}
 
-	game->player->moveSpeed = frameTime * 5.0;
-	game->player->rotSpeed = frameTime * 3.0;
+	game->plyr->moveSpeed = frameTime * 5.0;
+	game->plyr->rotSpeed = frameTime * 3.0;
 	printf("calc_speed: prev=%.0f, time=%.0f, frameTime=%.4f, moveSpeed=%.4f\n",
-		game->prev_time, game->time, frameTime, game->player->moveSpeed);
+		game->prev_time, game->time, frameTime, game->plyr->moveSpeed);
 }
 
 int raycasting(t_game *game)
@@ -54,15 +54,15 @@ int raycasting(t_game *game)
 	int drawEnd;
 
 	x = 0;
-	while(x < game->res_width)
+	while(x < RESW)
 	{
-		cameraX = 2 * x / (double) game->res_width - 1;
+		cameraX = 2 * x / (double) RESW - 1;
 
-		rayDirX = game->player->dirX + game->player->plnX * cameraX;
-		rayDirY = game->player->dirY + game->player->plnY * cameraX;
+		rayDirX = game->plyr->dirX + game->plyr->plnX * cameraX;
+		rayDirY = game->plyr->dirY + game->plyr->plnY * cameraX;
 
-		mapX = (int)game->player->posX;
-		mapY = (int)game->player->posY;
+		mapX = (int)game->plyr->posX;
+		mapY = (int)game->plyr->posY;
 
 		hit = 0;
 
@@ -79,20 +79,20 @@ int raycasting(t_game *game)
 		if(rayDirX < 0)
 		{
 			stepX = -1;
-			sideDistX = (game->player->posX - mapX) * deltaDistX;
+			sideDistX = (game->plyr->posX - mapX) * deltaDistX;
 		} else
 		{
 			stepX = 1;
-			sideDistX = (mapX + 1.0 - game->player->posX) * deltaDistX;
+			sideDistX = (mapX + 1.0 - game->plyr->posX) * deltaDistX;
 		}
 		if(rayDirY < 0)
 		{
 			stepY = -1;
-			sideDistY = (game->player->posY - mapY) * deltaDistY;
+			sideDistY = (game->plyr->posY - mapY) * deltaDistY;
 		} else
 		{
 			stepY = 1;
-			sideDistY = (mapY + 1.0 - game->player->posY) * deltaDistY;
+			sideDistY = (mapY + 1.0 - game->plyr->posY) * deltaDistY;
 		}
 
 
@@ -118,23 +118,23 @@ int raycasting(t_game *game)
 		else
 			perpWallDist = (sideDistY - deltaDistY);
 
-		lineHeight = (int) (game->res_height / perpWallDist);
+		lineHeight = (int) (RESH / perpWallDist);
 
-		drawStart = -lineHeight / 2 + game->res_height / 2;
+		drawStart = -lineHeight / 2 + RESH / 2;
 		if(drawStart < 0)
 			drawStart = 0;
 
-		drawEnd = lineHeight / 2 + game->res_height / 2;
-		if(drawEnd >= game->res_height)
-			drawEnd = game->res_height - 1;
+		drawEnd = lineHeight / 2 + RESH / 2;
+		if(drawEnd >= RESH)
+			drawEnd = RESH - 1;
 
 		int texnum = game->map[mapY][mapX] - '1';
 		double wallX;
 
 		if(side == 0)
-			wallX = game->player->posY + perpWallDist * rayDirY;
+			wallX = game->plyr->posY + perpWallDist * rayDirY;
 		else
-			wallX = game->player->posX + perpWallDist * rayDirX;
+			wallX = game->plyr->posX + perpWallDist * rayDirX;
 		wallX -= floor((wallX));		int texX = (int)(wallX * (double)64);
 
 		if(side == 0 && rayDirX > 0)
@@ -145,17 +145,17 @@ int raycasting(t_game *game)
 
 		// draw texture
 		double step = 1.0 * 64 / lineHeight;
-		double texPos = (drawStart - game->res_height / 2 + lineHeight) * step;
+		double texPos = (drawStart - RESH / 2 + lineHeight) * step;
 		int y = drawStart;
 
 		//draw colors
 		int y2 = 0;
-		while (y2 <= game->res_height)
+		while (y2 <= RESH)
 		{
 			if (y2 < drawStart)
-				ft_custom_pixel_put(game->img, x, y2, game->colors[0]);
+				ft_custom_pixel_put(game->mlx, x, y2, game->colors[0]);
 			else if (y2 > drawEnd)
-				ft_custom_pixel_put(game->img, x, y2, game->colors[1]);
+				ft_custom_pixel_put(game->mlx, x, y2, game->colors[1]);
 			y2++;
 		}
 
@@ -168,24 +168,36 @@ int raycasting(t_game *game)
 
 
 
-			ft_custom_pixel_put(game->img, x, y, color);
+			ft_custom_pixel_put(game->mlx, x, y, color);
 			y++;
 		}
 		ft_calc_speed(game);
 		x++;
 	}
-	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->img->img_ptr, 0, 0);
+	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->mlx->img_ptr, 0, 0);
 	return 0;
 }
 
-// int ft_render(char **map, char **textures, unsigned int **colors)
-int main(void)
+void ft_render(char **map, char **textures, unsigned int **colors)
 {
 	t_game game;
+
+	ft_bzero(&game, sizeof(t_game));
+	ft_init_struct(&game, map, textures, colors);
+	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, &ft_keypress, &game);
+	mlx_hook(game.win_ptr, DestroyNotify,
+		StructureNotifyMask, &ft_quit_game, &game);
+	mlx_loop_hook(game.mlx_ptr, raycasting, &game);
+	mlx_loop(game.mlx_ptr);
+}
+
+int main(void)
+{
+	//! testing vars
 	unsigned int color_top[] = {75, 75, 75};
     unsigned int color_bot[] = {50, 50, 255};
     unsigned int *colors[] = {color_top, color_bot};
-	char *textures[] = {"./a.xpm","./wall.xpm","./a.xpm","./a.xpm"};
+	char *textures[] = {"./a.xpm","./wall.xpm","./a.xpm","./wall.xpm"};
 	char *map[] = {
 		"1111111111111111111111111",
 		"1000000000110000000000001",
@@ -203,12 +215,8 @@ int main(void)
 		"11111111 1111111 11111111",
 		NULL
 	};
-	ft_bzero(&game, sizeof(t_game));
-	ft_init_game(&game, map, textures, colors);
-	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, &ft_keypress, &game);
-	mlx_hook(game.win_ptr, DestroyNotify,
-		StructureNotifyMask, &ft_quit_game, &game);
-	mlx_loop_hook(game.mlx_ptr, raycasting, &game);
-	mlx_loop(game.mlx_ptr);
+
+
+	ft_render(map, textures, colors);
 	return 0;
 }

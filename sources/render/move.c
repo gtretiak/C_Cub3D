@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 14:46:38 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/24 14:43:42 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/26 10:47:55 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,40 +18,40 @@ int	ft_keypress(int key, t_game *game)
 	double oldPlaneX;
 
 	printf("Key pressed: %d, moveSpeed=%.4f, rotSpeed=%.4f\n",
-        key, game->player->moveSpeed, game->player->rotSpeed);
+        key, game->plyr->moveSpeed, game->plyr->rotSpeed);
 
 	if (key == XK_a || key == XK_Left)
 	{
-		oldDirX = game->player->dirX;
-		game->player->dirX = game->player->dirX * cos(game->player->rotSpeed) - game->player->dirY * sin(game->player->rotSpeed);
-		game->player->dirY = oldDirX * sin(game->player->rotSpeed) + game->player->dirY * cos(game->player->rotSpeed);
-		oldPlaneX = game->player->plnX;
-		game->player->plnX = game->player->plnX * cos(game->player->rotSpeed) - game->player->plnY * sin(game->player->rotSpeed);
-		game->player->plnY = oldPlaneX * sin(game->player->rotSpeed) + game->player->plnY * cos(game->player->rotSpeed);
+		oldDirX = game->plyr->dirX;
+		game->plyr->dirX = game->plyr->dirX * cos(game->plyr->rotSpeed) - game->plyr->dirY * sin(game->plyr->rotSpeed);
+		game->plyr->dirY = oldDirX * sin(game->plyr->rotSpeed) + game->plyr->dirY * cos(game->plyr->rotSpeed);
+		oldPlaneX = game->plyr->plnX;
+		game->plyr->plnX = game->plyr->plnX * cos(game->plyr->rotSpeed) - game->plyr->plnY * sin(game->plyr->rotSpeed);
+		game->plyr->plnY = oldPlaneX * sin(game->plyr->rotSpeed) + game->plyr->plnY * cos(game->plyr->rotSpeed);
 	}
 	if (key == XK_w || key == XK_Up)
 	{
-		if(game->map[(int)game->player->posY][(int)(game->player->posX + game->player->dirX * game->player->moveSpeed)] != '1')
-			game->player->posX+= game->player->dirX * game->player->moveSpeed;
-		if(game->map[(int)(game->player->posY + game->player->dirY * game->player->moveSpeed)][(int)game->player->posX] != '1')
-			game->player->posY+= game->player->dirY * game->player->moveSpeed;
+		if(game->map[(int)game->plyr->posY][(int)(game->plyr->posX + game->plyr->dirX * game->plyr->moveSpeed)] != '1')
+			game->plyr->posX+= game->plyr->dirX * game->plyr->moveSpeed;
+		if(game->map[(int)(game->plyr->posY + game->plyr->dirY * game->plyr->moveSpeed)][(int)game->plyr->posX] != '1')
+			game->plyr->posY+= game->plyr->dirY * game->plyr->moveSpeed;
 	}
 	if (key == XK_d || key == XK_Right)
 	{
-		oldDirX = game->player->dirX;
-		game->player->dirX = game->player->dirX * cos(-game->player->rotSpeed) - game->player->dirY * sin(-game->player->rotSpeed);
-		game->player->dirY = oldDirX * sin(-game->player->rotSpeed) + game->player->dirY * cos(-game->player->rotSpeed);
-		oldPlaneX = game->player->plnX;
-		game->player->plnX = game->player->plnX * cos(-game->player->rotSpeed) - game->player->plnY * sin(-game->player->rotSpeed);
-		game->player->plnY = oldPlaneX * sin(-game->player->rotSpeed) + game->player->plnY * cos(-game->player->rotSpeed);
+		oldDirX = game->plyr->dirX;
+		game->plyr->dirX = game->plyr->dirX * cos(-game->plyr->rotSpeed) - game->plyr->dirY * sin(-game->plyr->rotSpeed);
+		game->plyr->dirY = oldDirX * sin(-game->plyr->rotSpeed) + game->plyr->dirY * cos(-game->plyr->rotSpeed);
+		oldPlaneX = game->plyr->plnX;
+		game->plyr->plnX = game->plyr->plnX * cos(-game->plyr->rotSpeed) - game->plyr->plnY * sin(-game->plyr->rotSpeed);
+		game->plyr->plnY = oldPlaneX * sin(-game->plyr->rotSpeed) + game->plyr->plnY * cos(-game->plyr->rotSpeed);
 	}
 	if (key == XK_s || key == XK_Down)
 	{
 
-		if(game->map[(int)game->player->posY][(int)(game->player->posX - game->player->dirX * game->player->moveSpeed)] != '1')
-			game->player->posX -= game->player->dirX * game->player->moveSpeed;
-		if(game->map[(int)(game->player->posY - game->player->dirY * game->player->moveSpeed)][(int)game->player->posX] != '1')
-			game->player->posY -= game->player->dirY * game->player->moveSpeed;
+		if(game->map[(int)game->plyr->posY][(int)(game->plyr->posX - game->plyr->dirX * game->plyr->moveSpeed)] != '1')
+			game->plyr->posX -= game->plyr->dirX * game->plyr->moveSpeed;
+		if(game->map[(int)(game->plyr->posY - game->plyr->dirY * game->plyr->moveSpeed)][(int)game->plyr->posX] != '1')
+			game->plyr->posY -= game->plyr->dirY * game->plyr->moveSpeed;
 	}
 	if (key == XK_Escape)
 		ft_quit_game();
