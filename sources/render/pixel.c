@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 11:51:15 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/26 11:21:54 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/26 12:03:46 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void ft_custom_pixel_put(t_image *img, int x, int y, unsigned int color)
 	int offset;
 	if(x >= 0 && x < 1280 && y >= 0 && y < 720)
 	{
-		offset = (img->line_len * y) + (x * (img->bits_per_pixel / 8));
-		*((unsigned int *)(offset + img->img_pixels_ptr)) = color;
+		offset = (img->line_len * y) + (x * (img->bpp / 8));
+		*((unsigned int *)(offset + img->pxl_ptr)) = color;
 	}
 }
 

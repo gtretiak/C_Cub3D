@@ -6,29 +6,29 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:20:27 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/26 11:31:00 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/26 11:57:15 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../render.h"
 
-int is_player(char c)
+int	is_player(char c)
 {
 	return (c == 'N' || c == 'E' || c == 'S' || c == 'W');
 }
 
-void get_player_pos(t_player *plyr, char **map)
+void	get_player_pos(t_player *plyr, char **map)
 {
-	int y;
-	int x;
+	int	y;
+	int	x;
 
 	y = 0;
-	while(map[y] != NULL)
+	while (map[y] != NULL)
 	{
 		x = 0;
-		while(map[y][x] != '\0')
+		while (map[y][x] != '\0')
 		{
-			if(is_player(map[y][x]))
+			if (is_player(map[y][x]))
 			{
 				plyr->posX = x + 0.5;
 				plyr->posY = y + 0.5;
@@ -40,11 +40,11 @@ void get_player_pos(t_player *plyr, char **map)
 	}
 }
 
-void ft_init_player(t_game *game, char **map)
+void	ft_init_player(t_game *game, char **map)
 {
 	game->plyr = malloc(sizeof(t_player));
 	if (!game->plyr)
-		return;
+		return ;
 	get_player_pos(game->plyr, map);
 	game->plyr->dirX = -1;
 	game->plyr->dirY = 0;

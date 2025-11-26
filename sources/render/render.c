@@ -6,31 +6,11 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:52:17 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/26 11:21:54 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/26 12:03:33 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./render.h"
-
-void ft_calc_speed(t_game *game)
-{
-	double frameTime;
-	game->prev_time = game->time;
-	game->time = ft_get_current_time();
-	frameTime = (game->time - game->prev_time) / 1000.0;
-
-	if((game->time - game->prev_time) < 2)
-	{
-		game->plyr->moveSpeed = 0.05;
-		game->plyr->rotSpeed = 0.03;
-		return ;
-	}
-
-	game->plyr->moveSpeed = frameTime * 5.0;
-	game->plyr->rotSpeed = frameTime * 3.0;
-	printf("calc_speed: prev=%.0f, time=%.0f, frameTime=%.4f, moveSpeed=%.4f\n",
-		game->prev_time, game->time, frameTime, game->plyr->moveSpeed);
-}
 
 int raycasting(t_game *game)
 {
@@ -163,8 +143,8 @@ int raycasting(t_game *game)
 		{
 			int texY = (int) texPos & (64 - 1);
 			texPos += step;
-			int offset = (game->textures[texnum]->line_len * texY) + (texX * (game->textures[texnum]->bits_per_pixel / 8));
-			unsigned int color = *(unsigned int *)(game->textures[texnum]->img_pixels_ptr + offset);
+			int offset = (game->txtr[texnum]->line_len * texY) + (texX * (game->txtr[texnum]->bpp / 8));
+			unsigned int color = *(unsigned int *)(game->txtr[texnum]->pxl_ptr + offset);
 
 
 

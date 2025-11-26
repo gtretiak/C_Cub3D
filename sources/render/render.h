@@ -25,11 +25,16 @@ typedef struct s_player
 typedef struct s_image
 {
 	void *img_ptr;
-	char *img_pixels_ptr;
-	int bits_per_pixel;
-	int line_len;
+	char *pxl_ptr;
+	int bpp;
 	int endian;
+	int line_len;
 }	t_image;
+
+typedef struct s_render_vars
+{
+
+}	t_render_vars;
 
 typedef struct s_game
 {
@@ -37,7 +42,7 @@ typedef struct s_game
 	double			time;
 	double			prev_time;
 	t_image 		*mlx;
-	t_image 		*textures[4];
+	t_image 		*txtr[4];
 	t_player		*plyr;
 	unsigned int	*colors;
 	void			*mlx_ptr;
@@ -52,6 +57,7 @@ int		ft_quit_game(void);
 void	ft_init_player(t_game *game, char **map);
 void	ft_init_struct(t_game *game,char **map, char **textures, unsigned int **colors);
 void	ft_custom_pixel_put(t_image *img, int x, int y, unsigned int color);
+void	ft_calc_speed(t_game *game);
 void	ft_draw_column(int x, int drawStart, int drawEnd, t_game *game, unsigned int wall);
 
 #endif
