@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:52:17 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/26 14:23:01 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/26 15:10:30 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,8 @@ int raycasting(t_game *game)
 		ft_calc_speed(game);
 		x++;
 	}
+	ft_handle_movement(game);
+	ft_rotate(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->mlx->img_ptr, 0, 0);
 	return 0;
 }
@@ -165,6 +167,7 @@ void ft_render(char **map, char **textures, unsigned int **colors)
 	ft_bzero(&game, sizeof(t_game));
 	ft_init_struct(&game, map, textures, colors);
 	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, &ft_keypress, &game);
+	mlx_hook(game.win_ptr, KeyRelease, KeyReleaseMask, &ft_keyrelease, &game);
 	mlx_hook(game.win_ptr, DestroyNotify,
 		StructureNotifyMask, &ft_quit_game, &game);
 	mlx_loop_hook(game.mlx_ptr, raycasting, &game);

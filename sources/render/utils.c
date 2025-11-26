@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 14:48:43 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/26 12:03:41 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/26 15:36:30 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void ft_calc_speed(t_game *game)
 
 	if((game->time - game->prev_time) < 2)
 	{
-		game->plyr->moveSpeed = 0.05;
-		game->plyr->rotSpeed = 0.03;
+		game->plyr->moveSpeed = 0.005;
+		game->plyr->rotSpeed = 0.003;
 		return ;
 	}
 

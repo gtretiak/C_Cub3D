@@ -3,7 +3,8 @@ CFLAGS = -Wall -Wextra -Werror
 
 NAME = cub3d
 
-SRC = move.c \
+SRC = keys.c \
+	move.c \
 	pixel.c \
 	render.c \
 	utils.c \

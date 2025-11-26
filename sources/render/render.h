@@ -44,6 +44,9 @@ typedef struct s_game
 	t_image 		*mlx;
 	t_image 		*txtr[4];
 	t_player		*plyr;
+	int				move_x;
+	int				move_y;
+	int				rotate;
 	unsigned int	*colors;
 	void			*mlx_ptr;
 	void			*win_ptr;
@@ -53,11 +56,15 @@ typedef struct s_game
 
 double	ft_get_current_time(void);
 int		ft_keypress(int key, t_game *game);
+int		ft_keyrelease(int key, t_game *game);
 int		ft_quit_game(void);
 void	ft_init_player(t_game *game, char **map);
 void	ft_init_struct(t_game *game,char **map, char **textures, unsigned int **colors);
 void	ft_custom_pixel_put(t_image *img, int x, int y, unsigned int color);
+void	ft_handle_movement(t_game *game);
 void	ft_calc_speed(t_game *game);
 void	ft_draw_column(int x, int drawStart, int drawEnd, t_game *game, unsigned int wall);
+void	ft_rotate(t_game *game);
+
 
 #endif
