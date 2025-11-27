@@ -6,28 +6,27 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 14:48:43 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/27 09:41:56 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:30:26 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./render.h"
 
-void ft_calc_speed(t_game *game)
+void	ft_calc_speed(t_game *game)
 {
-	double frameTime;
+	double	frametime;
+
 	game->prev_time = game->time;
 	game->time = ft_get_current_time();
-	frameTime = (game->time - game->prev_time) / 1000.0;
-
-	if((game->time - game->prev_time) < 2)
+	frametime = (game->time - game->prev_time) / 1000.0;
+	if ((game->time - game->prev_time) < 2)
 	{
 		game->plyr->move_speed = 0.005;
 		game->plyr->rot_speed = 0.003;
 		return ;
 	}
-
-	game->plyr->move_speed = frameTime * 5.0;
-	game->plyr->rot_speed = frameTime * 3.0;
+	game->plyr->move_speed = frametime * 5.0;
+	game->plyr->rot_speed = frametime * 3.0;
 }
 
 int	ft_quit_game(void)

@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 09:42:23 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/27 11:09:31 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:41:33 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_ray_vars
 	int		wall_height;
 	int		draw_start;
 	int		draw_end;
-	
+
 	int		tex_num;
 	int		tex_x;
 	int		tex_y;
@@ -96,11 +96,11 @@ int		ft_quit_game(void);
 void	ft_init_player(t_game *game, char **map);
 void	ft_init_struct(t_game *game, char **map,
 			char **textures, unsigned int **colors);
-void	ft_custom_pixel_put(t_image *img, int x, int y, unsigned int color);
+void	ft_draw_image(t_game *game, t_ray_vars *ray);
+void	ft_calc_texture(t_game *game, t_ray_vars *ray);
 void	ft_handle_movement(t_game *game);
 void	ft_calc_speed(t_game *game);
-void	ft_draw_column(int x, int drawStart, int drawEnd,
-			t_game *game, unsigned int wall);
 void	ft_rotate(t_game *game);
+int		ft_raycast(t_game *game);
 
 #endif

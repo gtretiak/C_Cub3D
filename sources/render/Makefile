@@ -3,13 +3,16 @@ CFLAGS = -Wall -Wextra -Werror
 
 NAME = cub3d
 
-SRC = keys.c \
+SRC = draw.c \
+	keys.c \
 	move.c \
-	pixel.c \
-	render.c \
-	utils.c \
+	raycast.c\
+	render.c\
+	texture.c\
+	utils.c\
 	memory/init.c \
 	memory/player.c \
+
 
 OBJ = $(SRC:.c=.o)
 
