@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:40:28 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/27 11:45:56 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:53:12 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ void	get_texture_side(t_ray_vars *ray)
 	if (ray->side == 0)
 	{
 		if (ray->ray_dir_x > 0)
-			ray->tex_num = 1;
-		else
 			ray->tex_num = 3;
+		else
+			ray->tex_num = 1;
 	}
 	else
 	{
 		if (ray->ray_dir_y > 0)
-			ray->tex_num = 2;
-		else
 			ray->tex_num = 0;
+		else
+			ray->tex_num = 2;
 	}
 }
 
