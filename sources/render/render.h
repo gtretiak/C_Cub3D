@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 09:42:23 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/27 11:41:33 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/27 13:40:40 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,12 @@ typedef struct s_game
 	unsigned int	*colors;
 	void			*mlx_ptr;
 	void			*win_ptr;
-	void			*xpms[4];
-
 }	t_game;
 
 double	ft_get_current_time(void);
 int		ft_keypress(int key, t_game *game);
 int		ft_keyrelease(int key, t_game *game);
-int		ft_quit_game(void);
+int		ft_quit_game(t_game *game);
 void	ft_init_player(t_game *game, char **map);
 void	ft_init_struct(t_game *game, char **map,
 			char **textures, unsigned int **colors);
@@ -102,5 +100,6 @@ void	ft_handle_movement(t_game *game);
 void	ft_calc_speed(t_game *game);
 void	ft_rotate(t_game *game);
 int		ft_raycast(t_game *game);
+void	ft_free_game(t_game *game);
 
 #endif

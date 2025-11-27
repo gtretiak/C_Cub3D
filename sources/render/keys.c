@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 15:10:43 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/27 11:36:23 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/27 13:42:32 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ int	ft_keypress(int key, t_game *game)
 	if (key == XK_a)
 		game->move_x = -1;
 	if (key == XK_Escape)
-		ft_quit_game();
+		ft_quit_game(game);
 	return (0);
 }

@@ -10,6 +10,7 @@ SRC = draw.c \
 	render.c\
 	texture.c\
 	utils.c\
+	memory/free.c \
 	memory/init.c \
 	memory/player.c \
 
