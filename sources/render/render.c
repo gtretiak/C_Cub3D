@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:52:17 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/27 11:11:54 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:28:44 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,20 @@ void find_wall(t_game *game, t_ray_vars *ray)
 
 void calc_texture(t_game *game, t_ray_vars *ray)
 {
-	ray->tex_num = game->map[ray->map_y][ray->map_x] - '1';
+	if (ray->side == 0)
+    {
+        if (ray->ray_dir_x > 0)
+            ray->tex_num = 1;
+        else
+            ray->tex_num = 3;
+    }
+    else
+    {
+        if (ray->ray_dir_y > 0)
+            ray->tex_num = 2;
+        else
+            ray->tex_num = 0;
+    }
 	if(ray->side == 0)
 		ray->wall_x = game->plyr->pos_y + ray->perp_wall_dist * ray->ray_dir_y;
 	else
@@ -176,7 +189,7 @@ int main(void)
 	unsigned int color_bot[] = {75, 75, 75};
     unsigned int color_top[] = {50, 50, 255};
     unsigned int *colors[] = {color_bot, color_top};
-	char *textures[] = {"./a.xpm","./wall.xpm","./a.xpm","./wall.xpm"};
+	char *textures[] = {"./n.xpm","./e.xpm","./s.xpm","./w.xpm"};
 	char *map[] = {
 		"1111111111111111111111111",
 		"1000000000110000000000001",
