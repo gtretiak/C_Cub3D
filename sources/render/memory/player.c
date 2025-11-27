@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:20:27 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/26 14:23:52 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/27 09:41:56 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ char	get_player_pos(t_player *plyr, char **map)
 		{
 			if (is_player(map[y][x]))
 			{
-				plyr->posX = x + 0.5;
-				plyr->posY = y + 0.5;
+				plyr->pos_x = x + 0.5;
+				plyr->pos_y = y + 0.5;
 				return (map[y][x]);
 			}
 			x++;
@@ -48,23 +48,23 @@ void	set_plane(t_player *plyr, char **map)
 	c = get_player_pos(plyr, map);
 	if (c == 'N')
 	{
-		plyr->plnX = 0.66;
-		plyr->plnY = 0;
+		plyr->plane_x = 0.66;
+		plyr->plane_y = 0;
 	}
 	else if (c == 'E')
 	{
-		plyr->plnX = 0;
-		plyr->plnY = 0.66;
+		plyr->plane_x = 0;
+		plyr->plane_y = 0.66;
 	}
 	else if (c == 'S')
 	{
-		plyr->plnX = -0.66;
-		plyr->plnY = 0;
+		plyr->plane_x = -0.66;
+		plyr->plane_y = 0;
 	}
 	else if (c == 'W')
 	{
-		plyr->plnX = 0;
-		plyr->plnY = -0.66;
+		plyr->plane_x = 0;
+		plyr->plane_y = -0.66;
 	}
 }
 
@@ -75,23 +75,23 @@ void	set_direction(t_player *plyr, char **map)
 	c = get_player_pos(plyr, map);
 	if (c == 'N')
 	{
-		plyr->dirX = 0;
-		plyr->dirY = -1;
+		plyr->dir_x = 0;
+		plyr->dir_y = -1;
 	}
 	else if (c == 'E')
 	{
-		plyr->dirX = -1;
-		plyr->dirY = 0;
+		plyr->dir_x = -1;
+		plyr->dir_y = 0;
 	}
 	else if (c == 'S')
 	{
-		plyr->dirX = 0;
-		plyr->dirY = 1;
+		plyr->dir_x = 0;
+		plyr->dir_y = 1;
 	}
 	else if (c == 'W')
 	{
-		plyr->dirX = 1;
-		plyr->dirY = 0;
+		plyr->dir_x = 1;
+		plyr->dir_y = 0;
 	}
 }
 
@@ -103,6 +103,6 @@ void	ft_init_player(t_game *game, char **map)
 	get_player_pos(game->plyr, map);
 	set_direction(game->plyr, map);
 	set_plane(game->plyr, map);
-	game->plyr->moveSpeed = 0.05;
-	game->plyr->rotSpeed = 0.03;
+	game->plyr->move_speed = 0.05;
+	game->plyr->rot_speed = 0.03;
 }

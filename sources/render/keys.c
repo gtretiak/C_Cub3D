@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 15:10:43 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/26 15:28:04 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/27 09:12:02 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ int	ft_keypress(int key, t_game *game)
 {
 	if (key == XK_w || key == XK_Up)
 		game->move_y = 1;
-	else if (key == XK_s || key == XK_Down)
+	if (key == XK_s || key == XK_Down)
 		game->move_y = -1;
 	if (key == XK_Right)
 		game->rotate = 1;
-	else if (key == XK_Left)
+	if (key == XK_Left)
 		game->rotate = -1;
 	if (key == XK_d)
 		game->move_x = 1;
-	else if (key == XK_a)
+	if (key == XK_a)
 		game->move_x = -1;
 	if (key == XK_Escape)
 		ft_quit_game();

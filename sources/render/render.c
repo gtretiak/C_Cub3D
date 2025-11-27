@@ -6,158 +6,154 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:52:17 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/26 15:10:30 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/11/27 11:11:54 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./render.h"
 
-int raycasting(t_game *game)
+void prep_dda(t_game *game, t_ray_vars *ray)
 {
-	int x;
-	double cameraX;
-	double rayDirX;
-	double rayDirY;
-	double sideDistX;
-	double sideDistY;
-	double deltaDistX;
-	double deltaDistY;
-	double perpWallDist;
-	int mapY;
-	int mapX;
-	int stepX;
-	int stepY;
-	int hit;
-	int side;
-	int lineHeight;
-	int drawStart;
-	int drawEnd;
-
-	x = 0;
-	while(x < RESW)
+	if(ray->ray_dir_x < 0)
 	{
-		cameraX = 2 * x / (double) RESW - 1;
+		ray->step_x = -1;
+		ray->side_dist_x = (game->plyr->pos_x - ray->map_x) * ray->delta_dist_x;
+	}
+	else
+	{
+		ray->step_x = 1;
+		ray->side_dist_x = (ray->map_x + 1.0 - game->plyr->pos_x) * ray->delta_dist_x;
+	}
+	if(ray->ray_dir_y < 0)
+	{
+		ray->step_y = -1;
+		ray->side_dist_y = (game->plyr->pos_y - ray->map_y) * ray->delta_dist_y;
+	}
+	else
+	{
+		ray->step_y = 1;
+		ray->side_dist_y = (ray->map_y + 1.0 - game->plyr->pos_y) * ray->delta_dist_y;
+	}
+}
 
-		rayDirX = game->plyr->dirX + game->plyr->plnX * cameraX;
-		rayDirY = game->plyr->dirY + game->plyr->plnY * cameraX;
+void init_vars(t_game *game, t_ray_vars *ray)
+{
+	ray->cam_x = 2 * ray->x / (double) RESW - 1;
+	ray->ray_dir_x = game->plyr->dir_x + game->plyr->plane_x * ray->cam_x;
+	ray->ray_dir_y = game->plyr->dir_y + game->plyr->plane_y * ray->cam_x;
+	ray->map_x = (int)game->plyr->pos_x;
+	ray->map_y = (int)game->plyr->pos_y;
+	ray->hit = 0;
+	if(ray->ray_dir_x == 0)
+		ray->delta_dist_x = 1e30;
+	else
+		ray->delta_dist_x = fabs(1/ray->ray_dir_x);
+	if(ray->ray_dir_y == 0)
+		ray->delta_dist_y = 1e30;
+	else
+		ray->delta_dist_y = fabs(1/ray->ray_dir_y);
+	prep_dda(game, ray);
+}
 
-		mapX = (int)game->plyr->posX;
-		mapY = (int)game->plyr->posY;
+void calc_distance(t_ray_vars *ray)
+{
+	if(ray->side == 0)
+		ray->perp_wall_dist = (ray->side_dist_x - ray->delta_dist_x);
+	else
+		ray->perp_wall_dist = (ray->side_dist_y - ray->delta_dist_y);
+	ray->wall_height = (int) (RESH / ray->perp_wall_dist);
+	ray->draw_start = -ray->wall_height / 2 + RESH / 2;
+	if(ray->draw_start < 0)
+		ray->draw_start = 0;
+	ray->draw_end = ray->wall_height / 2 + RESH / 2;
+	if(ray->draw_end >= RESH)
+		ray->draw_end = RESH - 1;
+}
 
-		hit = 0;
-
-		if(rayDirX == 0)
-			deltaDistX = 1e30;
+void find_wall(t_game *game, t_ray_vars *ray)
+{
+	while(ray->hit == 0)
+	{
+		if (ray->side_dist_x < ray->side_dist_y)
+		{
+			ray->side_dist_x += ray->delta_dist_x;
+			ray->map_x += ray->step_x;
+			ray->side=0;
+		}
 		else
-			deltaDistX = fabs(1/rayDirX);
-
-		if(rayDirY == 0)
-			deltaDistY = 1e30;
-		else
-			deltaDistY = fabs(1/rayDirY);
-
-		if(rayDirX < 0)
 		{
-			stepX = -1;
-			sideDistX = (game->plyr->posX - mapX) * deltaDistX;
-		} else
-		{
-			stepX = 1;
-			sideDistX = (mapX + 1.0 - game->plyr->posX) * deltaDistX;
+			ray->side_dist_y += ray->delta_dist_y;
+			ray->map_y += ray->step_y;
+			ray->side = 1;
 		}
-		if(rayDirY < 0)
-		{
-			stepY = -1;
-			sideDistY = (game->plyr->posY - mapY) * deltaDistY;
-		} else
-		{
-			stepY = 1;
-			sideDistY = (mapY + 1.0 - game->plyr->posY) * deltaDistY;
-		}
+		if(game->map[ray->map_y][ray->map_x] == '1')
+			ray->hit = 1;
+	}
+	calc_distance(ray);
+}
 
+void calc_texture(t_game *game, t_ray_vars *ray)
+{
+	ray->tex_num = game->map[ray->map_y][ray->map_x] - '1';
+	if(ray->side == 0)
+		ray->wall_x = game->plyr->pos_y + ray->perp_wall_dist * ray->ray_dir_y;
+	else
+		ray->wall_x = game->plyr->pos_x + ray->perp_wall_dist * ray->ray_dir_x;
+	ray->wall_x -= floor((ray->wall_x));
+	ray->tex_x = (int)(ray->wall_x * (double)64);
+	if(ray->side == 0 && ray->ray_dir_x > 0)
+		ray->tex_x = 64 - ray->tex_x - 1;
+	if(ray->side == 1 && ray->ray_dir_y < 0)
+		ray->tex_x = 64 - ray->tex_x - 1;
+	ray->tex_step = 1.0 * 64 / ray->wall_height;
+	ray->tex_pos = (ray->draw_start - RESH / 2 + ray->wall_height) * ray->tex_step;
+}
 
-		while(hit == 0)
-		{
-			if(sideDistX < sideDistY)
-			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
-				side = 0;
-			} else
-			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
-				side = 1;
-			}
-			if(game->map[mapY][mapX] == '1')
-				hit = 1;
-		}
+void draw_image(t_game *game, t_ray_vars *ray)
+{
+	int y;
+	int offset;
+	unsigned int txtr_pixel;
+	y = 0;
+	while(y <= RESH)
+	{
+		if (y > ray->draw_end)
+			ft_custom_pixel_put(game->mlx, ray->x, y, game->colors[0]);
+		else if (y < ray->draw_start)
+			ft_custom_pixel_put(game->mlx, ray->x, y, game->colors[1]);
+		y++;
+	}
+	y = ray->draw_start;
+	while (y <= ray->draw_end)
+	{
+		ray->tex_y = (int) ray->tex_pos & (64 - 1);
+		ray->tex_pos += ray->tex_step;
+		offset = (game->txtr[ray->tex_num]->line_len * ray->tex_y) + (ray-> tex_x * (game->txtr[ray->tex_num]->bpp) / 8);
+		txtr_pixel = *(unsigned int *)(game->txtr[ray->tex_num]->pxl_ptr + offset);
+		ft_custom_pixel_put(game->mlx, ray->x, y, txtr_pixel);
+		y++;
+	}
+}
 
-		if(side == 0)
-			perpWallDist = (sideDistX - deltaDistX);
-		else
-			perpWallDist = (sideDistY - deltaDistY);
+int ft_raycast(t_game *game)
+{
+	t_ray_vars	ray;
 
-		lineHeight = (int) (RESH / perpWallDist);
-
-		drawStart = -lineHeight / 2 + RESH / 2;
-		if(drawStart < 0)
-			drawStart = 0;
-
-		drawEnd = lineHeight / 2 + RESH / 2;
-		if(drawEnd >= RESH)
-			drawEnd = RESH - 1;
-
-		int texnum = game->map[mapY][mapX] - '1';
-		double wallX;
-
-		if(side == 0)
-			wallX = game->plyr->posY + perpWallDist * rayDirY;
-		else
-			wallX = game->plyr->posX + perpWallDist * rayDirX;
-		wallX -= floor((wallX));		int texX = (int)(wallX * (double)64);
-
-		if(side == 0 && rayDirX > 0)
-			texX = 64 - texX - 1;
-		if(side == 1 && rayDirY < 0)
-			texX = 64 - texX - 1;
-
-
-		// draw texture
-		double step = 1.0 * 64 / lineHeight;
-		double texPos = (drawStart - RESH / 2 + lineHeight) * step;
-		int y = drawStart;
-
-		//draw colors
-		int y2 = 0;
-		while (y2 <= RESH)
-		{
-			if (y2 < drawStart)
-				ft_custom_pixel_put(game->mlx, x, y2, game->colors[0]);
-			else if (y2 > drawEnd)
-				ft_custom_pixel_put(game->mlx, x, y2, game->colors[1]);
-			y2++;
-		}
-
-		while (y <= drawEnd)
-		{
-			int texY = (int) texPos & (64 - 1);
-			texPos += step;
-			int offset = (game->txtr[texnum]->line_len * texY) + (texX * (game->txtr[texnum]->bpp / 8));
-			unsigned int color = *(unsigned int *)(game->txtr[texnum]->pxl_ptr + offset);
-
-
-
-			ft_custom_pixel_put(game->mlx, x, y, color);
-			y++;
-		}
+	ray.x = 0;
+	while(ray.x < RESW)
+	{
+		init_vars(game, &ray);
+		find_wall(game, &ray);
+		calc_texture(game, &ray);
+		draw_image(game, &ray);
 		ft_calc_speed(game);
-		x++;
+		(ray.x)++;
 	}
 	ft_handle_movement(game);
 	ft_rotate(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win_ptr, game->mlx->img_ptr, 0, 0);
-	return 0;
+
+	return (0);
 }
 
 void ft_render(char **map, char **textures, unsigned int **colors)
@@ -170,16 +166,16 @@ void ft_render(char **map, char **textures, unsigned int **colors)
 	mlx_hook(game.win_ptr, KeyRelease, KeyReleaseMask, &ft_keyrelease, &game);
 	mlx_hook(game.win_ptr, DestroyNotify,
 		StructureNotifyMask, &ft_quit_game, &game);
-	mlx_loop_hook(game.mlx_ptr, raycasting, &game);
+	mlx_loop_hook(game.mlx_ptr, ft_raycast, &game);
 	mlx_loop(game.mlx_ptr);
 }
 
 int main(void)
 {
 	//! testing vars
-	unsigned int color_top[] = {75, 75, 75};
-    unsigned int color_bot[] = {50, 50, 255};
-    unsigned int *colors[] = {color_top, color_bot};
+	unsigned int color_bot[] = {75, 75, 75};
+    unsigned int color_top[] = {50, 50, 255};
+    unsigned int *colors[] = {color_bot, color_top};
 	char *textures[] = {"./a.xpm","./wall.xpm","./a.xpm","./wall.xpm"};
 	char *map[] = {
 		"1111111111111111111111111",
