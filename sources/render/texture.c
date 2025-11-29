@@ -44,6 +44,6 @@ void	ft_calc_texture(t_game *game, t_ray_vars *ray)
 	if (ray->side == 1 && ray->ray_dir_y < 0)
 		ray->tex_x = 64 - ray->tex_x - 1;
 	ray->tex_step = 1.0 * 64 / ray->wall_height;
-	ray->tex_pos = (ray->draw_start - RESH / 2 + ray->wall_height)
+	ray->tex_pos = (ray->draw_start - RESH / 2 + ray->wall_height / 2)
 		* ray->tex_step;
 }
