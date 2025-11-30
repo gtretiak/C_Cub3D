@@ -21,17 +21,17 @@
 #  define WIDTH 640
 # endif
 
-# define ARG_NUM "No/Many arguments. Should be \'./cub3D <map.cub>\'\n" // DONE!
-# define ARG_INV "Invalid file. Should be \'.cub\'.\n" // DONE!
+# define ARG_NUM "No/Many arguments. Should be \'./cub3D <map.cub>\'\n"
+# define ARG_INV "Invalid file. Should be \'.cub\'.\n"
 # define MAP_WALLS "Error.\nThe map must be closed/surrounded by walls.\n"
-# define MAP_PLAYER "Error.\nThere can't be more than one player.\n" // DONE!
-# define MAP_UNEXPECTED "Error.\nUnexpected char found in the map.\n" // DONE!
-# define MAP_GAPS "Error.\nThere can't be gaps (empty lines) in the map.\n" // DONE!
-# define MAP_LAST "Error.\nThe map must be the last element of *.cub.\n" // DONE!
-# define MAP_NO "Error.\nThere is no map in your cub file.\n" // DONE!
-# define ELEMENT_TYPE "Error.\nElement type is missing or doubled (invalid).\n" // DONE!
-# define ELEMENT_UNEXPECTED "Error.\nUnexpected char found in an element.\n" // DONE!
-# define ELEMENT_PATH "Error.\nTexture path/file is invalid/inaccessible.\n" // DONE!
+# define MAP_PLAYER "Error.\nThere can't be more than one player.\n"
+# define MAP_UNEXPECTED "Error.\nUnexpected char found in the map.\n"
+# define MAP_GAPS "Error.\nThere can't be gaps (empty lines) in the map.\n"
+# define MAP_LAST "Error.\nThe map must be the last element of *.cub.\n"
+# define MAP_NO "Error.\nThere is no map in your cub file.\n"
+# define ELEMENT_TYPE "Error.\nElement type is missing or doubled (invalid).\n"
+# define ELEMENT_UNEXPECTED "Error.\nUnexpected char found in an element.\n"
+# define ELEMENT_PATH "Error.\nTexture path/file is invalid/inaccessible.\n"
 
 typedef struct s_img
 {
@@ -63,6 +63,7 @@ typedef struct	s_flat
 
 typedef struct	s_wall
 {
+	bool	installed;
 	char	*path;
 }	t_wall;
 
@@ -76,6 +77,7 @@ typedef struct	s_scene
 	t_wall	east;
 	t_player	player;
 	char	**map;
+	int	map_height;
 	int	flag;
 }	t_scene;
 

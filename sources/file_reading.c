@@ -31,36 +31,35 @@ static int	parse_wall(char *line, t_wall *wall)
 
 static int	set_wall(char *line, t_scene *scene)
 {
-	static int	is_wall_built[4]; // NO[0], SO[1], EA[2], WE[3]
 	int	status;
 
 	if (line[0] == 'N' && line[1] && line[1] == 'O')
 	{
-		if (is_wall_built[0] == 1)
+		if (scene->north.installed)
 			return (returner(ELEMENT_TYPE));
 		status = parse_wall(line, &scene->north);
-		is_wall_built[0] = 1;
+		scene->north.installed = true;
 	}
 	else if (line[0] == 'S' && line[1] && line[1] == 'O')
 	{
-		if (is_wall_built[1] == 1)
+		if (scene->south.installed)
 			return (returner(ELEMENT_TYPE));
 		status = parse_wall(line, &scene->south);
-		is_wall_built[1] = 1;
+		scene->south.installed = true;
 	}
 	else if (line[0] == 'E' && line[1] && line[1] == 'A')
 	{
-		if (is_wall_built[2] == 1)
+		if (scene->east.installed)
 			return (returner(ELEMENT_TYPE));
 		status = parse_wall(line, &scene->east);
-		is_wall_built[2] = 1;
+		scene->east.installed = true;
 	}
 	else if (line[0] == 'W' && line[1] && line[1] == 'E')
 	{
-		if (is_wall_built[3] == 1)
+		if (scene->west.installed)
 			return (returner(ELEMENT_TYPE));
 		status = parse_wall(line, &scene->west);
-		is_wall_built[3] = 1;
+		scene->west.installed = true;
 	}
 	else
 		return (returner(ELEMENT_UNEXPECTED));
@@ -133,11 +132,9 @@ int	build_map(char *line, t_scene *scene)
 {
 	int	i;
 	short	j;
-	static int	row;
 
 	i = -1;
 	j = 0;
-	row = 0;
 	scene->flag = 1;
 	while (line[++i] != '\n' && line[i] != '\0')
 	{
@@ -150,7 +147,7 @@ int	build_map(char *line, t_scene *scene)
 				{
 					scene->player.direction = line[i];
 					scene->player.point.x = i;
-					scene->player.point.y = row;
+					scene->player.point.y = scene->map_height;
 					scene->player.on_position = true;
 				}
 				else
@@ -161,10 +158,10 @@ int	build_map(char *line, t_scene *scene)
 		else
 			return (returner(MAP_UNEXPECTED));
 	}
-	scene->map[row] = ft_strdup(line);
-	if (!scene->map[row])
+	scene->map[scene->map_height] = ft_strdup(line);
+	if (!scene->map[scene->map_height])
 		malloc_error();
-	*ft_strchr(scene->map[row], '\0') = line[i];
+	*ft_strchr(scene->map[scene->map_height], '\0') = line[i];
 	return (0);
 }
 
@@ -232,7 +229,7 @@ int	file_reading(char *file, t_scene *scene)
 			break ;
 		if (parse_scene(str, scene)) // might include just \n (empty)
 		{
-			//free(str);?
+			free(str);
 			str = get_next_line(fd, 2); // 2means freeing static tmp
 			free(str);
 			free_scene(scene);

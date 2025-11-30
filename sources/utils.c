@@ -16,16 +16,30 @@ void	init_scene(t_scene *scene)
 	scene->ceilling.rgb[0] = 0;
 	scene->ceilling.rgb[1] = 0;
 	scene->ceilling.rgb[2] = 0;
+	scene->north.installed = false;
+	scene->south.installed = false;
+	scene->west.installed = false;
+	scene->east.installed = false;
+	scene->map_height = 0;
 	scene->map = malloc(sizeof(char**));
 	if (!scene->map)
 		malloc_error();
 }
 
-//static void	free_map(char **map) or free array?
-
-void	free_scene(t_scene *scene) // TODO
+void	free_walls(t_scene *scene)
 {
-	//free_walls(scene); NO, SO, EA, WE?
-	//free_map(&scene->map); or free_array?
-	(void)scene; //tmp
+	if (scene->north.installed)
+		free(scene->north.path);
+	if (scene->south.installed)
+		free(scene->south.path);
+	if (scene->west.installed)
+		free(scene->west.path);
+	if (scene->east.installed)
+		free(scene->east.path);
+}
+
+void	free_scene(t_scene *scene)
+{
+	free_walls(scene);
+	ft_free_array_strn(scene->map, scene->map_height);
 }
