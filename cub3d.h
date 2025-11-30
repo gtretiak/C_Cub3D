@@ -21,17 +21,17 @@
 #  define WIDTH 640
 # endif
 
-# define ARG_NUM "No/Many arguments. Should be \'./cub3D <map.cub>\'\n"
-# define ARG_INV "Invalid file. Should be \'.cub\'.\n"
+# define ARG_NUM "No/Many arguments. Should be \'./cub3D <map.cub>\'\n" // DONE!
+# define ARG_INV "Invalid file. Should be \'.cub\'.\n" // DONE!
 # define MAP_WALLS "Error.\nThe map must be closed/surrounded by walls.\n"
-# define MAP_PLAYER "Error.\nThere can't be more than one player.\n"
-# define MAP_UNEXPECTED "Error.\nUnexpected char found in the map.\n"
-# define MAP_GAPS "Error.\nThere can't be gaps (empty lines) in the map.\n"
-# define MAP_LAST "Error.\nThe map must be the last element of *.cub.\n"
-# define MAP_NO "Error.\nThere is no map in your cub file.\n"
-# define ELEMENT_TYPE "Error.\nElement type is missing (invalid).\n"
-# define ELEMENT_UNEXPECTED "Error.\nUnexpected char found in an element.\n"
-# define ELEMENT_PATH "Error.\nTexture path/file is invalid/inaccessible.\n"
+# define MAP_PLAYER "Error.\nThere can't be more than one player.\n" // DONE!
+# define MAP_UNEXPECTED "Error.\nUnexpected char found in the map.\n" // DONE!
+# define MAP_GAPS "Error.\nThere can't be gaps (empty lines) in the map.\n" // DONE!
+# define MAP_LAST "Error.\nThe map must be the last element of *.cub.\n" // DONE!
+# define MAP_NO "Error.\nThere is no map in your cub file.\n" // DONE!
+# define ELEMENT_TYPE "Error.\nElement type is missing or doubled (invalid).\n" // DONE!
+# define ELEMENT_UNEXPECTED "Error.\nUnexpected char found in an element.\n" // DONE!
+# define ELEMENT_PATH "Error.\nTexture path/file is invalid/inaccessible.\n" // DONE!
 
 typedef struct s_img
 {
@@ -42,21 +42,31 @@ typedef struct s_img
 	int	endian;
 }	t_img;
 
-// structure for a player TODO
+typedef struct	s_point
+{
+	int	x;
+	int	y;
+}	t_point;
+
+typedef struct	s_player
+{
+	bool	on_position;
+	char	direction;
+	t_point	point;
+}	t_player;
 
 typedef struct	s_flat
 {
-	char	type;
-	char	*rgb;
+	int	rgb[3];
+	int	color;
 }	t_flat;
 
 typedef struct	s_wall
 {
-	char	*type;
 	char	*path;
 }	t_wall;
 
-typedef struct	s_map
+typedef struct	s_scene
 {
 	t_flat	floor;
 	t_flat	ceilling;
@@ -64,9 +74,10 @@ typedef struct	s_map
 	t_wall	south;
 	t_wall	west;
 	t_wall	east;
+	t_player	player;
 	char	**map;
 	int	flag;
-}	t_map;
+}	t_scene;
 
 typedef struct	s_mlx
 {
@@ -76,11 +87,12 @@ typedef struct	s_mlx
 }	t_mlx;
 
 void	args_checker(int argc, char **argv);
-void	file_reading(char *file, t_map *map);
-void	init_map(t_map *map);
-void	free_map(t_map *map);
-int	parse_map(char *line, t_map *map);
+int	file_reading(char *file, t_scene *scene);
+void	init_scene(t_scene *scene);
+void	free_scene(t_scene *scene);
+int	parse_scene(char *line, t_scene *scene);
 
+void	exiter(char *str);
 void	init_game(t_mlx *game);
 
 void	event_listening(t_mlx *game);

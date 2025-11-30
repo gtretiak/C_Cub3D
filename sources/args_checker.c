@@ -1,6 +1,6 @@
 #include "../cub3d.h"
 
-static void	exiter(char *str)
+void	exiter(char *str)
 {
 	if (str)
 		ft_printf("%s", str);

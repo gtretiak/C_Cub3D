@@ -6,116 +6,251 @@ static int	returner(char *str)
 	return (1);
 }
 
-static int	set_wall(char *line, t_map *map)
+static int	parse_wall(char *line, t_wall *wall)
 {
-	/*t_wall	curr;
+	short	i;
+	short	j;
+	size_t	len;
 
-	curr->path;
-	if (open(curr.path, O_RDONLY) < 0)
+	i = 2;
+	j = 0;
+	while (ft_isspace(line[i]))
+		i++;
+	len = ft_strlen(line);
+	wall->path = ft_substr(line, i, len - i);
+	if (!wall->path)
+		malloc_error();
+	*ft_strchr(wall->path, '\0') = line[len];
+	if (open(wall->path, O_RDONLY) < 0)
+	{
+		printf("no texture\n"); // tmp
 		return (returner(ELEMENT_PATH));
-	if (line[0] == 'N')
-		map->north = curr;
-	else if (line[0] == 'S')
-		map->south = curr;
-	else if (line[0] == 'W')
-		map->west = curr;
-	else
-		map->east = curr;
-	map->flag++;*/
-	(void)line;
-	(void)map;
+	}
 	return (0);
 }
 
-static int	set_flat(char *line, t_map *map)
+static int	set_wall(char *line, t_scene *scene)
 {
-	/*t_flat	curr;
-	short	i;
+	static int	is_wall_built[4]; // NO[0], SO[1], EA[2], WE[3]
+	int	status;
 
-	curr.type == line[0];
-	i = -1;
-	while (line[++i] != '\n' && line[i] != '\0')
+	if (line[0] == 'N' && line[1] && line[1] == 'O')
+	{
+		if (is_wall_built[0] == 1)
+			return (returner(ELEMENT_TYPE));
+		status = parse_wall(line, &scene->north);
+		is_wall_built[0] = 1;
+	}
+	else if (line[0] == 'S' && line[1] && line[1] == 'O')
+	{
+		if (is_wall_built[1] == 1)
+			return (returner(ELEMENT_TYPE));
+		status = parse_wall(line, &scene->south);
+		is_wall_built[1] = 1;
+	}
+	else if (line[0] == 'E' && line[1] && line[1] == 'A')
+	{
+		if (is_wall_built[2] == 1)
+			return (returner(ELEMENT_TYPE));
+		status = parse_wall(line, &scene->east);
+		is_wall_built[2] = 1;
+	}
+	else if (line[0] == 'W' && line[1] && line[1] == 'E')
+	{
+		if (is_wall_built[3] == 1)
+			return (returner(ELEMENT_TYPE));
+		status = parse_wall(line, &scene->west);
+		is_wall_built[3] = 1;
+	}
+	else
+		return (returner(ELEMENT_UNEXPECTED));
+	if (status)
+		return (1);
+	scene->flag++;
+	return (0);
+}
+
+static int	parse_color(char *line, t_flat *flat)
+{
+	short	counter;
+	short	i;
+	short	j;
+
+	counter = 1;
+	i = 1;
+	j = 0;
+	while (line[i] != '\n' && line[i] != '\0')
 	{
 		while (ft_isspace(line[i]))
 			i++;
-		//rgb, if unexpected - error and return 1
-		continue ;
+		if (!ft_isdigit(line[i]))
+			return (1);
+		while (ft_isdigit(line[i]))
+		{
+			if (counter > 3)
+				return (1);
+			flat->rgb[j] *= 10;
+			flat->rgb[j] += line[i++] - '0';
+			counter++;
+		}
+		if (line[i++] != ',' || ((line[i] == '\n' || line[i] == '\0') && j != 2))
+			return (1);
+		while (ft_isspace(line[i]))
+			i++;
+		j++;
 	}
-	if (line[0] == 'F')
-		map->floor = curr;
-	else
-		map->ceilling = curr;
-	map->flag++;*/
-	(void)line;
-	(void)map;
+	flat->color = (flat->rgb[0] << 16) | (flat->rgb[1] << 8) | flat->rgb[2];
 	return (0);
 }
 
-int	parse_map(char *line, t_map *map)
+static int	set_flat(char *line, t_scene *scene)
+{
+	static int	is_flat_built[2]; // floor[0], ceilling[1]
+	int	status;
+
+	if (line[0] == 'F')
+	{
+		if (is_flat_built[0] == 1)
+			return (returner(ELEMENT_TYPE));
+		is_flat_built[0] = 1;
+		status = parse_color(line, &scene->floor);
+		if (status)
+			return (returner(ELEMENT_UNEXPECTED));
+		scene->flag++;
+		return (0);
+	}
+	if (is_flat_built[1] == 1)
+		return (returner(ELEMENT_TYPE));
+	is_flat_built[1] = 1;
+	status = parse_color(line, &scene->ceilling);
+	if (status)
+		return (returner(ELEMENT_UNEXPECTED));
+	scene->flag++;
+	return (0);
+}
+
+int	build_map(char *line, t_scene *scene)
+{
+	int	i;
+	short	j;
+	static int	row;
+
+	i = -1;
+	j = 0;
+	row = 0;
+	scene->flag = 1;
+	while (line[++i] != '\n' && line[i] != '\0')
+	{
+		if (line[i] == 'N'
+			|| line[i] == 'S'
+			|| line[i] == 'W'
+			|| line[i] == 'E')
+			{
+				if (scene->player.on_position == false)
+				{
+					scene->player.direction = line[i];
+					scene->player.point.x = i;
+					scene->player.point.y = row;
+					scene->player.on_position = true;
+				}
+				else
+					return (returner(MAP_PLAYER));
+			}
+		else if (ft_isspace(line[i]) || line[i] == '1' || line[i] == '0')
+			continue ;
+		else
+			return (returner(MAP_UNEXPECTED));
+	}
+	scene->map[row] = ft_strdup(line);
+	if (!scene->map[row])
+		malloc_error();
+	*ft_strchr(scene->map[row], '\0') = line[i];
+	return (0);
+}
+
+int	parse_scene(char *line, t_scene *scene)
 {
 	short	i;
 
 	i = -1;
 	while (line[++i] != '\0')
 	{
+		if (line[i] == '1' || line[0] == '0')
+			return (build_map(line, scene));
+		if (ft_isspace(line[i]))
+		{
+			if (scene->flag == 0 || scene->flag == 1)
+				return (build_map(line, scene));
+			continue ;
+		}
 		if (line[i] == '\n')
 		{
-			if (i == 0 && map->flag == 1)
+			if (scene->flag == 1)
 				return (returner(MAP_GAPS));
 			return (0);
 		}	
-		if (ft_isspace(line[i]) && map->flag != 1)
-			continue ;
 		if (line[0] == 'F' || line[0] == 'C')
-			return (set_flat(line, map));
-		else if ((line[0] == 'N' && line[1] == 'O')
-			|| (line[0] == 'S' && line[1] == 'O')
-			|| (line[0] == 'W' && line[1] == 'E')
-			|| (line[0] == 'E' && line[1] == 'A'))
-			return (set_wall(line, map));
-		// test
-		//if (...)//error
-		//	return (1);
-/*
-TODO
-MAP_WALLS "Error.\nThe map must be closed/surrounded by walls.\n"
-MAP_PLAYER "Error.\nThere can't be more than one player.\n"
-MAP_UNEXPECTED "Error.\nUnexpected char found in the map.\n"
-MAP_LAST "Error.\nThe map must be the last element of *.cub.\n"
-MAP_NO "Error.\nThere is no map in your cub file.\n"
-ELEMENT_TYPE "Error.\nElement type is missing (invalid).\n"
-ELEMENT_UNEXPECTED "Error.\nUnexpected char found in an element.\n"
-*/
+			return (set_flat(line, scene));
+		if ((line[0] == 'N')
+			|| (line[0] == 'S')
+			|| (line[0] == 'W')
+			|| (line[0] == 'E'))
+			return (set_wall(line, scene));
+		if (scene->flag == 1)
+			return (returner(MAP_UNEXPECTED));
+		return (returner(ELEMENT_UNEXPECTED));
 	}
-	(void)line; // tmp
-	(void)map; //tmp
 	return (0);
 }
 
-void	file_reading(char *file, t_map *map)
+void	parse_map(char **map) // TODO
+{
+	// if (ft_isspace(current char))
+	// 	current char == '1'; or something else
+	//MAP_WALLS "Error.\nThe map must be closed/surrounded by walls.\n"
+   	(void)map;
+}
+
+int	file_reading(char *file, t_scene *scene)
 {
 	int	fd;
 	char	*str;
 
 	fd = open(file, O_RDONLY);
-	if (fd < 0)
+	if (fd < 0) // comment for debugging
 	{
 		perror("Error opening file");
 		exit(1);
 	}
-	init_map(map);
+	init_scene(scene);
 	while (1)
 	{
-		str = get_next_line(fd, 0); //recall workflow TODO
+		str = get_next_line(fd, 0); // zero means normal workflow (comment for debugging)
+		printf("Loop\n"); //tmp
+		//str = "1S01\n"; //uncomment for debugging
 		if (!str)
 			break ;
-		if (parse_map(str, map)) // might include just \n (empty)
+		if (parse_scene(str, scene)) // might include just \n (empty)
 		{
+			//free(str);?
+			str = get_next_line(fd, 2); // 2means freeing static tmp
 			free(str);
-			free_map(map);
+			free_scene(scene);
+			close(fd);
 			exit(1);
 		}
-		free(str);
+		free(str); //comment for debugging
 	}
+	printf("finished reading\n"); // tmp
+	if (scene->flag != 1)
+	{
+		free_scene(scene);
+		close(fd);
+		exiter(MAP_NO);
+	}
+	printf("I'm here\n"); // tmp
+	parse_map(scene->map);
 	close(fd);
+	printf("success\n");// tmp
+	return (0);
 }

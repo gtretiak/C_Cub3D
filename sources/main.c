@@ -3,9 +3,10 @@
 int	main(int argc, char **argv)
 {
 	t_mlx	game;
-	t_map	map;
-	args_checker(argc, argv);
-	file_reading(argv[1], &map);
+	t_scene	scene;
+	args_checker(argc, argv); // comment for debugging
+//	(void)argc; // uncomment for debugging
+	file_reading(argv[1], &scene);
 	init_game(&game);
 	rendering(&game);
 	mlx_loop(game.mlx);

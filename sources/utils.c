@@ -6,15 +6,26 @@ void	malloc_error()
 	exit(2);
 }
 
-void	init_map(t_map *map)
+void	init_scene(t_scene *scene)
 {
-	map->flag = -6;
-	map->map = malloc(sizeof(char**));
-	if (!map->map)
+	scene->flag = -6;
+	scene->player.on_position = false;
+	scene->floor.rgb[0] = 0;
+	scene->floor.rgb[1] = 0;
+	scene->floor.rgb[2] = 0;
+	scene->ceilling.rgb[0] = 0;
+	scene->ceilling.rgb[1] = 0;
+	scene->ceilling.rgb[2] = 0;
+	scene->map = malloc(sizeof(char**));
+	if (!scene->map)
 		malloc_error();
 }
 
-void	free_map(t_map *map)
+//static void	free_map(char **map) or free array?
+
+void	free_scene(t_scene *scene) // TODO
 {
-	(void)map; //tmp
+	//free_walls(scene); NO, SO, EA, WE?
+	//free_map(&scene->map); or free_array?
+	(void)scene; //tmp
 }
