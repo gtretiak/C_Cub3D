@@ -1,5 +1,5 @@
 #ifndef CUB3D_H
-#define CUB3D_H
+# define CUB3D_H
 
 # include <stdio.h>
 # include <fcntl.h>
@@ -37,51 +37,51 @@ typedef struct s_img
 {
 	void	*img;
 	char	*pixels;
-	int	bpp;
-	int	line_len;
-	int	endian;
+	int		bpp;
+	int		line_len;
+	int		endian;
 }	t_img;
 
-typedef struct	s_point
+typedef struct s_point
 {
 	int	x;
 	int	y;
 }	t_point;
 
-typedef struct	s_player
+typedef struct s_player
 {
 	bool	on_position;
 	char	direction;
 	t_point	point;
 }	t_player;
 
-typedef struct	s_flat
+typedef struct s_flat
 {
 	int	rgb[3];
 	int	color;
 }	t_flat;
 
-typedef struct	s_wall
+typedef struct s_wall
 {
 	bool	installed;
 	char	*path;
 }	t_wall;
 
-typedef struct	s_scene
+typedef struct s_scene
 {
-	t_flat	floor;
-	t_flat	ceilling;
-	t_wall	north;
-	t_wall	south;
-	t_wall	west;
-	t_wall	east;
+	t_flat		floor;
+	t_flat		ceilling;
+	t_wall		north;
+	t_wall		south;
+	t_wall		west;
+	t_wall		east;
 	t_player	player;
-	char	**map;
-	int	map_height;
-	int	flag;
+	char		**map;
+	int			map_height;
+	int			flag;
 }	t_scene;
 
-typedef struct	s_mlx
+typedef struct s_mlx
 {
 	void	*mlx;
 	void	*win;
@@ -89,22 +89,22 @@ typedef struct	s_mlx
 }	t_mlx;
 
 void	args_checker(int argc, char **argv);
-int	file_reading(char *file, t_scene *scene);
+int		file_reading(char *file, t_scene *scene);
 void	init_scene(t_scene *scene);
 void	free_scene(t_scene *scene);
-int	parse_scene(char *line, t_scene *scene);
+int		parse_scene(char *line, t_scene *scene);
 
 void	exiter(char *str);
 void	init_game(t_mlx *game);
 
 void	event_listening(t_mlx *game);
-int	handle_key(int keysym, t_mlx *game);
-int	key_movement(int keysym, t_mlx *game);
-int	key_control(int keysym, t_mlx *game);
-int	handle_mini(t_mlx *game);
-int	handle_action(t_mlx *game);
-int	handle_mouse(int button, int x, int y, t_mlx *game);
-int	handle_closing(t_mlx *game);
+int		handle_key(int keysym, t_mlx *game);
+int		key_movement(int keysym, t_mlx *game);
+int		key_control(int keysym, t_mlx *game);
+int		handle_mini(t_mlx *game);
+int		handle_action(t_mlx *game);
+int		handle_mouse(int button, int x, int y, t_mlx *game);
+int		handle_closing(t_mlx *game);
 
 void	rendering(t_mlx *game);
 void	put_pixels(int x, int y, t_img *img, int color);

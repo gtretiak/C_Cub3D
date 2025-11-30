@@ -4,7 +4,8 @@ void	event_listening(t_mlx *game)
 {
 	mlx_hook(game->win, KeyPress, KeyPressMask, handle_key, game);
 	mlx_mouse_hook(game->win, handle_mouse, game);
-	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, handle_closing, game);
+	mlx_hook(game->win, DestroyNotify, StructureNotifyMask,
+		handle_closing, game);
 }
 
 void	init_game(t_mlx *game)
@@ -27,6 +28,7 @@ void	init_game(t_mlx *game)
 		free(game->mlx);
 		malloc_error();
 	}
-	game->img.pixels = mlx_get_data_addr(game->img.img, &game->img.bpp, &game->img.line_len, &game->img.endian);
+	game->img.pixels = mlx_get_data_addr(game->img.img, &game->img.bpp,
+			&game->img.line_len, &game->img.endian);
 	event_listening(game);
 }

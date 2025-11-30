@@ -12,7 +12,7 @@ void	exiter(char *str)
 static void	cub_extension(char *map_path)
 {
 	char	*extension;
-	
+
 	extension = ft_strrchr(map_path, '.');
 	if (!extension || ft_strncmp(extension, ".cub", 4))
 		exiter(ARG_INV);

@@ -1,39 +1,5 @@
 #include "../cub3d.h"
 
-int	handle_closing(t_mlx *game)
-{
-	mlx_destroy_image(game->mlx, game->img.img);
-	mlx_destroy_window(game->mlx, game->win);
-	mlx_destroy_display(game->mlx);
-	free(game->mlx);
-	exit(0);
-}
-
-int	handle_action(t_mlx *game) //TODO
-{
-	(void)game;
-	return (0);
-}
-
-int	handle_mini(t_mlx *game) //TODO
-{
-	(void)game;
-	return (0);
-}
-
-int	key_control(int keysym, t_mlx *game)
-{
-	if (keysym == XK_Escape)
-		handle_closing(game);
-	if (keysym == XK_e)
-		handle_action(game); //TODO
-	if (keysym == XK_m)
-		handle_mini(game); //TODO
-	(void)keysym;
-	(void)game;
-	return (0);
-}
-
 int	key_movement(int keysym, t_mlx *game) //TODO
 {
 	/*if (keysym == XK_w)

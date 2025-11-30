@@ -8,7 +8,7 @@ LIBFT_DIR = C_libft/
 MLX = libmlx_Linux.a
 MLX_DIR = minilibx_linux/
 SRC_DIR = sources/
-SRC = main.c init.c events.c render.c utils.c args_checker.c file_reading.c 
+SRC = main.c init.c events_movements.c events_other.c render.c utils.c args_checker.c file_reading.c 
 OBJ = $(addprefix $(SRC_DIR), $(SRC:.c=.o))
 
 all: $(LIBFT) $(MLX) $(CUB_LIB) $(NAME)

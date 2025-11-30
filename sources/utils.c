@@ -1,6 +1,6 @@
 #include "../cub3d.h"
 
-void	malloc_error()
+void	malloc_error(void)
 {
 	perror("Malloc failed.\n");
 	exit(2);
@@ -10,18 +10,12 @@ void	init_scene(t_scene *scene)
 {
 	scene->flag = -6;
 	scene->player.on_position = false;
-	scene->floor.rgb[0] = 0;
-	scene->floor.rgb[1] = 0;
-	scene->floor.rgb[2] = 0;
-	scene->ceilling.rgb[0] = 0;
-	scene->ceilling.rgb[1] = 0;
-	scene->ceilling.rgb[2] = 0;
 	scene->north.installed = false;
 	scene->south.installed = false;
 	scene->west.installed = false;
 	scene->east.installed = false;
 	scene->map_height = 0;
-	scene->map = malloc(sizeof(char**));
+	scene->map = malloc(sizeof(char **));
 	if (!scene->map)
 		malloc_error();
 }
