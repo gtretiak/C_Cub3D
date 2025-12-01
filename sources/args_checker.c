@@ -1,14 +1,5 @@
 #include "../cub3d.h"
 
-void	exiter(char *str)
-{
-	if (str)
-		ft_printf("%s", str);
-	else
-		perror("Error:");
-	exit(1);
-}
-
 static void	cub_extension(char *map_path)
 {
 	char	*extension;

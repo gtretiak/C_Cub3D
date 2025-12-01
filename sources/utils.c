@@ -6,21 +6,22 @@ void	malloc_error(void)
 	exit(2);
 }
 
-void	init_scene(t_scene *scene)
+int	returner(char *str)
 {
-	scene->flag = -6;
-	scene->player.on_position = false;
-	scene->north.installed = false;
-	scene->south.installed = false;
-	scene->west.installed = false;
-	scene->east.installed = false;
-	scene->map_height = 0;
-	scene->map = malloc(sizeof(char **));
-	if (!scene->map)
-		malloc_error();
+	printf("%s", str);
+	return (1);
 }
 
-void	free_walls(t_scene *scene)
+void	exiter(char *str)
+{
+	if (str)
+		ft_printf("%s", str);
+	else
+		perror("Error:");
+	exit(1);
+}
+
+static void	free_walls(t_scene *scene)
 {
 	if (scene->north.installed)
 		free(scene->north.path);

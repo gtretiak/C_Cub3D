@@ -89,12 +89,14 @@ typedef struct s_mlx
 }	t_mlx;
 
 void	args_checker(int argc, char **argv);
-int		file_reading(char *file, t_scene *scene);
-void	init_scene(t_scene *scene);
-void	free_scene(t_scene *scene);
-int		parse_scene(char *line, t_scene *scene);
 
-void	exiter(char *str);
+int		file_reading(char *file, t_scene *scene);
+
+int		define_wall(char *line, t_scene *scene);
+int		set_flat(char *line, t_scene *scene);
+int		build_map(char *line, t_scene *scene);
+void	parse_map(char **map);
+
 void	init_game(t_mlx *game);
 
 void	event_listening(t_mlx *game);
@@ -109,5 +111,9 @@ int		handle_closing(t_mlx *game);
 void	rendering(t_mlx *game);
 void	put_pixels(int x, int y, t_img *img, int color);
 
+void	free_scene(t_scene *scene);
 void	malloc_error(void);
+void	exiter(char *str);
+int		returner(char *str);
+
 #endif
