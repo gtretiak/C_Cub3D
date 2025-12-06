@@ -6,7 +6,7 @@
 /*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 16:59:28 by gtretiak          #+#    #+#             */
-/*   Updated: 2025/12/06 16:59:49 by gtretiak         ###   ########.fr       */
+/*   Updated: 2025/12/06 17:30:10 by gtretiak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	parse_component(char *line, short *i, int *value)
 	return (0);
 }
 
-static int	parse_color(char *line, t_flat *flat) //returns 1 - bug!
+static int	parse_color(char *line, t_flat *flat)
 {
 	short	i;
 	short	j;
@@ -51,11 +51,8 @@ static int	parse_color(char *line, t_flat *flat) //returns 1 - bug!
 				return (1);
 			i++;
 		}
-		else if (j == 2)
-		{
-			if (line[i] != '\n' && line[i] != '\0')
-				return (1);
-		}
+		else if (j == 2 && line[i] != '\n' && line[i] != '\0')
+			return (1);
 		while (ft_isspace(line[i]))
 			i++;
 		j++;

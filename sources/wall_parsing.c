@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wall_parsing.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/06 17:06:55 by gtretiak          #+#    #+#             */
+/*   Updated: 2025/12/06 17:23:27 by gtretiak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
 
 static int	parse_wall(char *line, t_wall *wall)
@@ -12,14 +24,12 @@ static int	parse_wall(char *line, t_wall *wall)
 	wall->path = ft_substr(line, i, len - i);
 	if (!wall->path)
 		malloc_error();
-	//*ft_strchr(wall->path, '\0') = line[len]; //do I need it? TODO
-/*	if (open(wall->path, O_RDONLY) < 0) uncomment! TODO
-	{
-		printf("no texture\n"); // tmp
+	*ft_strchr(wall->path, '\n') = '\0';
+	if (open(wall->path, O_RDONLY) < 0)
 		return (returner(ELEMENT_PATH));
-	}*/
 	return (0);
 }
+//PS: do I need this? *ft_strchr(wall->path, '\0') = line[len];
 
 static int	set_wall(char *line, t_wall *wall, t_scene *scene)
 {

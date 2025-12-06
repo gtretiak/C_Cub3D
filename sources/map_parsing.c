@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_parsing.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/06 17:28:29 by gtretiak          #+#    #+#             */
+/*   Updated: 2025/12/06 17:28:30 by gtretiak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
 
 static int	handle_player(t_scene *scene, char c, int i)
@@ -40,11 +52,11 @@ int	build_map(char *line, t_scene *scene)
 	scene->map[scene->map_row] = ft_strdup(line);
 	if (!scene->map[scene->map_row])
 		malloc_error();
-	//*ft_strchr(scene->map[scene->map_row], '\0') = line[i];//Do I need it? TODO
-	//if line[i] = '\n', then my scene->map line isn't terminated?TODO
 	scene->map_row++;
 	return (0);
 }
+//	*ft_strchr(scene->map[scene->map_row], '\0') = line[i];//Do I need it?
+//	if line[i] = '\n', then my scene->map line isn't terminated?
 
 static int	flood_fill(t_scene *scene, int row, int col)
 {

@@ -6,7 +6,7 @@
 /*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 16:53:49 by gtretiak          #+#    #+#             */
-/*   Updated: 2025/12/06 16:55:43 by gtretiak         ###   ########.fr       */
+/*   Updated: 2025/12/06 17:10:15 by gtretiak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	reached_eof(int fd, t_scene *scene)
 }
 // PS: 0 means usual flow, whereas 2 means freeing static tmp
 
-static void	check_for_missing(t_scene *scene)
+static void	check_for_missing(int fd, t_scene *scene)
 {
 	bool	error;
 	char	*output;
@@ -110,7 +110,7 @@ int	file_reading(char *file, t_scene *scene)
 	}
 	while (!reached_eof(fd, scene))
 		;
-	check_for_missing(scene);
+	check_for_missing(fd, scene);
 	parse_map(fd, scene);
 	close(fd);
 	return (0);
