@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/06 16:57:33 by gtretiak          #+#    #+#             */
+/*   Updated: 2025/12/06 16:57:35 by gtretiak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
 
 void	malloc_error(void)
@@ -37,5 +49,5 @@ void	free_scene(t_scene *scene)
 {
 	free_walls(scene);
 	ft_free_array_str(scene->map);
-//	ft_free_array_strn(scene->map, scene->map_size.y);
 }
+//	PS: is ft_free_array_strn(scene->map, scene->map_size.y); better?

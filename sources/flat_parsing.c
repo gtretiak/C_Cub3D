@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   flat_parsing.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/06 16:59:28 by gtretiak          #+#    #+#             */
+/*   Updated: 2025/12/06 16:59:49 by gtretiak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
 
 static int	parse_component(char *line, short *i, int *value)
@@ -55,22 +67,21 @@ static int	parse_color(char *line, t_flat *flat) //returns 1 - bug!
 int	set_flat(char *line, t_scene *scene)
 {
 	int			status;
-	static int	is_flat_built[2];
-	//floor[0], ceilling[1]
+
 	if (line[0] == 'F')
 	{
-		if (is_flat_built[0] == 1)
+		if (scene->floor.installed == true)
 			return (returner(ELEMENT_TYPE));
-		is_flat_built[0] = 1;
+		scene->floor.installed = true;
 		status = parse_color(line, &scene->floor);
 		if (status)
 			return (returner(ELEMENT_UNEXPECTED));
 		scene->flag++;
 		return (0);
 	}
-	if (is_flat_built[1] == 1)
+	if (scene->ceilling.installed == true)
 		return (returner(ELEMENT_TYPE));
-	is_flat_built[1] = 1;
+	scene->ceilling.installed = true;
 	status = parse_color(line, &scene->ceilling);
 	if (status)
 		return (returner(ELEMENT_UNEXPECTED));

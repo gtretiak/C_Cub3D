@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/06 16:09:41 by gtretiak          #+#    #+#             */
+/*   Updated: 2025/12/06 16:50:57 by gtretiak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -23,9 +35,13 @@
 
 # define ARG_NUM "No/Many arguments. Should be \'./cub3D <map.cub>\'\n"
 # define ARG_INV "Invalid file. Should be \'.cub\'.\n"
-# define MAP_INVALID "Error.\nThe map is invalid (absent, not closed, start with unexpected char or contains gaps.\n"
+# define MAP_INV "Error.\nInvalid map: not closed/weird char/contains gaps.\n"
 # define MAP_WALLS "Error.\nThe map must be closed/surrounded by walls.\n"
 # define MAP_PLAYER "Error.\nThere can't be more than one player.\n"
+# define MAP_NO_PLAYER "Error.\nThere is no player.\n"
+# define MAP_NO_FLOOR "Error.\nThere is no floor.\n"
+# define MAP_NO_CEILLING "Error.\nThere is no ceilling.\n"
+# define MAP_NO_WALL "Error.\nOne or more walls are missing.\n"
 # define MAP_UNEXPECTED "Error.\nUnexpected char found in the map.\n"
 # define MAP_GAPS "Error.\nThere can't be gaps (empty lines) in the map.\n"
 # define MAP_LAST "Error.\nThe map must be the last element of *.cub.\n"
@@ -58,8 +74,9 @@ typedef struct s_player
 
 typedef struct s_flat
 {
-	int	rgb[3];
-	int	color;
+	bool	installed;
+	int		rgb[3];
+	int		color;
 }	t_flat;
 
 typedef struct s_wall

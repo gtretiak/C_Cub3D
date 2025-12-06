@@ -30,33 +30,33 @@
 
 ## 2) `.cub` File Reading and Pre-Parsing
 
-* [ ] Read the file line by line (preserve content)
-* [ ] Identify and collect **elements**: `NO`, `SO`, `WE`, `EA`, `F`, `C`
-* [ ] Delimit the **map block** (the last block in the file)
+* [x] Read the file line by line (preserve content)
+* [x] Identify and collect **elements**: `NO`, `SO`, `WE`, `EA`, `F`, `C`
+* [x] Delimit the **map block** (the last block in the file)
 * [x] Allow **empty lines** between elements (never inside the map)
-* [ ] Store map lines *exactly as they appear* (including spaces)
+* [x] Store map lines *exactly as they appear* (including spaces)
 
 **Acceptance**
 
 * [x] If lines exist after the map → error `map must be last`
-* [ ] If map block is empty → error `empty map block`
+* [x] If map block is empty → error `empty map block`
 
 ---
 
 ## 3) Element Validation (Textures and Colors)
 
-* [ ] Each identifier appears **exactly once**
+* [x] Each identifier appears **exactly once**
 * [x] `NO/SO/WE/EA` → *path* exists and is readable (XPM recommended)
-* [ ] `F r,g,b` and `C r,g,b`:
+* [x] `F r,g,b` and `C r,g,b`:
 
-  * [ ] Exactly 3 integers
-  * [ ] Each between 0–255
-  * [ ] No extra characters (e.g. double commas)
+  * [x] Exactly 3 integers
+  * [x] Each between 0–255
+  * [x] No extra characters (e.g. double commas)
 * [ ] Store `floor` and `ceiling` as `uint32_t ARGB`
 
 **Acceptance**
 
-* [ ] Duplicate →
+* [x] Duplicate →
 
   ```
   Error
@@ -68,28 +68,28 @@
   Error
   missing <ID>
   ```
-* [ ] Invalid path → `Error
+* [x] Invalid path → `Error
   texture path invalid`
-* [ ] Invalid color → `Error
+* [x] Invalid color → `Error
   invalid color`
 
 ---
 
 ## 4) Map Validation
 
-* [ ] Allowed characters: `0 1 N S E W` (and spaces)
-* [ ] Exactly **one** `N/S/E/W` (player spawn + orientation)
+* [x] Allowed characters: `0 1 N S E W` (and spaces)
+* [x] Exactly **one** `N/S/E/W` (player spawn + orientation)
 * [ ] Normalize width: pad with `' '` up to `max_width`
-* [ ] **Flood-fill** check to ensure the map is **closed by walls**:
+* [x] **Flood-fill** check to ensure the map is **closed by walls**:
 
   * [ ] Treat `' '` as *outside space*
-  * [ ] Start flood from non-wall border cells
-  * [ ] If flood touches `0` or spawn → `map not closed`
+  * [x] Start flood from non-wall border cells
+  * [x] If flood touches `0` or spawn → `map not closed`
 * [ ] Reject “holes” or empty lines *inside* the map block
 
 **Acceptance**
 
-* [ ] Specific errors:
+* [x] Specific errors:
   `invalid map char`,
   `multiple player spawns`,
   `missing player spawn`,

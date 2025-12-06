@@ -42,7 +42,7 @@ int	build_map(char *line, t_scene *scene)
 		malloc_error();
 	//*ft_strchr(scene->map[scene->map_row], '\0') = line[i];//Do I need it? TODO
 	//if line[i] = '\n', then my scene->map line isn't terminated?TODO
-	scene->map_size.y++;
+	scene->map_row++;
 	return (0);
 }
 

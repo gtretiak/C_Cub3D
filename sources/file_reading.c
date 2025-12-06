@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   file_reading.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/06 16:53:49 by gtretiak          #+#    #+#             */
+/*   Updated: 2025/12/06 16:55:43 by gtretiak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub3d.h"
 
 static int	identifiers_or_weird(char *line, t_scene *scene)
@@ -42,22 +54,47 @@ static int	reached_eof(int fd, t_scene *scene)
 {
 	char	*str;
 
-	str = get_next_line(fd, 0); //0 means usual flow (comment for debugging)
-	printf("Loop\n"); //tmp
-	//str = "1S01\n"; //uncomment for debugging
+	str = get_next_line(fd, 0);
 	if (!str)
 		return (1);
-	if (parse_scene(str, scene)) // might include just \n (empty)
+	if (parse_scene(str, scene))
 	{
 		free(str);
-		str = get_next_line(fd, 2); //2 means freeing static tmp
+		str = get_next_line(fd, 2);
 		free(str);
 		free_scene(scene);
 		close(fd);
 		exit(1);
 	}
-	free(str); //comment for debugging
+	free(str);
 	return (0);
+}
+// PS: 0 means usual flow, whereas 2 means freeing static tmp
+
+static void	check_for_missing(t_scene *scene)
+{
+	bool	error;
+	char	*output;
+
+	error = true;
+	if (scene->flag != 1)
+		output = MAP_NO;
+	else if (!scene->player.on_position)
+		output = MAP_NO_PLAYER;
+	else if (!scene->floor.installed)
+		output = MAP_NO_FLOOR;
+	else if (!scene->ceilling.installed)
+		output = MAP_NO_CEILLING;
+	else if (!scene->north.installed || !scene->south.installed
+		|| !scene->west.installed || !scene->east.installed)
+		output = MAP_NO_WALL;
+	else
+		error = false;
+	if (!error)
+		return ;
+	free_scene(scene);
+	close(fd);
+	exiter(output);
 }
 
 int	file_reading(char *file, t_scene *scene)
@@ -66,23 +103,16 @@ int	file_reading(char *file, t_scene *scene)
 
 	init_scene(file, scene);
 	fd = open(file, O_RDONLY);
-	if (fd < 0) // comment for debugging
+	if (fd < 0)
 	{
 		perror("Error opening file");
 		exit(1);
 	}
 	while (!reached_eof(fd, scene))
 		;
-	printf("finished reading\n"); // tmp
-	if (scene->flag != 1 || !scene->player.on_position)
-	{
-		free_scene(scene);
-		close(fd);
-		exiter(MAP_NO);
-	}
-	printf("I'm here\n"); // tmp
+	check_for_missing(scene);
 	parse_map(fd, scene);
 	close(fd);
-	printf("success\n");// tmp
 	return (0);
 }
+//	PS: might need scene->map[scene->map_row] = NULL; or not
