@@ -2,13 +2,14 @@
 
 int	main(int argc, char **argv)
 {
-	t_map	map;
-	if(argc != 2 || !args_checker(argv[1]))
-	{
-		ft_printf("Invalid argument\n");
-		return 1;
-	}
-	file_reading(argv[1], &map);
+	t_mlx	game;
+	t_scene	scene;
 
+	args_checker(argc, argv); // comment for debugging
+	//(void)argc; //uncomment for debugging
+	file_reading(argv[1], &scene);
+	init_game(&game);
+	rendering(&game);
+	mlx_loop(game.mlx);
 	exit(0);
 }

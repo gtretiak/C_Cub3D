@@ -1,5 +1,5 @@
 #ifndef CUB3D_H
-#define CUB3D_H
+# define CUB3D_H
 
 # include <stdio.h>
 # include <fcntl.h>
@@ -10,48 +10,110 @@
 # include <stdbool.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
-# include "lib/minilibx-linux/mlx.h"
-# include "lib/libft/libft.h"
+# include "minilibx_linux/mlx.h"
+# include "C_libft/libft.h"
 
+# ifndef HEIGHT
+#  define HEIGHT 800
+# endif
+
+# ifndef WIDTH
+#  define WIDTH 640
+# endif
+
+# define ARG_NUM "No/Many arguments. Should be \'./cub3D <map.cub>\'\n"
+# define ARG_INV "Invalid file. Should be \'.cub\'.\n"
 # define MAP_WALLS "Error.\nThe map must be closed/surrounded by walls.\n"
 # define MAP_PLAYER "Error.\nThere can't be more than one player.\n"
 # define MAP_UNEXPECTED "Error.\nUnexpected char found in the map.\n"
 # define MAP_GAPS "Error.\nThere can't be gaps (empty lines) in the map.\n"
 # define MAP_LAST "Error.\nThe map must be the last element of *.cub.\n"
 # define MAP_NO "Error.\nThere is no map in your cub file.\n"
-# define ELEMENT_TYPE "Error.\nElement type is missing (invalid).\n"
+# define ELEMENT_TYPE "Error.\nElement type is missing or doubled (invalid).\n"
 # define ELEMENT_UNEXPECTED "Error.\nUnexpected char found in an element.\n"
 # define ELEMENT_PATH "Error.\nTexture path/file is invalid/inaccessible.\n"
 
-
-typedef struct	s_flat
+typedef struct s_img
 {
-	char	type;
-	char	*rgb;
+	void	*img;
+	char	*pixels;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}	t_img;
+
+typedef struct s_point
+{
+	int	x;
+	int	y;
+}	t_point;
+
+typedef struct s_player
+{
+	bool	on_position;
+	char	direction;
+	t_point	point;
+}	t_player;
+
+typedef struct s_flat
+{
+	int	rgb[3];
+	int	color;
 }	t_flat;
 
-typedef struct	s_wall
+typedef struct s_wall
 {
-	char	*type;
+	bool	installed;
 	char	*path;
 }	t_wall;
 
-typedef struct	s_map
+typedef struct s_scene
 {
-	t_flat	floor;
-	t_flat	ceilling;
-	t_wall	north;
-	t_wall	south;
-	t_wall	west;
-	t_wall	east;
-	char	**map;
-	bool	flag;
-}	t_map;
+	t_flat		floor;
+	t_flat		ceilling;
+	t_wall		north;
+	t_wall		south;
+	t_wall		west;
+	t_wall		east;
+	t_player	player;
+	char		**map;
+	int			map_height;
+	int			flag;
+}	t_scene;
 
-bool args_checker(char *map_path);
-void	file_reading(char *file, t_map *map);
-int	parse_map(char *line, t_map *map);
+typedef struct s_mlx
+{
+	void	*mlx;
+	void	*win;
+	t_img	img;
+}	t_mlx;
 
+void	args_checker(int argc, char **argv);
 
+int		file_reading(char *file, t_scene *scene);
+
+int		define_wall(char *line, t_scene *scene);
+int		set_flat(char *line, t_scene *scene);
+int		build_map(char *line, t_scene *scene);
+void	parse_map(char **map);
+
+void	init_game(t_mlx *game);
+
+void	event_listening(t_mlx *game);
+int		handle_key(int keysym, t_mlx *game);
+int		key_movement(int keysym, t_mlx *game);
+int		key_control(int keysym, t_mlx *game);
+int		handle_mini(t_mlx *game);
+int		handle_action(t_mlx *game);
+int		handle_mouse(int button, int x, int y, t_mlx *game);
+int		handle_closing(t_mlx *game);
+
+void	rendering(t_mlx *game);
+void	put_pixels(int x, int y, t_img *img, int color);
+
+void	free_scene(t_scene *scene);
 void	malloc_error(void);
+void	exiter(char *str);
+int		returner(char *str);
+
 #endif
