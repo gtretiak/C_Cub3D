@@ -6,7 +6,7 @@
 /*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 17:27:17 by gtretiak          #+#    #+#             */
-/*   Updated: 2025/12/06 17:27:19 by gtretiak         ###   ########.fr       */
+/*   Updated: 2025/12/06 18:08:11 by gtretiak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 
 	args_checker(argc, argv);
 	file_reading(argv[1], &scene);
-	init_game(&game);
+	init_game(&game, &scene);
 	rendering(&game);
 	mlx_loop(game.mlx);
 	exit(0);

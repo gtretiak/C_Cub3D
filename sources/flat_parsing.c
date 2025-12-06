@@ -6,7 +6,7 @@
 /*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 16:59:28 by gtretiak          #+#    #+#             */
-/*   Updated: 2025/12/06 17:30:10 by gtretiak         ###   ########.fr       */
+/*   Updated: 2025/12/06 17:43:36 by gtretiak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,19 @@ int	set_flat(char *line, t_scene *scene)
 	{
 		if (scene->floor.installed == true)
 			return (returner(ELEMENT_TYPE));
-		scene->floor.installed = true;
 		status = parse_color(line, &scene->floor);
 		if (status)
 			return (returner(ELEMENT_UNEXPECTED));
+		scene->floor.installed = true;
 		scene->flag++;
 		return (0);
 	}
 	if (scene->ceilling.installed == true)
 		return (returner(ELEMENT_TYPE));
-	scene->ceilling.installed = true;
 	status = parse_color(line, &scene->ceilling);
 	if (status)
 		return (returner(ELEMENT_UNEXPECTED));
+	scene->ceilling.installed = true;
 	scene->flag++;
 	return (0);
 }

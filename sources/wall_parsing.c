@@ -6,13 +6,13 @@
 /*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 17:06:55 by gtretiak          #+#    #+#             */
-/*   Updated: 2025/12/06 17:23:27 by gtretiak         ###   ########.fr       */
+/*   Updated: 2025/12/06 18:11:49 by gtretiak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-static int	parse_wall(char *line, t_wall *wall)
+static int	parse_wall(char *line, t_wall *wall, t_scene *scene)
 {
 	short	i;
 	size_t	len;
@@ -23,7 +23,7 @@ static int	parse_wall(char *line, t_wall *wall)
 	len = ft_strlen(line);
 	wall->path = ft_substr(line, i, len - i);
 	if (!wall->path)
-		malloc_error();
+		malloc_error(scene);
 	*ft_strchr(wall->path, '\n') = '\0';
 	if (open(wall->path, O_RDONLY) < 0)
 		return (returner(ELEMENT_PATH));
@@ -37,10 +37,10 @@ static int	set_wall(char *line, t_wall *wall, t_scene *scene)
 
 	if (wall->installed)
 		return (returner(ELEMENT_TYPE));
-	status = parse_wall(line, wall);
-	wall->installed = true;
+	status = parse_wall(line, wall, scene);
 	if (status)
 		return (1);
+	wall->installed = true;
 	scene->flag++;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 17:28:29 by gtretiak          #+#    #+#             */
-/*   Updated: 2025/12/06 17:28:30 by gtretiak         ###   ########.fr       */
+/*   Updated: 2025/12/06 18:32:08 by gtretiak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int	build_map(char *line, t_scene *scene)
 		scene->map_size.x = l;
 	scene->map[scene->map_row] = ft_strdup(line);
 	if (!scene->map[scene->map_row])
-		malloc_error();
+		malloc_error(scene);
+	*ft_strchr(scene->map[scene->map_row], '\n') = '\0';
 	scene->map_row++;
 	return (0);
 }

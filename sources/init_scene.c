@@ -6,7 +6,7 @@
 /*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 16:56:07 by gtretiak          #+#    #+#             */
-/*   Updated: 2025/12/06 16:56:38 by gtretiak         ###   ########.fr       */
+/*   Updated: 2025/12/06 18:08:37 by gtretiak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	init_map(int fd, t_scene *scene)
 		exiter(MAP_INV);
 	scene->map = malloc(sizeof(char *) * (scene->map_size.y + 1));
 	if (!scene->map)
-		malloc_error();
+		malloc_error(scene);
 	i = 0;
 	while (i < scene->map_size.y + 1)
 		scene->map[i++] = NULL;

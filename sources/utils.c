@@ -6,15 +6,16 @@
 /*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 16:57:33 by gtretiak          #+#    #+#             */
-/*   Updated: 2025/12/06 16:57:35 by gtretiak         ###   ########.fr       */
+/*   Updated: 2025/12/06 18:09:28 by gtretiak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	malloc_error(void)
+void	malloc_error(t_scene *scene)
 {
 	perror("Malloc failed.\n");
+	free_scene(scene);
 	exit(2);
 }
 

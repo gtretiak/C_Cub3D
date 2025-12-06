@@ -6,7 +6,7 @@
 /*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 16:09:41 by gtretiak          #+#    #+#             */
-/*   Updated: 2025/12/06 16:50:57 by gtretiak         ###   ########.fr       */
+/*   Updated: 2025/12/06 18:11:31 by gtretiak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int		set_flat(char *line, t_scene *scene);
 int		build_map(char *line, t_scene *scene);
 void	parse_map(int fd, t_scene *scene);
 
-void	init_game(t_mlx *game);
+void	init_game(t_mlx *game, t_scene *scene);
 
 void	event_listening(t_mlx *game);
 int		handle_key(int keysym, t_mlx *game);
@@ -132,7 +132,7 @@ void	rendering(t_mlx *game);
 void	put_pixels(int x, int y, t_img *img, int color);
 
 void	free_scene(t_scene *scene);
-void	malloc_error(void);
+void	malloc_error(t_scene *scene);
 void	exiter(char *str);
 int		returner(char *str);
 
