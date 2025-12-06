@@ -6,7 +6,7 @@ static int	handle_player(t_scene *scene, char c, int i)
 		return (returner(MAP_PLAYER));
 	scene->player.direction = c;
 	scene->player.point.x = i;
-	scene->player.point.y = scene->map_height;
+	scene->player.point.y = scene->map_row;
 	scene->player.on_position = true;
 	return (0);
 }
@@ -24,6 +24,7 @@ static int	char_processing(char c, t_scene *scene, int i)
 int	build_map(char *line, t_scene *scene)
 {
 	int		i;
+	int		l;
 
 	i = 0;
 	scene->flag = 1;
@@ -33,18 +34,44 @@ int	build_map(char *line, t_scene *scene)
 			return (1);
 		i++;
 	}
-	scene->map[scene->map_height] = ft_strdup(line);
-	if (!scene->map[scene->map_height])
+	l = ft_strlen(line);
+	if (l > scene->map_size.x)
+		scene->map_size.x = l;
+	scene->map[scene->map_row] = ft_strdup(line);
+	if (!scene->map[scene->map_row])
 		malloc_error();
-	*ft_strchr(scene->map[scene->map_height], '\0') = line[i];
-	//if line[i] = '\n', then my scene->map line isn't terminated.TODO
+	//*ft_strchr(scene->map[scene->map_row], '\0') = line[i];//Do I need it? TODO
+	//if line[i] = '\n', then my scene->map line isn't terminated?TODO
+	scene->map_size.y++;
 	return (0);
 }
 
-void	parse_map(char **map)// TODO
+static int	flood_fill(t_scene *scene, int row, int col)
 {
-	// if (ft_isspace(current char))
-	// 	current char == '1'; or something else
-	//MAP_WALLS "Error.\nThe map must be closed/surrounded by walls.\n"
-	(void)map;
+	if (row < 0 || row >= scene->map_size.y
+		|| col < 0 || col >= (int)ft_strlen(scene->map[row]))
+		return (0);
+	if (scene->map[row][col] == '1' || scene->map[row][col] == 'f'
+		|| scene->map[row][col] == scene->player.direction)
+		return (0);
+	if (scene->map[row][col] == '0')
+		scene->map[row][col] = 'f';
+	if (scene->map[row][col] != '0' && scene->map[row][col] != 'f'
+		&& scene->map[row][col] != '1')
+		return (1);
+	flood_fill(scene, row - 1, col);
+	flood_fill(scene, row + 1, col);
+	flood_fill(scene, row, col + 1);
+	flood_fill(scene, row, col - 1);
+	return (0);
+}
+
+void	parse_map(int fd, t_scene *scene)
+{
+	if (flood_fill(scene, scene->player.point.y, scene->player.point.x))
+	{
+		free_scene(scene);
+		close(fd);
+		exiter(MAP_WALLS);
+	}
 }

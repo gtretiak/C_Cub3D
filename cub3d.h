@@ -23,6 +23,7 @@
 
 # define ARG_NUM "No/Many arguments. Should be \'./cub3D <map.cub>\'\n"
 # define ARG_INV "Invalid file. Should be \'.cub\'.\n"
+# define MAP_INVALID "Error.\nThe map is invalid (absent, not closed, start with unexpected char or contains gaps.\n"
 # define MAP_WALLS "Error.\nThe map must be closed/surrounded by walls.\n"
 # define MAP_PLAYER "Error.\nThere can't be more than one player.\n"
 # define MAP_UNEXPECTED "Error.\nUnexpected char found in the map.\n"
@@ -76,8 +77,9 @@ typedef struct s_scene
 	t_wall		west;
 	t_wall		east;
 	t_player	player;
+	t_point		map_size;
 	char		**map;
-	int			map_height;
+	int			map_row;
 	int			flag;
 }	t_scene;
 
@@ -91,11 +93,12 @@ typedef struct s_mlx
 void	args_checker(int argc, char **argv);
 
 int		file_reading(char *file, t_scene *scene);
+void	init_scene(char *file, t_scene *scene);
 
 int		define_wall(char *line, t_scene *scene);
 int		set_flat(char *line, t_scene *scene);
 int		build_map(char *line, t_scene *scene);
-void	parse_map(char **map);
+void	parse_map(int fd, t_scene *scene);
 
 void	init_game(t_mlx *game);
 

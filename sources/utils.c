@@ -36,5 +36,6 @@ static void	free_walls(t_scene *scene)
 void	free_scene(t_scene *scene)
 {
 	free_walls(scene);
-	ft_free_array_strn(scene->map, scene->map_height);
+	ft_free_array_str(scene->map);
+//	ft_free_array_strn(scene->map, scene->map_size.y);
 }

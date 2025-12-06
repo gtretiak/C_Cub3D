@@ -60,42 +60,28 @@ static int	reached_eof(int fd, t_scene *scene)
 	return (0);
 }
 
-static void	init_scene(t_scene *scene)
-{
-	scene->flag = -6;
-	scene->player.on_position = false;
-	scene->north.installed = false;
-	scene->south.installed = false;
-	scene->west.installed = false;
-	scene->east.installed = false;
-	scene->map_height = 0;
-	scene->map = malloc(sizeof(char **));//how many rows?
-	if (!scene->map)
-		malloc_error();
-}
-
 int	file_reading(char *file, t_scene *scene)
 {
 	int		fd;
 
+	init_scene(file, scene);
 	fd = open(file, O_RDONLY);
 	if (fd < 0) // comment for debugging
 	{
 		perror("Error opening file");
 		exit(1);
 	}
-	init_scene(scene);
 	while (!reached_eof(fd, scene))
 		;
 	printf("finished reading\n"); // tmp
-	if (scene->flag != 1)
+	if (scene->flag != 1 || !scene->player.on_position)
 	{
 		free_scene(scene);
 		close(fd);
 		exiter(MAP_NO);
 	}
 	printf("I'm here\n"); // tmp
-	parse_map(scene->map);
+	parse_map(fd, scene);
 	close(fd);
 	printf("success\n");// tmp
 	return (0);

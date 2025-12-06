@@ -12,7 +12,7 @@ static int	parse_wall(char *line, t_wall *wall)
 	wall->path = ft_substr(line, i, len - i);
 	if (!wall->path)
 		malloc_error();
-	*ft_strchr(wall->path, '\0') = line[len];
+	//*ft_strchr(wall->path, '\0') = line[len]; //do I need it? TODO
 /*	if (open(wall->path, O_RDONLY) < 0) uncomment! TODO
 	{
 		printf("no texture\n"); // tmp
