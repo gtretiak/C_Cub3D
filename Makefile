@@ -8,7 +8,8 @@ LIBFT_DIR = C_libft/
 MLX = libmlx_Linux.a
 MLX_DIR = minilibx_linux/
 SRC_DIR = sources/
-SRC = main.c init_game.c events_movements.c events_other.c render.c utils.c args_checker.c file_reading.c wall_parsing.c flat_parsing.c map_parsing.c init_scene.c \
+SRC = main.c utils.c args_checker.c init_scene.c file_reading.c wall_parsing.c flat_parsing.c map_parsing.c \
+	//init_game.c events_movements.c events_other.c render.c \
 	render/draw.c \
 	render/keys.c \
 	render/move.c \
