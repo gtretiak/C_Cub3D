@@ -39,10 +39,10 @@ static int	parse_color(char *line, t_flat *flat)
 
 	i = 1;
 	j = 0;
+	while (ft_isspace(line[i]))
+			i++;
 	while (line[i] != '\n' && line[i] != '\0')
 	{
-		while (ft_isspace(line[i]))
-			i++;
 		if (parse_component(line, &i, &flat->rgb[j]))
 			return (1);
 		if (j < 2)
@@ -53,8 +53,6 @@ static int	parse_color(char *line, t_flat *flat)
 		}
 		else if (j == 2 && line[i] != '\n' && line[i] != '\0')
 			return (1);
-		while (ft_isspace(line[i]))
-			i++;
 		j++;
 	}
 	flat->color = (flat->rgb[0] << 16) | (flat->rgb[1] << 8) | flat->rgb[2];

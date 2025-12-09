@@ -3,13 +3,12 @@ NO ./textures/n.xpm
 SO ./textures/s.xpm
 WE ./textures/w.xpm
 
-EA ./textures/e.xpm - handle spaces after
+EA ./textures/e.xpm - should we handle spaces after last char in the path?
 
-F 220,100,0 - handle spaces after
+F 220,100,0 - should handle spaces after the last number?
 
 
-C 225,30,0 - handle many spaces between info
-
+C 225,30,0 - should we handle spaces between numbers?
 
 
 
