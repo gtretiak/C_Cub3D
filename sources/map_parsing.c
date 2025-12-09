@@ -37,6 +37,7 @@ int	build_map(char *line, t_scene *scene)
 {
 	int		i;
 	int		l;
+	char	*last_char_ptr;
 
 	i = 0;
 	scene->flag = 1;
@@ -52,7 +53,9 @@ int	build_map(char *line, t_scene *scene)
 	scene->map[scene->map_row] = ft_strdup(line);
 	if (!scene->map[scene->map_row])
 		malloc_error(scene);
-	*ft_strchr(scene->map[scene->map_row], '\n') = '\0';
+	last_char_ptr = ft_strchr(scene->map[scene->map_row], '\n');
+	if (last_char_ptr)
+		*last_char_ptr = '\0';
 	scene->map_row++;
 	return (0);
 }
