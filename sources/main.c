@@ -14,14 +14,10 @@
 
 int	main(int argc, char **argv)
 {
-	// t_mlx	game;
 	t_scene	scene;
 
 	args_checker(argc, argv);
 	file_reading(argv[1], &scene);
 	ft_render(&scene);
-	// init_game(&game, &scene);
-	// rendering(&game);
-	// mlx_loop(game.mlx);
 	exit(0);
 }

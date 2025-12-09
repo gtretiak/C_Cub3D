@@ -51,15 +51,6 @@
 # define ELEMENT_UNEXPECTED "Error.\nUnexpected char found in an element.\n"
 # define ELEMENT_PATH "Error.\nTexture path/file is invalid/inaccessible.\n"
 
-// typedef struct s_img
-// {
-// 	void	*img;
-// 	char	*pixels;
-// 	int		bpp;
-// 	int		line_len;
-// 	int		endian;
-// }	t_img;
-
 typedef struct s_point
 {
 	int	x;
@@ -101,13 +92,6 @@ typedef struct s_scene
 	int			flag;
 }	t_scene;
 
-// typedef struct s_mlx
-// {
-// 	void	*mlx;
-// 	void	*win;
-// 	t_img	img;
-// }	t_mlx;
-
 void	args_checker(int argc, char **argv);
 
 int		file_reading(char *file, t_scene *scene);
@@ -117,20 +101,6 @@ int		define_wall(char *line, t_scene *scene);
 int		set_flat(char *line, t_scene *scene);
 int		build_map(char *line, t_scene *scene);
 void	parse_map(int fd, t_scene *scene);
-
-// void	init_game(t_mlx *game, t_scene *scene);
-
-// void	event_listening(t_mlx *game);
-// int		handle_key(int keysym, t_mlx *game);
-// int		key_movement(int keysym, t_mlx *game);
-// int		key_control(int keysym, t_mlx *game);
-// int		handle_mini(t_mlx *game);
-// int		handle_action(t_mlx *game);
-// int		handle_mouse(int button, int x, int y, t_mlx *game);
-// int		handle_closing(t_mlx *game);
-
-// void	rendering(t_mlx *game);
-// void	put_pixels(int x, int y, t_img *img, int color);
 
 void	free_scene(t_scene *scene);
 void	malloc_error(t_scene *scene);
