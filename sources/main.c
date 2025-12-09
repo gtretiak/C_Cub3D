@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 17:27:17 by gtretiak          #+#    #+#             */
-/*   Updated: 2025/12/06 18:08:11 by gtretiak         ###   ########.fr       */
+/*   Updated: 2025/12/09 10:46:21 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 int	main(int argc, char **argv)
 {
-	t_mlx	game;
+	// t_mlx	game;
 	t_scene	scene;
 
 	args_checker(argc, argv);
 	file_reading(argv[1], &scene);
-	init_game(&game, &scene);
-	rendering(&game);
-	mlx_loop(game.mlx);
+	ft_render(&scene);
+	// init_game(&game, &scene);
+	// rendering(&game);
+	// mlx_loop(game.mlx);
 	exit(0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 16:09:41 by gtretiak          #+#    #+#             */
-/*   Updated: 2025/12/06 18:11:31 by gtretiak         ###   ########.fr       */
+/*   Updated: 2025/12/09 10:49:36 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <X11/keysym.h>
 # include "minilibx_linux/mlx.h"
 # include "C_libft/libft.h"
+# include "./sources/render/render.h"
 
 # ifndef HEIGHT
 #  define HEIGHT 800
@@ -50,14 +51,14 @@
 # define ELEMENT_UNEXPECTED "Error.\nUnexpected char found in an element.\n"
 # define ELEMENT_PATH "Error.\nTexture path/file is invalid/inaccessible.\n"
 
-typedef struct s_img
-{
-	void	*img;
-	char	*pixels;
-	int		bpp;
-	int		line_len;
-	int		endian;
-}	t_img;
+// typedef struct s_img
+// {
+// 	void	*img;
+// 	char	*pixels;
+// 	int		bpp;
+// 	int		line_len;
+// 	int		endian;
+// }	t_img;
 
 typedef struct s_point
 {
@@ -100,12 +101,12 @@ typedef struct s_scene
 	int			flag;
 }	t_scene;
 
-typedef struct s_mlx
-{
-	void	*mlx;
-	void	*win;
-	t_img	img;
-}	t_mlx;
+// typedef struct s_mlx
+// {
+// 	void	*mlx;
+// 	void	*win;
+// 	t_img	img;
+// }	t_mlx;
 
 void	args_checker(int argc, char **argv);
 
@@ -117,19 +118,19 @@ int		set_flat(char *line, t_scene *scene);
 int		build_map(char *line, t_scene *scene);
 void	parse_map(int fd, t_scene *scene);
 
-void	init_game(t_mlx *game, t_scene *scene);
+// void	init_game(t_mlx *game, t_scene *scene);
 
-void	event_listening(t_mlx *game);
-int		handle_key(int keysym, t_mlx *game);
-int		key_movement(int keysym, t_mlx *game);
-int		key_control(int keysym, t_mlx *game);
-int		handle_mini(t_mlx *game);
-int		handle_action(t_mlx *game);
-int		handle_mouse(int button, int x, int y, t_mlx *game);
-int		handle_closing(t_mlx *game);
+// void	event_listening(t_mlx *game);
+// int		handle_key(int keysym, t_mlx *game);
+// int		key_movement(int keysym, t_mlx *game);
+// int		key_control(int keysym, t_mlx *game);
+// int		handle_mini(t_mlx *game);
+// int		handle_action(t_mlx *game);
+// int		handle_mouse(int button, int x, int y, t_mlx *game);
+// int		handle_closing(t_mlx *game);
 
-void	rendering(t_mlx *game);
-void	put_pixels(int x, int y, t_img *img, int color);
+// void	rendering(t_mlx *game);
+// void	put_pixels(int x, int y, t_img *img, int color);
 
 void	free_scene(t_scene *scene);
 void	malloc_error(t_scene *scene);
