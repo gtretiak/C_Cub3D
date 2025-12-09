@@ -16,6 +16,7 @@ static int	parse_wall(char *line, t_wall *wall, t_scene *scene)
 {
 	short	i;
 	size_t	len;
+	char	*last_char_ptr;
 
 	i = 2;
 	while (ft_isspace(line[i]))
@@ -24,7 +25,9 @@ static int	parse_wall(char *line, t_wall *wall, t_scene *scene)
 	wall->path = ft_substr(line, i, len - i);
 	if (!wall->path)
 		malloc_error(scene);
-	*ft_strchr(wall->path, '\n') = '\0';
+	last_char_ptr = ft_strchr(wall->path, '\n');
+	if (last_char_ptr)
+		*last_char_ptr = '\0';	
 	if (open(wall->path, O_RDONLY) < 0)
 		return (returner(ELEMENT_PATH));
 	return (0);
