@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:20:27 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/27 11:57:35 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/09 11:05:19 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_player(char c)
 	return (c == 'N' || c == 'E' || c == 'S' || c == 'W');
 }
 
-char	get_player_pos(t_player *plyr, char **map)
+char	get_player_pos(t_actor *plyr, char **map)
 {
 	int	y;
 	int	x;
@@ -41,7 +41,7 @@ char	get_player_pos(t_player *plyr, char **map)
 	return (0);
 }
 
-void	set_plane(t_player *plyr, char **map)
+void	set_plane(t_actor *plyr, char **map)
 {
 	char	c;
 
@@ -68,7 +68,7 @@ void	set_plane(t_player *plyr, char **map)
 	}
 }
 
-void	set_direction(t_player *plyr, char **map)
+void	set_direction(t_actor *plyr, char **map)
 {
 	char	c;
 
@@ -97,7 +97,7 @@ void	set_direction(t_player *plyr, char **map)
 
 void	ft_init_player(t_game *game, char **map)
 {
-	game->plyr = malloc(sizeof(t_player));
+	game->plyr = malloc(sizeof(t_actor));
 	if (!game->plyr)
 		return ;
 	get_player_pos(game->plyr, map);

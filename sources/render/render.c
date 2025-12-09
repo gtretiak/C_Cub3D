@@ -6,18 +6,19 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:31:25 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/27 11:58:06 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/09 10:04:56 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./render.h"
 
-void	ft_render(char **map, char **textures, unsigned int **colors)
+// void	ft_render(char **map, char **textures, unsigned int **colors)
+void	ft_render(t_scene* scene)
 {
 	t_game	game;
 
 	ft_bzero(&game, sizeof(t_game));
-	ft_init_struct(&game, map, textures, colors);
+	ft_init_struct(&game, scene);
 	mlx_hook(game.win_ptr, KeyPress, KeyPressMask, &ft_keypress, &game);
 	mlx_hook(game.win_ptr, KeyRelease, KeyReleaseMask, &ft_keyrelease, &game);
 	mlx_hook(game.win_ptr, DestroyNotify,

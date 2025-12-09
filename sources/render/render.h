@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 09:42:23 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/27 13:40:40 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/09 10:46:01 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@
 # include "sys/time.h"
 # include "math.h"
 
+typedef struct s_scene	t_scene;
+
 # define RESH 360
 # define RESW 640
 
-typedef struct s_player
+typedef struct s_actor
 {
 	double	pos_x;
 	double	pos_y;
@@ -31,7 +33,7 @@ typedef struct s_player
 	double	move_speed;
 	double	rot_speed;
 
-}	t_player;
+}	t_actor;
 
 typedef struct s_image
 {
@@ -78,7 +80,7 @@ typedef struct s_game
 	double			prev_time;
 	t_image			*mlx;
 	t_image			*txtr[4];
-	t_player		*plyr;
+	t_actor			*plyr;
 	int				move_x;
 	int				move_y;
 	int				rotate;
@@ -92,8 +94,7 @@ int		ft_keypress(int key, t_game *game);
 int		ft_keyrelease(int key, t_game *game);
 int		ft_quit_game(t_game *game);
 void	ft_init_player(t_game *game, char **map);
-void	ft_init_struct(t_game *game, char **map,
-			char **textures, unsigned int **colors);
+void	ft_init_struct(t_game *game, t_scene *scene);
 void	ft_draw_image(t_game *game, t_ray_vars *ray);
 void	ft_calc_texture(t_game *game, t_ray_vars *ray);
 void	ft_handle_movement(t_game *game);
@@ -101,5 +102,6 @@ void	ft_calc_speed(t_game *game);
 void	ft_rotate(t_game *game);
 int		ft_raycast(t_game *game);
 void	ft_free_game(t_game *game);
+void	ft_render(t_scene* scene);
 
 #endif

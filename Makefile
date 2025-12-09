@@ -8,7 +8,18 @@ LIBFT_DIR = C_libft/
 MLX = libmlx_Linux.a
 MLX_DIR = minilibx_linux/
 SRC_DIR = sources/
-SRC = main.c init_game.c events_movements.c events_other.c render.c utils.c args_checker.c file_reading.c wall_parsing.c flat_parsing.c map_parsing.c init_scene.c 
+SRC = main.c init_game.c events_movements.c events_other.c render.c utils.c args_checker.c file_reading.c wall_parsing.c flat_parsing.c map_parsing.c init_scene.c \
+	render/draw.c \
+	render/keys.c \
+	render/move.c \
+	render/raycast.c\
+	render/render.c\
+	render/texture.c\
+	render/utils.c\
+	render/memory/free.c \
+	render/memory/init.c \
+	render/memory/player.c \
+
 OBJ = $(addprefix $(SRC_DIR), $(SRC:.c=.o))
 
 all: $(LIBFT) $(MLX) $(CUB_LIB) $(NAME)
