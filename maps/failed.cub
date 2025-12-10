@@ -43,4 +43,6 @@ anything here (not always, different options though)
 
 // it's up to us to decide how to handle whitespaces in relation to map
 // so choose whats easier for you  just skip whitespacs and nothing else or allow nothing at all
-
+// most of the leaks and problems that were happening were because it was formatted with tabs and not spaces
+// it took a while to understand what was going on because there were tabs and not spaces
+// visually it looked the same but it was misaligned when you put it in an array
