@@ -7,26 +7,37 @@ EA ./textures/e.xpm - should we handle spaces after last char in the path?
 
 F 220,100,0 - should handle spaces after the last number?
 
-
 C 225,30,0 - should we handle spaces between numbers?
 
+// according to the subject
+>Except for the map, each type of information from an element can be separated
+by one or more spaces
+// so they should just be skipped/ignored and it doesn't make them invalid
+// as long as the number itself isn't seperated by spaces like 2 2 2, 3 0, 5 0
+// if its 222,        30,    50 it should be valid
+// essentially as long as the spaces don't break the information its just meant to be ignored
 
 
+
+// for the sake of making it easier, consider only spaces for the map
+// don't handle tabs or anything else because it breaks the formatting of the map really easily
+// and goes out of bounds for rendering, only accept the character 32 or the actual space ' '
 
  111  	1111111111111111111111111
  101	1000000000110000000000001
  111	1011000001110000000000001
-	1001000000000000000000001
+        1001000000000000000000001
 111111111011000001110000000000001
 100000000011000001110111111111111
 11110111111111011100000010001
 11110111111111011101010010001
 11000000110101011100000010001
 10000000000000001100000010001
-10000000000000001101010010001 
+10000000000000001101010010001
 11000001110101011111011110N0111
 11110111 1110101 101111010001
 11111111 1111111 111111111111
 
 when it's /n - should be error (something unexpected after map)
 anything here (not always, different options though)
+
