@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 17:28:29 by gtretiak          #+#    #+#             */
-/*   Updated: 2025/12/06 18:32:08 by gtretiak         ###   ########.fr       */
+/*   Updated: 2025/12/10 15:01:13 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ int	build_map(char *line, t_scene *scene)
 	scene->map_row++;
 	return (0);
 }
-//	*ft_strchr(scene->map[scene->map_row], '\0') = line[i];//Do I need it?
-//	if line[i] = '\n', then my scene->map line isn't terminated?
+// 	*ft_strchr(scene->map[scene->map_row], '\0') = line[i];//Do I need it?
+// 	if line[i] = '\n', then my scene->map line isn't terminated?
 
-static int	flood_fill(t_scene *scene, int row, int col)
+/* static int	flood_fill(t_scene *scene, int row, int col)
 {
 	if (row < 0 || row >= scene->map_size.y
 		|| col < 0 || col >= (int)ft_strlen(scene->map[row]))
@@ -70,15 +70,54 @@ static int	flood_fill(t_scene *scene, int row, int col)
 	if (scene->map[row][col] == '1' || scene->map[row][col] == 'f'
 		|| scene->map[row][col] == scene->player.direction)
 		return (0);
-	if (scene->map[row][col] == '0')
-		scene->map[row][col] = 'f';
 	if (scene->map[row][col] != '0' && scene->map[row][col] != 'f'
 		&& scene->map[row][col] != '1')
 		return (1);
+	if (scene->map[row][col] == '0')
+		scene->map[row][col] = 'f';
 	flood_fill(scene, row - 1, col);
 	flood_fill(scene, row + 1, col);
 	flood_fill(scene, row, col + 1);
 	flood_fill(scene, row, col - 1);
+	return (0);
+}*/
+
+static int	flood_fill(t_scene *scene, int row, int col)
+{
+	char current;
+	//out of bounds
+	if(row < 0 || row >= scene->map_size.y)
+		return (0);
+	if(col < 0 || col >= (int)ft_strlen(scene->map[row]))
+		return (0);
+	//assigning to a var to make it human readable
+	current = scene->map[row][col];
+	//already visited
+	if(current == 'f')
+		return (0);
+	//wall is the valid boundary so stop
+	if(current == '1')
+		return (0);
+	//by this point it could only be a 0 or the player
+	//so if it isnt, error
+	if (current != '0' && current != scene->player.direction)
+		return (1);
+	//if every if passes that means its a 0 or player
+	//if its a 0 make it an F
+	//never replace the player since rendering depends on it
+	if(current == '0')
+		scene->map[row][col] = 'f';
+	//needs the return to propagate errors just like the first call
+	//otherwise it would always return 0 regardless
+	//because that's the default return value
+	if(flood_fill(scene, row - 1, col))
+		return (1);
+	if(flood_fill(scene, row + 1, col))
+		return (1);
+	if(flood_fill(scene, row, col - 1))
+		return (1);
+	if(flood_fill(scene, row, col + 1))
+		return (1);
 	return (0);
 }
 
