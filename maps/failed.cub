@@ -41,3 +41,6 @@ by one or more spaces
 when it's /n - should be error (something unexpected after map)
 anything here (not always, different options though)
 
+// it's up to us to decide how to handle whitespaces in relation to map
+// so choose whats easier for you  just skip whitespacs and nothing else or allow nothing at all
+
