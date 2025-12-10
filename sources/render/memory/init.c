@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:43:06 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/12/09 11:01:24 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/10 11:25:02 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	init_mlx(t_game *game)
 			&game->mlx->endian);
 }
 
-void create_texture(char *path, t_game *game, int i)
+void	create_texture(char *path, t_game *game, int i)
 {
 	int	width;
 	int	height;
@@ -48,9 +48,9 @@ void create_texture(char *path, t_game *game, int i)
 
 void	init_textures(t_game *game, t_scene *scene)
 {
-	create_texture(scene->north.path, game,  0);
+	create_texture(scene->north.path, game, 0);
 	create_texture(scene->east.path, game, 1);
-	create_texture(scene->south.path, game,  2);
+	create_texture(scene->south.path, game, 2);
 	create_texture(scene->west.path, game, 3);
 }
 

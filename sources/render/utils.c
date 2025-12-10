@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 14:48:43 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/12/10 10:19:57 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/10 11:24:24 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	ft_calc_speed(t_game *game)
 	game->prev_time = game->time;
 	game->time = ft_get_current_time();
 	frametime = (game->time - game->prev_time) / 1000.0;
-    if (frametime < 0.001 || frametime > 1.0)
-    {
-        game->plyr->move_speed = 0.15;
-        game->plyr->rot_speed = 0.08;
-        return ;
-    }
+	if (frametime < 0.001 || frametime > 1.0)
+	{
+		game->plyr->move_speed = 0.15;
+		game->plyr->rot_speed = 0.08;
+		return ;
+	}
 	game->plyr->move_speed = frametime * 5.0;
 	game->plyr->rot_speed = frametime * 3.0;
 }

@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 09:42:23 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/12/09 10:46:01 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/10 11:23:58 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,6 @@ void	ft_calc_speed(t_game *game);
 void	ft_rotate(t_game *game);
 int		ft_raycast(t_game *game);
 void	ft_free_game(t_game *game);
-void	ft_render(t_scene* scene);
+void	ft_render(t_scene *scene);
 
 #endif
