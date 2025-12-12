@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 13:11:13 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/12/10 11:24:39 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/12 13:49:52 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void	ft_free_game(t_game *game)
 {
 	if (!game)
 		return ;
-	// if (game->map)
-	// 	ft_free_arr((void **)game->map);
+	if (game->map)
+		ft_free_arr((void **)game->map);
 	if (game->plyr)
 		free(game->plyr);
 	if (game->mlx)

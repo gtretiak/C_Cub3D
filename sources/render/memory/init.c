@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:43:06 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/12/10 11:25:02 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/12 13:53:42 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	create_texture(char *path, t_game *game, int i)
 			&game->txtr[i]->bpp,
 			&game->txtr[i]->line_len,
 			&game->txtr[i]->endian);
+	free(path);
 }
 
 void	init_textures(t_game *game, t_scene *scene)
