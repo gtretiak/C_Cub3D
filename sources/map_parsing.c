@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 17:28:29 by gtretiak          #+#    #+#             */
-/*   Updated: 2025/12/10 15:01:13 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/12 14:25:20 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,30 @@ int	build_map(char *line, t_scene *scene)
 static int	flood_fill(t_scene *scene, int row, int col)
 {
 	char current;
-	//out of bounds
+	int line_len;
+
+	//out of bounds vertically
 	if(row < 0 || row >= scene->map_size.y)
 		return (0);
-	if(col < 0 || col >= (int)ft_strlen(scene->map[row]))
-		return (0);
-	//assigning to a var to make it human readable
+
+	line_len = (int)ft_strlen(scene->map[row]);
+
+	//out of bounds horizontally
+	if(col < 0 || col >= line_len)
+	{
+		// If trying to go beyond the line, check the last character
+		// If last char is not a wall, it's a hole
+		if (line_len > 0 && col == line_len)
+		{
+			char last_char = scene->map[row][line_len - 1];
+			if (last_char != '1')
+				return (1); //line ends without wall
+		}
+		return (0); // Out of bounds but line ends with wall
+	}
+
 	current = scene->map[row][col];
+
 	//already visited
 	if(current == 'f')
 		return (0);
