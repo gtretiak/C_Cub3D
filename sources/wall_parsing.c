@@ -12,6 +12,16 @@
 
 #include "../cub3d.h"
 
+static int     xpm_extension(char *texture_path)
+{
+        char    *extension;
+
+        extension = ft_strrchr(texture_path, '.');
+        if (!extension || ft_strncmp(extension, ".xpm", 4))
+                return (1);
+        return (0);
+}
+
 static int	parse_wall(char *line, t_wall *wall, t_scene *scene)
 {
 	short	i;
@@ -22,14 +32,17 @@ static int	parse_wall(char *line, t_wall *wall, t_scene *scene)
 	while (ft_isspace(line[i]))
 		i++;
 	len = ft_strlen(line);
-	wall->path = ft_substr(line, i, len - i);
+	wall->path = ft_substr(line, i, len - i - 1);
 	if (!wall->path)
 		malloc_error(scene);
 	last_char_ptr = ft_strchr(wall->path, '\n');
 	if (last_char_ptr)
-		*last_char_ptr = '\0';	
-	if (open(wall->path, O_RDONLY) < 0)
-		return (returner(ELEMENT_PATH));
+		*last_char_ptr = '\0';
+	if (xpm_extension(wall->path) || open(wall->path, O_RDONLY) < 0)
+	{
+		free(wall->path);
+		return (returner(ELEMENT_PATH));	
+	}
 	return (0);
 }
 //PS: do I need this? *ft_strchr(wall->path, '\0') = line[len];

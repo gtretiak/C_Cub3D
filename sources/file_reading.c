@@ -62,9 +62,9 @@ static int	reached_eof(int fd, t_scene *scene)
 		free(str);
 		str = get_next_line(fd, 2);
 		free(str);
-		free_scene(scene);
-		close(fd);
-		exit(1);
+//		free_scene(scene);
+//		close(fd);
+		return (-1);
 	}
 	free(str);
 	return (0);
@@ -94,12 +94,13 @@ static void	check_for_missing(int fd, t_scene *scene)
 		return ;
 	free_scene(scene);
 	close(fd);
-	exiter(output);
+	exiter(output); //replace with return logic?
 }
 
 int	file_reading(char *file, t_scene *scene)
 {
 	int		fd;
+	int		status;
 
 	init_scene(file, scene);
 	fd = open(file, O_RDONLY);
@@ -108,8 +109,18 @@ int	file_reading(char *file, t_scene *scene)
 		perror("Error opening file");
 		exit(1);
 	}
-	while (!reached_eof(fd, scene))
-		;
+	while (true)
+	{
+		status = reached_eof(fd, scene);
+		if (status == 1)
+			break ;
+		else if (status == -1)
+		{
+			free_scene(scene);
+			close(fd);
+			return (1);
+		}
+	}
 	check_for_missing(fd, scene);
 	parse_map(fd, scene);
 	close(fd);

@@ -17,7 +17,8 @@ int	main(int argc, char **argv)
 	t_scene	scene;
 
 	args_checker(argc, argv);
-	file_reading(argv[1], &scene);
+	if (file_reading(argv[1], &scene))
+		return (1);
 	ft_render(&scene);
 	exit(0);
 }

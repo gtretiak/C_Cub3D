@@ -86,7 +86,7 @@ int	build_map(char *line, t_scene *scene)
 	flood_fill(scene, row, col - 1);
 	return (0);
 }*/
-
+/*
 static int	flood_fill(t_scene *scene, int row, int col)
 {
 	char current;
@@ -95,9 +95,7 @@ static int	flood_fill(t_scene *scene, int row, int col)
 	//out of bounds vertically
 	if(row < 0 || row >= scene->map_size.y)
 		return (0);
-
 	line_len = (int)ft_strlen(scene->map[row]);
-
 	//out of bounds horizontally
 	if(col < 0 || col >= line_len)
 	{
@@ -111,7 +109,6 @@ static int	flood_fill(t_scene *scene, int row, int col)
 		}
 		return (0); // Out of bounds but line ends with wall
 	}
-
 	current = scene->map[row][col];
 
 	//already visited
@@ -127,8 +124,54 @@ static int	flood_fill(t_scene *scene, int row, int col)
 	//if every if passes that means its a 0 or player
 	//if its a 0 make it an F
 	//never replace the player since rendering depends on it
-	if(current == '0')
+	else if (current == '0')
 		scene->map[row][col] = 'f';
+	//needs the return to propagate errors just like the first call
+	//otherwise it would always return 0 regardless
+	//because that's the default return value
+	if(flood_fill(scene, row - 1, col))
+		return (1);
+	if(flood_fill(scene, row + 1, col))
+		return (1);
+	if(flood_fill(scene, row, col - 1))
+		return (1);
+	if(flood_fill(scene, row, col + 1))
+		return (1);
+	return (0);
+}
+*/
+static int	flood_fill(t_scene *scene, int row, int col)
+{
+	char current;
+	int line_len;
+
+	//out of bounds vertically
+	if(row < 0 || row >= scene->map_size.y)
+		return (1); // a typo? should be 1 (not 0)?
+	if (!scene->map[row])
+		return (1);
+	line_len = (int)ft_strlen(scene->map[row]);
+	//out of bounds horizontally v.2.0
+	if (col < 0 || col >= line_len)
+		return (1); //line ends without wall
+	current = scene->map[row][col];
+	//already visited
+	if(current == 'f')
+		return (0);
+	//wall is the valid boundary so stop
+	if(current == '1')
+		return (0);
+	//by this point it could only be a 0 or the player
+	//so if it isnt, error
+	if (ft_isspace(current))
+		scene->map[row][col] = 'f';
+	//if every if passes that means its a 0 or player
+	//if its a 0 make it an F
+	//never replace the player since rendering depends on it
+	else if (current == '0')
+		scene->map[row][col] = 'f';
+	else if (current != scene->player.direction)
+		return (1);
 	//needs the return to propagate errors just like the first call
 	//otherwise it would always return 0 regardless
 	//because that's the default return value
@@ -149,6 +192,6 @@ void	parse_map(int fd, t_scene *scene)
 	{
 		free_scene(scene);
 		close(fd);
-		exiter(MAP_WALLS);
+		exiter(MAP_WALLS); // replace with return logic?
 	}
 }

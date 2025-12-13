@@ -37,7 +37,10 @@ void	exiter(char *str)
 static void	free_walls(t_scene *scene)
 {
 	if (scene->north.installed)
+	{
 		free(scene->north.path);
+		scene->north.path = NULL;	
+	}
 	if (scene->south.installed)
 		free(scene->south.path);
 	if (scene->west.installed)
