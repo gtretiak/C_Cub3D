@@ -33,7 +33,7 @@ static int	parse_scene(char *line, t_scene *scene)
 	{
 		if (line[i] == '1' || line[i] == '0')
 			return (build_map(line, scene));
-		else if (ft_isspace(line[i]))
+		else if (line[i] == 32 || line[i] == 9)
 		{
 			if (scene->flag == 0 || scene->flag == 1)
 				return (build_map(line, scene));

@@ -88,6 +88,13 @@ void	find_wall(t_game *game, t_ray_vars *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
+		// This is supposed to prevent leaks on holes in walls:
+		if (ray->map_y < 0 || !game->map[ray->map_y] || ray->map_x < 0
+			|| ray->map_x >= (int)ft_strlen(game->map[ray->map_y]))
+		{
+			ray->hit = 1; // can we treat a hole as a wall?
+			break ;
+		}
 		if (game->map[ray->map_y][ray->map_x] == '1')
 			ray->hit = 1;
 	}

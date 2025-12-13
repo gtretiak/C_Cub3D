@@ -36,7 +36,7 @@
 
 # define ARG_NUM "No/Many arguments. Should be \'./cub3D <map.cub>\'\n"
 # define ARG_INV "Invalid file. Should be \'.cub\'.\n"
-# define MAP_INV "Error.\nInvalid map: not closed/weird char/contains gaps.\n"
+# define MAP_INV "Error.\nInvalid map:small/open/contains weird char/gaps.\n"
 # define MAP_WALLS "Error.\nThe map must be closed/surrounded by walls.\n"
 # define MAP_PLAYER "Error.\nThere can't be more than one player.\n"
 # define MAP_NO_PLAYER "Error.\nThere is no player.\n"
@@ -46,7 +46,7 @@
 # define MAP_UNEXPECTED "Error.\nUnexpected char found in the map.\n"
 # define MAP_GAPS "Error.\nThere can't be gaps (empty lines) in the map.\n"
 # define MAP_LAST "Error.\nThe map must be the last element of *.cub.\n"
-# define MAP_NO "Error.\nThere is no map in your cub file.\n"
+# define MAP_NO "Error.\nThere's no map in cub file (or it's not closed).\n"
 # define ELEMENT_TYPE "Error.\nElement type is missing or doubled (invalid).\n"
 # define ELEMENT_UNEXPECTED "Error.\nUnexpected char found in an element.\n"
 # define ELEMENT_PATH "Error.\nTexture path/file is invalid/inaccessible.\n"

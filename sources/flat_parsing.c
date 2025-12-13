@@ -55,6 +55,8 @@ static int	parse_color(char *line, t_flat *flat)
 			return (1);
 		j++;
 	}
+	if (j < 3)
+		return (1);
 	flat->color = (flat->rgb[0] << 16) | (flat->rgb[1] << 8) | flat->rgb[2];
 	return (0);
 }

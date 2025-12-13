@@ -40,7 +40,12 @@ int	build_map(char *line, t_scene *scene)
 	char	*last_char_ptr;
 
 	i = 0;
-	scene->flag = 1;
+	if (scene->flag >= 0)
+		scene->flag = 1;
+	else
+		return(returner(MAP_LAST));
+	if (scene->map_row >= scene->map_size.y)
+		return(returner(MAP_INV));
 	while (line[i] != '\0' && line[i] != '\n')
 	{
 		if (char_processing(line[i], scene, i))
