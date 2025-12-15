@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:43:06 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/12/12 13:53:42 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/15 12:01:23 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	ft_init_struct(t_game *game, t_scene *scene)
 	init_textures(game, scene);
 	if (!game->txtr[0])
 		return ;
-	game->win_ptr = mlx_new_window(game->mlx_ptr, RESW, RESH, "キュボースリディ");
+	game->win_ptr = mlx_new_window(game->mlx_ptr, RESW, RESH, "CUB3D");
 	if (!game->win_ptr)
 		return ;
 }

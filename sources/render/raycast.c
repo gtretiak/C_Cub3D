@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:52:17 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/27 11:52:37 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/15 11:29:17 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,6 @@ void	find_wall(t_game *game, t_ray_vars *ray)
 			ray->side_dist_y += ray->delta_dist_y;
 			ray->map_y += ray->step_y;
 			ray->side = 1;
-		}
-		// This is supposed to prevent leaks on holes in walls:
-		if (ray->map_y < 0 || !game->map[ray->map_y] || ray->map_x < 0
-			|| ray->map_x >= (int)ft_strlen(game->map[ray->map_y]))
-		{
-			ray->hit = 1; // can we treat a hole as a wall?
-			break ;
 		}
 		if (game->map[ray->map_y][ray->map_x] == '1')
 			ray->hit = 1;
