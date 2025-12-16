@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 16:53:49 by gtretiak          #+#    #+#             */
-/*   Updated: 2025/12/16 12:07:06 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/16 12:09:42 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	file_reading(char *file, t_scene *scene)
 	init_scene(file, scene);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (perror("Error opening file"), exit(1));
+		return (perror("Error opening file"), exit(1), 1);
 	while (true)
 	{
 		status = reached_eof(fd, scene);
