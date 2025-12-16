@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 16:57:33 by gtretiak          #+#    #+#             */
-/*   Updated: 2025/12/06 18:09:28 by gtretiak         ###   ########.fr       */
+/*   Updated: 2025/12/16 12:00:55 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	free_walls(t_scene *scene)
 	if (scene->north.installed)
 	{
 		free(scene->north.path);
-		scene->north.path = NULL;	
+		scene->north.path = NULL;
 	}
 	if (scene->south.installed)
 		free(scene->south.path);
@@ -54,4 +54,3 @@ void	free_scene(t_scene *scene)
 	free_walls(scene);
 	ft_free_array_str(scene->map);
 }
-//	PS: is ft_free_array_strn(scene->map, scene->map_size.y); better?

@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 17:28:29 by gtretiak          #+#    #+#             */
-/*   Updated: 2025/12/16 10:31:21 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/16 12:04:00 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,22 @@ static int	char_processing(char c, t_scene *scene, int i)
 int	build_map(char *line, t_scene *scene)
 {
 	int		i;
-	int		l;
 	char	*last_char_ptr;
 
-	i = 0;
+	i = -1;
 	if (scene->flag >= 0)
 		scene->flag = 1;
 	else
-		return(returner(MAP_LAST));
+		return (returner(MAP_LAST));
 	if (scene->map_row >= scene->map_size.y)
-		return(returner(MAP_INV));
-	while (line[i] != '\0' && line[i] != '\n')
+		return (returner(MAP_INV));
+	while (line[++i] != '\0' && line[i] != '\n')
 	{
 		if (char_processing(line[i], scene, i))
 			return (1);
-		i++;
 	}
-	l = ft_strlen(line);
-	if (l > scene->map_size.x)
-		scene->map_size.x = l;
+	if (ft_strlen(line) > scene->map_size.x)
+		scene->map_size.x = ft_strlen(line);
 	scene->map[scene->map_row] = ft_strdup(line);
 	if (!scene->map[scene->map_row])
 		malloc_error(scene);

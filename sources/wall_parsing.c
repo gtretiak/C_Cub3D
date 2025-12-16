@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   wall_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 17:06:55 by gtretiak          #+#    #+#             */
-/*   Updated: 2025/12/06 18:11:49 by gtretiak         ###   ########.fr       */
+/*   Updated: 2025/12/16 12:00:29 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-static int     xpm_extension(char *texture_path)
+static int	xpm_extension(char *texture_path)
 {
-        char    *extension;
+	char	*extension;
 
-        extension = ft_strrchr(texture_path, '.');
-        if (!extension || ft_strncmp(extension, ".xpm", 4))
-                return (1);
-        return (0);
+	extension = ft_strrchr(texture_path, '.');
+	if (!extension || ft_strncmp(extension, ".xpm", 4))
+		return (1);
+	return (0);
 }
 
 static int	parse_wall(char *line, t_wall *wall, t_scene *scene)
@@ -41,11 +41,10 @@ static int	parse_wall(char *line, t_wall *wall, t_scene *scene)
 	if (xpm_extension(wall->path) || open(wall->path, O_RDONLY) < 0)
 	{
 		free(wall->path);
-		return (returner(ELEMENT_PATH));	
+		return (returner(ELEMENT_PATH));
 	}
 	return (0);
 }
-//PS: do I need this? *ft_strchr(wall->path, '\0') = line[len];
 
 static int	set_wall(char *line, t_wall *wall, t_scene *scene)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_reading.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 16:53:49 by gtretiak          #+#    #+#             */
-/*   Updated: 2025/12/06 18:01:25 by gtretiak         ###   ########.fr       */
+/*   Updated: 2025/12/16 12:07:06 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,11 @@ static int	reached_eof(int fd, t_scene *scene)
 		free(str);
 		str = get_next_line(fd, 2);
 		free(str);
-//		free_scene(scene);
-//		close(fd);
 		return (-1);
 	}
 	free(str);
 	return (0);
 }
-// PS: 0 means usual flow, whereas 2 means freeing static tmp
 
 static void	check_for_missing(int fd, t_scene *scene)
 {
@@ -94,7 +91,7 @@ static void	check_for_missing(int fd, t_scene *scene)
 		return ;
 	free_scene(scene);
 	close(fd);
-	exiter(output); //replace with return logic?
+	exiter(output);
 }
 
 int	file_reading(char *file, t_scene *scene)
@@ -105,10 +102,7 @@ int	file_reading(char *file, t_scene *scene)
 	init_scene(file, scene);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-	{
-		perror("Error opening file");
-		exit(1);
-	}
+		return (perror("Error opening file"), exit(1));
 	while (true)
 	{
 		status = reached_eof(fd, scene);
@@ -126,4 +120,3 @@ int	file_reading(char *file, t_scene *scene)
 	close(fd);
 	return (0);
 }
-//	PS: might need scene->map[scene->map_row] = NULL; or not

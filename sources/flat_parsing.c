@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flat_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gtretiak <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 16:59:28 by gtretiak          #+#    #+#             */
-/*   Updated: 2025/12/06 17:43:36 by gtretiak         ###   ########.fr       */
+/*   Updated: 2025/12/16 12:05:59 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	parse_color(char *line, t_flat *flat)
 	i = 1;
 	j = 0;
 	while (ft_isspace(line[i]))
-			i++;
+		i++;
 	while (line[i] != '\n' && line[i] != '\0')
 	{
 		if (parse_component(line, &i, &flat->rgb[j]))
