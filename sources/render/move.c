@@ -6,11 +6,11 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 14:46:38 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/27 11:54:50 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/16 10:14:47 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./render.h"
+#include "../../cub3d.h"
 
 void	move_y_axis(t_game *game)
 {

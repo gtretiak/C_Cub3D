@@ -6,11 +6,11 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 11:40:28 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/27 11:53:12 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/16 10:14:47 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./render.h"
+#include "../../cub3d.h"
 
 void	get_texture_side(t_ray_vars *ray)
 {

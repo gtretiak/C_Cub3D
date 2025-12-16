@@ -6,11 +6,11 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 11:51:15 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/11/27 11:42:51 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/16 10:14:47 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./render.h"
+#include "../../cub3d.h"
 
 void	draw_pixel(t_image *img, int x, int y, unsigned int color)
 {

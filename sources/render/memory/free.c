@@ -6,11 +6,11 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/27 13:11:13 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/12/12 13:49:52 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/16 10:17:48 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../render.h"
+#include "../../../cub3d.h"
 
 void	ft_free_arr(void **arr)
 {

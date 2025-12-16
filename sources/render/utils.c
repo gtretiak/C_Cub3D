@@ -6,11 +6,11 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 14:48:43 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/12/10 15:05:58 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/16 10:14:47 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./render.h"
+#include "../../cub3d.h"
 
 void	ft_calc_speed(t_game *game)
 {

@@ -6,11 +6,11 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 14:43:06 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/12/15 12:01:23 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/16 10:14:23 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../render.h"
+#include "../../../cub3d.h"
 
 void	init_colors(t_scene *scene, unsigned int *clr_arr)
 {

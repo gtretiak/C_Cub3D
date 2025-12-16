@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 16:09:41 by gtretiak          #+#    #+#             */
-/*   Updated: 2025/12/09 10:49:36 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/16 10:17:31 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,12 @@
 # include <stdbool.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
+# include <sys/time.h>
 # include "minilibx_linux/mlx.h"
 # include "C_libft/libft.h"
-# include "./sources/render/render.h"
 
-# ifndef HEIGHT
-#  define HEIGHT 800
-# endif
-
-# ifndef WIDTH
-#  define WIDTH 640
-# endif
+# define RESH 360
+# define RESW 640
 
 # define ARG_NUM "No/Many arguments. Should be \'./cub3D <map.cub>\'\n"
 # define ARG_INV "Invalid file. Should be \'.cub\'.\n"
@@ -92,19 +87,96 @@ typedef struct s_scene
 	int			flag;
 }	t_scene;
 
-void	args_checker(int argc, char **argv);
+typedef struct s_actor
+{
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+	double	move_speed;
+	double	rot_speed;
 
+}	t_actor;
+
+typedef struct s_image
+{
+	void	*img_ptr;
+	char	*pxl_ptr;
+	int		bpp;
+	int		endian;
+	int		line_len;
+}	t_image;
+
+typedef struct s_ray_vars
+{
+	double	cam_x;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	perp_wall_dist;
+	double	wall_x;
+	int		x;
+	int		map_y;
+	int		map_x;
+	int		step_x;
+	int		step_y;
+	int		hit;
+	int		side;
+	int		wall_height;
+	int		draw_start;
+	int		draw_end;
+	int		tex_num;
+	int		tex_x;
+	int		tex_y;
+	double	tex_step;
+	double	tex_pos;
+}	t_ray_vars;
+
+typedef struct s_game
+{
+	char			**map;
+	double			time;
+	double			prev_time;
+	t_image			*mlx;
+	t_image			*txtr[4];
+	t_actor			*plyr;
+	int				move_x;
+	int				move_y;
+	int				rotate;
+	unsigned int	*colors;
+	void			*mlx_ptr;
+	void			*win_ptr;
+}	t_game;
+
+void	args_checker(int argc, char **argv);
 int		file_reading(char *file, t_scene *scene);
 void	init_scene(char *file, t_scene *scene);
-
 int		define_wall(char *line, t_scene *scene);
 int		set_flat(char *line, t_scene *scene);
 int		build_map(char *line, t_scene *scene);
 void	parse_map(int fd, t_scene *scene);
-
 void	free_scene(t_scene *scene);
 void	malloc_error(t_scene *scene);
 void	exiter(char *str);
 int		returner(char *str);
+double	ft_get_current_time(void);
+int		ft_keypress(int key, t_game *game);
+int		ft_keyrelease(int key, t_game *game);
+int		ft_quit_game(t_game *game);
+void	ft_init_player(t_game *game, char **map);
+void	ft_init_struct(t_game *game, t_scene *scene);
+void	ft_draw_image(t_game *game, t_ray_vars *ray);
+void	ft_calc_texture(t_game *game, t_ray_vars *ray);
+void	ft_handle_movement(t_game *game);
+void	ft_calc_speed(t_game *game);
+void	ft_rotate(t_game *game);
+int		ft_raycast(t_game *game);
+void	ft_free_game(t_game *game);
+void	ft_render(t_scene *scene);
 
 #endif

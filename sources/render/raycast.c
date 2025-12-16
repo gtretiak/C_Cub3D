@@ -6,11 +6,11 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 13:52:17 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/12/15 11:29:17 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/16 10:14:47 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./render.h"
+#include "../../cub3d.h"
 
 void	prep_dda(t_game *game, t_ray_vars *ray)
 {
