@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:20:27 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/12/22 12:00:11 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/22 12:02:50 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	set_plane(t_actor *plyr, char **map)
 	else if (c == 'E')
 	{
 		plyr->plane_x = 0;
-		plyr->plane_y = -0.66;
+		plyr->plane_y = 0.66;
 	}
 	else if (c == 'S')
 	{
@@ -64,7 +64,7 @@ void	set_plane(t_actor *plyr, char **map)
 	else if (c == 'W')
 	{
 		plyr->plane_x = 0;
-		plyr->plane_y = 0.66;
+		plyr->plane_y = -0.66;
 	}
 }
 
