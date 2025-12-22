@@ -6,7 +6,7 @@
 /*   By: rimagalh <rimagalh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 11:20:27 by rimagalh          #+#    #+#             */
-/*   Updated: 2025/12/16 10:14:22 by rimagalh         ###   ########.fr       */
+/*   Updated: 2025/12/22 12:00:11 by rimagalh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	set_direction(t_actor *plyr, char **map)
 	}
 	else if (c == 'E')
 	{
-		plyr->dir_x = -1;
+		plyr->dir_x = 1;
 		plyr->dir_y = 0;
 	}
 	else if (c == 'S')
@@ -90,7 +90,7 @@ void	set_direction(t_actor *plyr, char **map)
 	}
 	else if (c == 'W')
 	{
-		plyr->dir_x = 1;
+		plyr->dir_x = -1;
 		plyr->dir_y = 0;
 	}
 }
