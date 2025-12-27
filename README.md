@@ -1,12 +1,6 @@
 # C_Cub3D
 Ray-Caster "3D" First-person-shooter 
 
-![Project Type](https://img.shields.io/badge/Type-Graphics%20%7C%20Game%20Engine-blue)
-![Language](https://img.shields.io/badge/Language-C-orange)
-![Graphics](https://img.shields.io/badge/Graphics-MinilibX-green)
-
-> *"My first RayCaster with miniLibX"* - A tribute to Wolfenstein 3D, the first true First-Person Shooter in gaming history.
-
 ## 📋 Table of Contents
 - [Overview](#overview)
 - [Key Concepts](#key-concepts)
@@ -497,21 +491,6 @@ This is an educational project, but improvements are welcome:
 
 ---
 
-## 📜 License
-
-This project is part of the 42 School curriculum. Feel free to use for educational purposes.
-
----
-
-## 🙏 Acknowledgments
-
-- **Id Software** - For pioneering raycasting with Wolfenstein 3D
-- **Lode Vandevenne** - For excellent raycasting tutorials
-- **42 Network** - For the project specifications
-- **MinilibX contributors** - For the graphics library
-
----
-
 ## 📚 Resources
 
 ### Learning Materials
@@ -523,7 +502,3 @@ This project is part of the 42 School curriculum. Feel free to use for education
 - [GIMP](https://www.gimp.org/) - Creating XPM textures
 - [Valgrind](https://valgrind.org/) - Memory leak detection
 - [GDB](https://www.gnu.org/software/gdb/) - Debugging
-
----
-
-**Made with ☕ and raycasting magic**
