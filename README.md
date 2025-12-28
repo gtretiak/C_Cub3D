@@ -5,7 +5,6 @@ Ray-Caster "3D" First-person-shooter
 - [Overview](#overview)
 - [Key Concepts](#key-concepts)
 - [Features](#features)
-- [Technologies](#technologies)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Map Format](#map-format)
@@ -25,13 +24,6 @@ Ray-Caster "3D" First-person-shooter
 - Displays different wall textures based on cardinal direction (N/S/E/W)
 - Validates map integrity (closed walls, proper format)
 
-### Purpose
-This project serves as:
-1. **Educational tool** for understanding 3D graphics fundamentals without complex frameworks
-2. **Mathematical playground** demonstrating practical applications of trigonometry and linear algebra
-3. **Performance optimization challenge** requiring efficient rendering algorithms
-4. **Foundation** for more complex game engine development
-
 ---
 
 ## 🔑 Key Concepts
@@ -47,17 +39,7 @@ The core technique that makes pseudo-3D rendering possible:
 
 **Why This Approach?**
 - **Efficiency**: O(n) per frame where n = screen width, much faster than true 3D rendering
-- **Simplicity**: Works with 2D data structures (grid maps)
-- **Classic Feel**: Authentic retro gaming aesthetic
-- **Educational Value**: Perfect introduction to graphics programming without GPU dependencies
-
-### Mathematical Foundations
-```
-Ray Direction = Player Direction + Camera Plane × Camera X
-Delta Distance = |1 / Ray Direction|
-Perpendicular Distance = avoid fisheye effect
-Wall Height = Screen Height / Perpendicular Distance
-```
+- **Simplicity**: Works with 2D data structures (grid maps) and without GPU dependencies
 
 ---
 
@@ -74,42 +56,14 @@ Wall Height = Screen Height / Perpendicular Distance
 - ✅ **Map Validation**: Comprehensive error checking for invalid configurations
 - ✅ **Scene Parser**: Flexible .cub file format with whitespace tolerance
 
-### Bonus Features
+###  Ideas TODO
 - 🎁 **Wall Collisions**: Realistic collision detection
 - 🎁 **Minimap System**: Real-time overhead view
-- 🎁 **Interactive Doors**: Open/close mechanisms
+- 🎁 **Interactive elements**: Open/close/use mechanisms 
 - 🎁 **Animated Sprites**: Dynamic visual elements
 - 🎁 **Mouse Rotation**: Smooth camera control
-
----
-
-## 🛠️ Technologies
-
-| Component | Technology | Purpose |
-|-----------|-----------|---------|
-| **Language** | C (C99 standard) | Performance and low-level control |
-| **Graphics Library** | MinilibX | Cross-platform pixel manipulation |
-| **Window System** | X11 (Linux) | Event handling and window management |
-| **Math Library** | libm | Trigonometric calculations |
-| **Build System** | GNU Make | Automated compilation |
-| **Memory Management** | Manual (malloc/free) | Leak-free resource handling |
-
-### Why These Technologies?
-
-**MinilibX**: 
-- Minimal abstraction layer over X11/Cocoa
-- Direct pixel buffer access for maximum control
-- Educational focus without hiding complexity
-
-**C Language**:
-- Direct memory manipulation for texture data
-- Predictable performance characteristics
-- Teaches fundamental concepts without framework magic
-
-**Raycasting vs Modern 3D**:
-- No GPU required (runs on integrated graphics)
-- Deterministic frame times
-- Perfect for learning before moving to OpenGL/Vulkan
+- 🎁 **Configuration file**: For key bindings
+- 🎁 **Save/load system**: To keep game state
 
 ---
 
@@ -125,8 +79,6 @@ sudo apt-get install -y gcc make xorg libxext-dev libbsd-dev
 xcode-select --install
 brew install make
 ```
-
-### Step-by-Step Setup
 
 1. **Clone the Repository**
 ```bash
@@ -145,41 +97,14 @@ make
 
 3. **Verify Installation**
 ```bash
-./cub3D maps/good/subject_map.cub
+./cub3D <path_to_map.cub>
+Example: ./cub3D maps/good/subject_map.cub
 # Should open a window with a 3D maze view
-```
-
-4. **Clean Build Files** (optional)
-```bash
-make fclean  # Remove all compiled files
-make re      # Rebuild from scratch
-```
-
-### Troubleshooting
-
-**Issue**: `mlx.h not found`
-```bash
-# Install from sources
-cd minilibx_linux
-make
-cd ..
-```
-
-**Issue**: Segmentation fault on startup
-```bash
-# Check map file validity
-./cub3D maps/bad/map_missing.cub
-# Should print: "Error.\nThere is no map in your cub file."
 ```
 
 ---
 
 ## 📖 Usage
-
-### Basic Command
-```bash
-./cub3D <path_to_map.cub>
-```
 
 ### Controls
 
@@ -192,25 +117,6 @@ cd ..
 | `←` | Rotate left |
 | `→` | Rotate right |
 | `ESC` | Exit program |
-
-### Example Runs
-
-**Simple Test Map**:
-```bash
-./cub3D maps/good/test_textures.cub
-```
-
-**Complex Maze**:
-```bash
-./cub3D maps/good/cheese_maze.cub
-```
-
-**Error Handling**:
-```bash
-./cub3D maps/bad/wall_hole_north.cub
-# Output: Error.
-#         The map must be closed/surrounded by walls.
-```
 
 ---
 
@@ -255,12 +161,12 @@ C 225,30,0
 | `S` | Player spawn facing South |
 | `E` | Player spawn facing East |
 | `W` | Player spawn facing West |
-| ` ` (space) | Void (treated as wall boundary) |
+| ` ` (space) | Void |
 
 ### Validation Rules
 
 ✅ **Valid Maps**:
-- Enclosed by walls (all `0` spaces surrounded by `1`)
+- Enclosed by walls (surrounded by `1`)
 - Exactly one player spawn position
 - Rectangular or irregular shapes with proper boundaries
 
@@ -282,11 +188,6 @@ C 225,30,0
 - Extend with combat mechanics, inventory systems, and level progression
 - Deploy on platforms with limited GPU capabilities (embedded systems, old hardware)
 
-**Skills Transfer**:
-- Render loop optimization → applicable to any game engine
-- Collision detection → fundamental for physics engines
-- Texture management → scalable to 3D asset pipelines
-
 **Example**: A dungeon crawler mobile game using similar techniques could run on low-end Android devices where full 3D engines struggle.
 
 ---
@@ -299,61 +200,17 @@ C 225,30,0
 - Allow clients to "walk through" properties remotely
 - Lightweight alternative to heavy CAD software for initial presentations
 
-**Skills Transfer**:
-- Map parsing → importing architectural blueprints
-- Camera controls → implementing smooth navigation for non-gamers
-- Texture mapping → applying real material samples to walls
-
 **Example**: A web-based property viewer that loads floor plans as `.cub` format and renders instant 3D previews without requiring browser WebGL support.
 
 ---
 
-### 3. **Robotics & SLAM Systems**
-**Scenario**: Autonomous robot navigating indoor environments
-
-**Application**:
-- Visualize LiDAR/sensor data as a 3D navigable map
-- Debug pathfinding algorithms by rendering robot's "view"
-- Simulate robot perception for testing before hardware deployment
-
-**Skills Transfer**:
-- Grid-based raycasting → directly applicable to occupancy grid mapping
-- DDA algorithm → optimizing sensor ray calculations
-- Real-time rendering → visualizing live sensor feeds
-
-**Example**: A warehouse robot control center displaying each robot's first-person perspective, helping operators understand navigation decisions.
-
----
-
-### 4. **Educational Software**
-**Scenario**: University teaching computer graphics fundamentals
-
-**Application**:
-- Interactive textbook for ray-casting concepts
-- Students modify `.cub` maps to see immediate rendering changes
-- Benchmark different optimization techniques (DDA vs Bresenham vs naive)
-
-**Skills Transfer**:
-- Step-by-step algorithm visualization → teaching tool development
-- Performance profiling → introducing students to optimization
-- Modular design → demonstrating software architecture principles
-
-**Example**: An online course where students submit `.cub` maps and the platform auto-grades based on rendering correctness and performance metrics.
-
----
-
-### 5. **Accessibility Tools**
+### 3. **Accessibility Tools**
 **Scenario**: Assistive technology for visually impaired users
 
 **Application**:
 - Audio-based navigation system using spatial sound
 - Convert physical spaces into navigable digital maps
 - Haptic feedback integration for maze-like environments (museums, malls)
-
-**Skills Transfer**:
-- Distance calculations → audio volume/panning algorithms
-- Wall detection → vibration intensity mapping
-- Collision system → haptic warning triggers
 
 **Example**: A museum app where blind visitors navigate exhibits using headphones that provide 3D audio cues based on raycasting calculations of nearby walls and objects.
 
@@ -472,24 +329,6 @@ fps = 1.0 / frametime;
 
 ---
 
-## 🤝 Contributing
-
-This is an educational project, but improvements are welcome:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add raycasting optimization'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Contribution Ideas
-- [ ] Add support for doors and interactive elements
-- [ ] Implement sprite rendering system
-- [ ] Port to macOS with Cocoa MinilibX
-- [ ] Add configuration file for key bindings
-- [ ] Implement save/load system for game states
-
----
 
 ## 📚 Resources
 
@@ -497,6 +336,7 @@ This is an educational project, but improvements are welcome:
 - [Lodev's Raycasting Tutorial](https://lodev.org/cgtutor/raycasting.html) - Comprehensive guide
 - [Permadi's Ray-Casting Tutorial](https://permadi.com/1996/05/ray-casting-tutorial-table-of-contents/) - Classic resource
 - [Game Engine Black Book: Wolfenstein 3D](https://fabiensanglard.net/gebbwolf3d/) - Deep dive into the original
+- [Original Wolfenstein game](http://users.atw.hu/wolf3d/) - get inspiration
 
 ### Tools
 - [GIMP](https://www.gimp.org/) - Creating XPM textures
